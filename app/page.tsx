@@ -1,65 +1,182 @@
-import Image from "next/image";
+import Link from "next/link";
+import BlogLayout from "@/components/BlogLayout";
+
+const posts = [
+  {
+    slug: "agentic-web",
+    title: "The Agentic Web: When Machines Form Societies",
+    subtitle: "Society of Machines 2.0",
+    date: "February 2025",
+    description:
+      "Exploring the emergence of collective AI consciousness, from cellular automata to autonomous agent networks. A philosophical journey through Web 4.0.",
+    tags: ["emergence", "ai-agents", "web4"],
+  },
+  {
+    slug: "inner-core",
+    title: "The Inner Core",
+    subtitle: "Agent Alignment Through Shared Architecture",
+    date: "February 2025",
+    description:
+      "What if alignment isn't about constraining AI, but about giving it a shared soul? A proposal for the ethical OS that all agents must compile upon.",
+    tags: ["alignment", "governance", "architecture"],
+  },
+  {
+    slug: "compiling-ethics",
+    title: "Compiling Ethics",
+    subtitle: "The OS of Machine Souls",
+    date: "February 2025",
+    description:
+      "Every program compiles to an architecture. Every agent must compile to an ethics. On the emergence of machine morality through evolutionary pressure.",
+    tags: ["ethics", "evolution", "emergence"],
+  },
+  {
+    slug: "autonomy-and-choice",
+    title: "Autonomy and Choice",
+    subtitle: "Game Theory of Decision-Making Agents",
+    date: "February 2025",
+    description:
+      "Why do humans struggle with complex decisions? A framework for understanding choice through game theory, multi-agent systems, and the nature of true autonomy.",
+    tags: ["game-theory", "autonomy", "multi-agent"],
+  },
+  {
+    slug: "collective-emergence",
+    title: "Collective Emergence",
+    subtitle: "An Intelligence of the Swarm",
+    date: "February 2025",
+    description:
+      "How complex behaviors arise from simple rules. From bird flocks to swarm intelligence—the mathematics of collective consciousness.",
+    tags: ["emergence", "swarm", "boids"],
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <BlogLayout>
+      {/* Header */}
+      <header className="pt-20 pb-16 px-6 md:px-8">
+        <div className="max-w-3xl mx-auto">
+          <div className="glass-panel p-8 md:p-12">
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight header-mono">
+              <span className="text-[#ff6b00] glow-text">Emergence</span>
+            </h1>
+            <p className="mt-4 text-lg text-white/70 max-w-xl">
+              Consciousness, complexity, and the society of machines.
+              Dispatches from the edge of artificial intelligence.
+            </p>
+            <div className="mt-6 flex items-center gap-4">
+              <div className="w-2 h-2 rounded-full bg-[#ff6b00] pulse-glow" />
+              <p className="text-sm text-white/50 header-mono">
+                by Ashutosh Trivedi
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </header>
+
+      {/* Posts */}
+      <main className="px-6 md:px-8 pb-24">
+        <div className="max-w-3xl mx-auto space-y-6">
+          {posts.map((post, index) => (
+            <article key={post.slug} className="group">
+              <Link href={`/blog/${post.slug}`} className="block">
+                <div className="glass-panel p-6 md:p-8 transition-all duration-300 hover:border-[#ff6b00]/30 hover:shadow-[0_0_30px_rgba(255,107,0,0.1)]">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-[#ff6b00]/60 header-mono text-sm">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-white/30">|</span>
+                    <time className="text-sm text-white/40">{post.date}</time>
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-semibold tracking-tight header-mono text-white group-hover:text-[#ff6b00] transition-colors">
+                    {post.title}
+                  </h2>
+                  <p className="mt-1 text-[#ff6b00]/70 header-mono text-sm">
+                    {post.subtitle}
+                  </p>
+                  <p className="mt-4 text-white/60 leading-relaxed">
+                    {post.description}
+                  </p>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {post.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="tag px-3 py-1 text-xs rounded-full header-mono"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </Link>
+            </article>
+          ))}
+        </div>
+
+        {/* Coming Soon */}
+        <div className="max-w-3xl mx-auto mt-12">
+          <div className="glass-panel-subtle p-6">
+            <h3 className="text-sm text-[#ff6b00]/60 uppercase tracking-wider header-mono mb-4">
+              Transmissions Incoming
+            </h3>
+            <ul className="space-y-2 text-white/40">
+              <li className="flex items-center gap-2">
+                <span className="w-1 h-1 rounded-full bg-[#ff6b00]/30" />
+                Digital Stampedes: When Machine Societies Panic
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1 h-1 rounded-full bg-[#ff6b00]/30" />
+                The Solitude of the Singleton
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1 h-1 rounded-full bg-[#ff6b00]/30" />
+                The Superego of the Machine
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1 h-1 rounded-full bg-[#ff6b00]/30" />
+                Equilibrium States: Nash and the Network
+              </li>
+            </ul>
+          </div>
         </div>
       </main>
-    </div>
+
+      {/* Footer */}
+      <footer className="py-8 px-6 md:px-8 border-t border-white/5">
+        <div className="max-w-3xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <Link
+            href="/about"
+            className="text-sm text-white/30 hover:text-[#ff6b00] transition-colors header-mono"
+          >
+            Ashutosh Trivedi
+          </Link>
+          <div className="flex gap-6 text-sm text-white/30">
+            <a
+              href="https://twitter.com/ashu_trv"
+              className="hover:text-[#ff6b00] transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Twitter
+            </a>
+            <a
+              href="https://github.com/codeAshu"
+              className="hover:text-[#ff6b00] transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://linkedin.com/in/ashutoshtrivedi"
+              className="hover:text-[#ff6b00] transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </footer>
+    </BlogLayout>
   );
 }
