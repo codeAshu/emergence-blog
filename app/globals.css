@@ -1,254 +1,445 @@
 @import "tailwindcss";
 
-:root {
-  --background: #000000;
-  --foreground: #fafaf9;
-  --accent: #ff6b00;
-  --accent-glow: rgba(255, 107, 0, 0.6);
-  --accent-subtle: rgba(255, 107, 0, 0.15);
-  --glass: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --grid-color: rgba(255, 107, 0, 0.03);
+/* =====================================================================
+   Impeccable — warm-paper editorial palette
+   Reference: github.com/pbakaus/impeccable (DESIGN.md)
+   - Warm Ash Cream is the load-bearing background, not white.
+   - Editorial Magenta is the only vibrant accent (≤10% of any screen).
+   - All colors declared in OKLCH.
+   - Light is the default. Dark mode mirrors the same hue family.
+   ===================================================================== */
+
+:root,
+[data-theme="light"] {
+  /* Surfaces — Natural warm beige */
+  --background: oklch(95% 0.015 85);           /* Natural Beige */
+  --surface: oklch(97% 0.012 85);              /* Light Cream */
+  --surface-mist: oklch(93% 0.015 85);         /* Soft Sand */
+
+  /* Text */
+  --foreground: oklch(10% 0 0);                /* Deep Graphite */
+  --text-muted: oklch(25% 0 0);                /* Soft Charcoal */
+  --text-subtle: oklch(55% 0 0);               /* Mid Ash */
+
+  /* Accent — Editorial Magenta */
+  --accent: oklch(60% 0.25 350);
+  --accent-deep: oklch(52% 0.25 350);
+  --accent-whisper: oklch(60% 0.25 350 / 0.15);
+  --accent-veil: oklch(60% 0.25 350 / 0.25);
+  --accent-subtle: oklch(60% 0.25 350 / 0.08);
+  --accent-glow: oklch(60% 0.25 350 / 0.18);
+
+  /* Structure */
+  --border: oklch(90% 0.01 85);                /* Warm Sand hairline */
+  --header-bg: oklch(95% 0.015 85 / 0.88);
+  --grid-color: oklch(60% 0.25 350 / 0.03);
+
+  /* Background-swarm canvas — blue/turquoise for light mode */
+  --swarm-fade: oklch(95% 0.015 85 / 0.10);
+  --swarm-particle: 35 0.15 190;               /* Turquoise */
+  --swarm-leader: 50% 0.20 185;                /* Bright turquoise */
+  --swarm-tint: 190;                           /* Turquoise hue */
+
+  --shadow-hover: 0 4px 24px -4px rgb(0 0 0 / 0.10),
+                  0 1px 3px rgb(0 0 0 / 0.05);
+  --shadow-lift:  0 20px 40px rgb(0 0 0 / 0.07);
+  --shadow-accent: 0 20px 60px var(--accent-glow);
+
+  --ease-out:       cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --width-content: 65ch;
+  --width-prose:   720px;
+  --width-page:    1100px;
+
+  /* Fonts loaded by next/font */
+  --font-display: var(--font-cormorant), Georgia, "Times New Roman", serif;
+  --font-body:    var(--font-instrument), system-ui, -apple-system, sans-serif;
+  --font-mono:    var(--font-space-grotesk), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* Dark theme — same hue family, restrained */
+[data-theme="dark"] {
+  --background: oklch(14% 0.005 350);
+  --surface: oklch(18% 0.005 350);
+  --surface-mist: oklch(22% 0.005 350);
+
+  --foreground: oklch(96% 0.005 350);
+  --text-muted: oklch(78% 0 0);
+  --text-subtle: oklch(58% 0 0);
+
+  --accent: oklch(72% 0.20 350);
+  --accent-deep: oklch(64% 0.20 350);
+  --accent-whisper: oklch(72% 0.20 350 / 0.18);
+  --accent-veil: oklch(72% 0.20 350 / 0.30);
+  --accent-subtle: oklch(72% 0.20 350 / 0.12);
+  --accent-glow: oklch(72% 0.20 350 / 0.22);
+
+  --border: oklch(28% 0.003 350);
+  --header-bg: oklch(14% 0.005 350 / 0.88);
+  --grid-color: oklch(72% 0.20 350 / 0.04);
+
+  /* Background-swarm canvas — fire orange for dark mode */
+  --swarm-fade: oklch(14% 0.005 350 / 0.10);
+  --swarm-particle: 70 0.20 25;                /* Fire orange */
+  --swarm-leader: 65% 0.25 20;                 /* Bright fire */
+  --swarm-tint: 25;                            /* Orange hue */
+
+  --shadow-hover: 0 4px 24px -4px rgb(0 0 0 / 0.40),
+                  0 1px 3px rgb(0 0 0 / 0.20);
+  --shadow-lift:  0 20px 40px rgb(0 0 0 / 0.30);
+  --shadow-accent: 0 20px 60px var(--accent-glow);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
-  --font-sans: var(--font-inter);
+  --color-muted: var(--text-muted);
+  --color-subtle: var(--text-subtle);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-display);
   --font-mono: var(--font-mono);
 }
 
-/* Base */
+/* ---------- Base ---------- */
+html {
+  background: var(--background);
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* Subtle Grid Background */
-.grid-bg {
-  background-image:
-    linear-gradient(var(--grid-color) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-  background-size: 60px 60px;
-  background-position: -1px -1px;
+::selection {
+  background: var(--accent-veil);
+  color: var(--foreground);
 }
 
-/* Glass Panel */
+/* ---------- Hero Section (Homepage) ---------- */
+.hero-section {
+  position: relative;
+}
+
+[data-theme="light"] .hero-section {
+  background: linear-gradient(
+    180deg,
+    oklch(82% 0.035 85) 0%,
+    oklch(88% 0.025 85) 100%
+  );
+}
+
+[data-theme="dark"] .hero-section {
+  background: transparent;
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  background: var(--header-bg);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+          backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+/* ---------- Cards ---------- */
+/* Flat at rest, hairline border, subtle hover lift. No glassmorphism. */
+.editorial-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: transform 300ms var(--ease-out),
+              border-color 200ms linear,
+              box-shadow 300ms var(--ease-out);
+}
+
+.editorial-card:hover {
+  border-color: var(--accent-veil);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.editorial-card-feature {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+}
+
+/* Backwards-compatible alias for any remaining `glass-panel` references.
+   Renders as a flat editorial card — no blur, no glass border. */
 .glass-panel {
-  background: var(--glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
 }
 
 .glass-panel-subtle {
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
 }
 
-/* Orange Glow Effects */
-.glow-orange {
-  box-shadow:
-    0 0 20px var(--accent-glow),
-    0 0 40px rgba(255, 107, 0, 0.3),
-    0 0 60px rgba(255, 107, 0, 0.1);
+/* ---------- Buttons ---------- */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--foreground);
+  color: var(--background);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 14px 32px;
+  border: 0;
+  border-radius: 0;        /* sharp by design */
+  cursor: pointer;
+  transition: transform 200ms var(--ease-out),
+              background-color 200ms linear,
+              color 200ms linear;
 }
 
-.glow-text {
-  text-shadow:
-    0 0 10px var(--accent-glow),
-    0 0 20px rgba(255, 107, 0, 0.4),
-    0 0 40px rgba(255, 107, 0, 0.2);
+.btn-primary:hover {
+  background: var(--accent);
+  transform: translateY(-2px);
 }
 
-.glow-line {
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  box-shadow: 0 0 20px var(--accent-glow);
+/* ---------- Tag pill ---------- */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 4px 10px;
+  transition: color 200ms linear, border-color 200ms linear;
 }
 
-/* Scanline Animation */
-@keyframes scanline {
-  0% {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(100vh);
-    opacity: 0;
-  }
+.tag:hover {
+  color: var(--accent);
+  border-color: var(--accent-veil);
 }
 
-.scanline {
-  position: fixed;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent 0%, var(--accent) 20%, var(--accent) 80%, transparent 100%);
-  box-shadow:
-    0 0 10px var(--accent-glow),
-    0 0 20px var(--accent-glow),
-    0 -10px 30px var(--accent-subtle),
-    0 10px 30px var(--accent-subtle);
-  animation: scanline 12s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 50;
-  opacity: 0.6;
+/* ---------- Subtle dotted background ---------- */
+.grid-bg {
+  background-image: radial-gradient(var(--grid-color) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: 0 0;
 }
 
-/* Pulse Animation for Active Elements */
-@keyframes pulse-glow {
-  0%, 100% {
-    opacity: 0.4;
-    box-shadow: 0 0 10px var(--accent-glow);
-  }
-  50% {
-    opacity: 0.8;
-    box-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(255, 107, 0, 0.3);
-  }
+/* ---------- Header brand mono ---------- */
+.header-mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
 }
 
-.pulse-glow {
-  animation: pulse-glow 3s ease-in-out infinite;
+/* ---------- Display type ---------- */
+.display-serif {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.01em;
 }
 
-/* Typography */
+.headline-serif {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+}
+
+/* ---------- Article prose ---------- */
 .prose-emergence {
-  font-family: var(--font-sans), system-ui, sans-serif;
-  line-height: 1.85;
-  letter-spacing: 0.01em;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  max-width: 70ch;
+  margin-inline: auto;
 }
 
 .prose-emergence h1,
 .prose-emergence h2,
 .prose-emergence h3 {
-  font-family: var(--font-mono), monospace;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+  line-height: 1.2;
 }
 
 .prose-emergence h2 {
-  position: relative;
-  display: inline-block;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  margin-top: 2.75em;
+  margin-bottom: 0.6em;
 }
 
-.prose-emergence h2::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 40px;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent), transparent);
-  box-shadow: 0 0 10px var(--accent-glow);
+.prose-emergence h3 {
+  font-size: 1.375rem;
+  margin-top: 2em;
+  margin-bottom: 0.4em;
 }
 
 .prose-emergence p {
-  margin-bottom: 1.5em;
-  color: rgba(250, 250, 249, 0.85);
+  margin-bottom: 1.4em;
+  color: var(--text-muted);
+}
+
+.prose-emergence a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 200ms linear;
+}
+
+.prose-emergence a:hover {
+  color: var(--accent-deep);
 }
 
 .prose-emergence blockquote {
-  border-left: 2px solid var(--accent);
-  padding-left: 1.5em;
-  font-style: italic;
-  color: rgba(255, 107, 0, 0.9);
-  background: var(--accent-subtle);
-  padding: 1em 1.5em;
-  border-radius: 0 8px 8px 0;
+  border-left: 1px solid var(--accent);
+  padding: 0.25em 0 0.25em 1.5em;
   margin: 2em 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.25rem;
+  line-height: 1.45;
+  color: var(--foreground);
 }
 
 .prose-emergence strong {
-  color: #fff;
+  color: var(--foreground);
   font-weight: 600;
 }
 
 .prose-emergence em {
-  color: rgba(255, 107, 0, 0.9);
+  font-style: italic;
 }
 
 .prose-emergence code {
-  font-family: var(--font-mono), monospace;
-  background: rgba(255, 107, 0, 0.1);
-  padding: 0.2em 0.4em;
+  font-family: var(--font-mono);
+  background: var(--surface-mist);
+  border: 1px solid var(--border);
+  padding: 0.1em 0.4em;
   border-radius: 4px;
-  font-size: 0.9em;
-  color: var(--accent);
+  font-size: 0.875em;
+  color: var(--foreground);
 }
 
 .prose-emergence pre {
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid var(--glass-border);
-  border-radius: 12px;
-  padding: 1.5em;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25em 1.5em;
   overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
 
 .prose-emergence pre code {
-  background: none;
+  background: transparent;
+  border: 0;
   padding: 0;
 }
 
-/* Animation Container */
+/* ---------- Animation frame around demos ---------- */
 .animation-container {
-  background: linear-gradient(135deg, rgba(255, 107, 0, 0.02) 0%, rgba(0, 0, 0, 0.3) 100%);
-  border: 1px solid rgba(255, 107, 0, 0.1);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
   position: relative;
 }
 
-.animation-container::before {
-  content: '';
+/* ---------- Background swarm ---------- */
+.swarm-bg {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  opacity: 0.5;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
 }
 
-/* Header Mono Style */
-.header-mono {
-  font-family: var(--font-mono), monospace;
-}
+[data-theme="light"] .swarm-bg { opacity: 0.55; }
+[data-theme="dark"]  .swarm-bg { opacity: 0.85; }
 
-/* Tag Styles */
-.tag {
-  background: rgba(255, 107, 0, 0.1);
-  border: 1px solid rgba(255, 107, 0, 0.2);
-  color: var(--accent);
-  transition: all 0.3s ease;
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
 }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-veil); }
 
-.tag:hover {
-  background: rgba(255, 107, 0, 0.2);
-  box-shadow: 0 0 10px var(--accent-glow);
-}
-
-/* Fade In */
+/* ---------- Motion ---------- */
 .fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
+  animation: fadeIn 0.6s var(--ease-out) forwards;
 }
 
 @keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Quiet, slow indicator pulse — reserved for the live status dot */
+.pulse-glow {
+  animation: pulseGlow 3s var(--ease-out-quint) infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50%      { opacity: 0.4;  transform: scale(0.85); }
+}
+
+/* No retro scanline in either mode — editorial sanctuary, not sci-fi UI */
+.scanline { display: none; }
+
+/* Keep glow utility classes alive for legacy markup, but neutralise them
+   so they no longer produce the AI-tool dark-glow aesthetic. */
+.glow-orange,
+.glow-text { box-shadow: none; text-shadow: none; }
+
+/* Theme-token transitions — 2 second smooth transition */
+body,
+.site-header,
+.editorial-card,
+.tag,
+.btn-primary,
+.prose-emergence,
+.prose-emergence p,
+.prose-emergence h1,
+.prose-emergence h2,
+.prose-emergence h3 {
+  transition: background-color 2s var(--ease-out),
+              border-color 2s var(--ease-out),
+              color 2s var(--ease-out);
+}
+
+/* Page header entrance animation */
+@keyframes headerSlideUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -256,32 +447,54 @@ body {
   }
 }
 
-/* Background Swarm Styles */
-.swarm-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
+@keyframes headerFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.page-header-animate {
+  animation: headerSlideUp 0.8s var(--ease-out-quint) forwards;
+}
+
+.page-header-animate h1 {
+  animation: headerSlideUp 0.8s var(--ease-out-quint) 0.1s forwards;
+  opacity: 0;
+}
+
+.page-header-animate .subtitle {
+  animation: headerSlideUp 0.8s var(--ease-out-quint) 0.2s forwards;
+  opacity: 0;
+}
+
+.page-header-animate time,
+.page-header-animate .meta {
+  animation: headerFadeIn 0.6s var(--ease-out) 0.3s forwards;
+  opacity: 0;
+}
+
+/* Header separator line */
+.header-separator {
   width: 100%;
-  height: 100%;
-  z-index: -1;
-  opacity: 0.4;
-  pointer-events: none;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--border) 20%,
+    var(--border) 80%,
+    transparent 100%
+  );
+  margin: 2rem 0;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #000;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 107, 0, 0.3);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 107, 0, 0.5);
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

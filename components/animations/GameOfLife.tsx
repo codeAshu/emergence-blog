@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useCallback } from "react";
+import { useThemeColorsRef } from "./useThemeColors";
 
 interface GameOfLifeProps {
   width?: number;
@@ -16,6 +17,7 @@ export default function GameOfLife({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const gridRef = useRef<boolean[][]>([]);
   const animationRef = useRef<number>(0);
+  const themeRef = useThemeColorsRef();
 
   const cols = Math.floor(width / cellSize);
   const rows = Math.floor(height / cellSize);
@@ -89,41 +91,40 @@ export default function GameOfLife({
       }
       return newGrid;
     },
-    [cols, countNeighbors, createGrid]
+    [cols, countNeighbors, createGrid, rows]
   );
 
   const draw = useCallback(
     (ctx: CanvasRenderingContext2D, grid: boolean[][]) => {
-      // Fade effect
-      ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+      const t = themeRef.current;
+
+      // Trail fade matched to page background
+      ctx.fillStyle = t.fadeOverlay;
       ctx.fillRect(0, 0, width, height);
 
-      // Draw cells with orange glow
       for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
           if (grid[i][j]) {
             const x = i * cellSize;
             const y = j * cellSize;
 
-            // Glow
             const gradient = ctx.createRadialGradient(
               x + cellSize / 2, y + cellSize / 2, 0,
-              x + cellSize / 2, y + cellSize / 2, cellSize * 2
+              x + cellSize / 2, y + cellSize / 2, cellSize * 2,
             );
-            gradient.addColorStop(0, "rgba(255, 107, 0, 0.6)");
-            gradient.addColorStop(0.5, "rgba(255, 107, 0, 0.2)");
-            gradient.addColorStop(1, "rgba(255, 107, 0, 0)");
+            gradient.addColorStop(0, t.ink(0.45));
+            gradient.addColorStop(0.5, t.ink(0.15));
+            gradient.addColorStop(1, t.ink(0));
             ctx.fillStyle = gradient;
             ctx.fillRect(x - cellSize, y - cellSize, cellSize * 3, cellSize * 3);
 
-            // Core
-            ctx.fillStyle = "rgba(255, 140, 50, 0.9)";
+            ctx.fillStyle = t.ink(0.95);
             ctx.fillRect(x, y, cellSize - 1, cellSize - 1);
           }
         }
       }
     },
-    [cellSize, cols, height, width]
+    [cellSize, cols, height, rows, themeRef, width],
   );
 
   useEffect(() => {
@@ -138,7 +139,7 @@ export default function GameOfLife({
     grid = addGosperGliderGun(grid, 5, 50);
     gridRef.current = grid;
 
-    ctx.fillStyle = "#000";
+    ctx.fillStyle = themeRef.current.background;
     ctx.fillRect(0, 0, width, height);
 
     let frameCount = 0;
@@ -156,7 +157,7 @@ export default function GameOfLife({
     return () => {
       cancelAnimationFrame(animationRef.current);
     };
-  }, [addGosperGliderGun, createGrid, draw, height, nextGeneration, width]);
+  }, [addGosperGliderGun, createGrid, draw, height, nextGeneration, themeRef, width]);
 
   return (
     <div className="animation-container w-full overflow-hidden">
