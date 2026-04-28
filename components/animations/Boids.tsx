@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useCallback } from "react";
+import { useThemeColorsRef } from "./useThemeColors";
 
 interface Boid {
   x: number;
@@ -23,6 +24,7 @@ export default function Boids({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const boidsRef = useRef<Boid[]>([]);
   const animationRef = useRef<number>(0);
+  const themeRef = useThemeColorsRef();
 
   const visualRange = 50;
   const protectedRange = 15;
@@ -113,12 +115,14 @@ export default function Boids({
 
   const draw = useCallback(
     (ctx: CanvasRenderingContext2D, boids: Boid[]) => {
-      // Fade effect
-      ctx.fillStyle = "rgba(0, 0, 0, 0.15)";
+      const t = themeRef.current;
+
+      // Trail fade matched to page background
+      ctx.fillStyle = t.fadeOverlay;
       ctx.fillRect(0, 0, width, height);
 
-      // Draw connections
-      ctx.strokeStyle = "rgba(255, 107, 0, 0.1)";
+      // Connections — hairline ink
+      ctx.strokeStyle = t.hairline(0.12);
       ctx.lineWidth = 0.5;
       for (let i = 0; i < boids.length; i++) {
         for (let j = i + 1; j < boids.length; j++) {
@@ -132,7 +136,7 @@ export default function Boids({
         }
       }
 
-      // Draw boids with glow
+      // Boids — graphite arrow with restrained ink glow
       for (const boid of boids) {
         const angle = Math.atan2(boid.vy, boid.vx);
 
@@ -140,18 +144,16 @@ export default function Boids({
         ctx.translate(boid.x, boid.y);
         ctx.rotate(angle);
 
-        // Glow
         const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, 15);
-        gradient.addColorStop(0, "rgba(255, 107, 0, 0.4)");
-        gradient.addColorStop(0.5, "rgba(255, 107, 0, 0.1)");
-        gradient.addColorStop(1, "rgba(255, 107, 0, 0)");
+        gradient.addColorStop(0, t.ink(0.32));
+        gradient.addColorStop(0.5, t.ink(0.08));
+        gradient.addColorStop(1, t.ink(0));
         ctx.fillStyle = gradient;
         ctx.beginPath();
         ctx.arc(0, 0, 15, 0, Math.PI * 2);
         ctx.fill();
 
-        // Core
-        ctx.fillStyle = "rgba(255, 140, 50, 0.9)";
+        ctx.fillStyle = t.ink(0.95);
         ctx.beginPath();
         ctx.moveTo(8, 0);
         ctx.lineTo(-4, 3);
@@ -162,7 +164,7 @@ export default function Boids({
         ctx.restore();
       }
     },
-    [height, width]
+    [height, themeRef, width],
   );
 
   useEffect(() => {
@@ -174,7 +176,7 @@ export default function Boids({
 
     boidsRef.current = initBoids();
 
-    ctx.fillStyle = "#000";
+    ctx.fillStyle = themeRef.current.background;
     ctx.fillRect(0, 0, width, height);
 
     const animate = () => {
@@ -190,7 +192,7 @@ export default function Boids({
     return () => {
       cancelAnimationFrame(animationRef.current);
     };
-  }, [draw, height, initBoids, updateBoid, width]);
+  }, [draw, height, initBoids, themeRef, updateBoid, width]);
 
   return (
     <div className="animation-container w-full overflow-hidden">

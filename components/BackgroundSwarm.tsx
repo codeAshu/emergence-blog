@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 
 interface Particle {
   x: number;
@@ -51,6 +51,7 @@ export default function BackgroundSwarm() {
   const startTimeRef = useRef<number>(Date.now());
   const cyclePhaseRef = useRef<"forming" | "dispersing">("forming");
   const cycleStartRef = useRef<number>(Date.now());
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   const numSocieties = 3;
   const particlesPerSociety = 50;
@@ -536,21 +537,44 @@ export default function BackgroundSwarm() {
       societies: Society[],
       tradeRoutes: TradeRoute[],
       width: number,
-      height: number
+      height: number,
+      darkMode: boolean
     ) => {
-      // Slower fade for trails
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      /* ----- Theme-aware palette ----- */
+      // Dark mode: fire orange | Light mode: blue/turquoise
+      const baseHue = darkMode ? 25 : 190; // Orange vs Turquoise
+      const hueVariation = (idx: number) => baseHue + (idx - 1) * 8;
+
+      const inkLightness = (idx: number) =>
+        darkMode ? [75, 65, 55][idx % 3] : [35, 45, 55][idx % 3];
+
+      const ink = (idx: number, alpha: number) =>
+        `hsla(${hueVariation(idx)}, ${darkMode ? 80 : 60}%, ${inkLightness(idx)}%, ${alpha})`;
+
+      // Accent color — brighter version of the theme
+      const accent = (alpha: number) => {
+        const h = darkMode ? 20 : 185;
+        const s = darkMode ? 95 : 75;
+        const l = darkMode ? 60 : 45;
+        return `hsla(${h}, ${s}%, ${l}%, ${alpha})`;
+      };
+
+      // Background trail fade — matches page background.
+      // Dark: deep charcoal | Light: warm natural beige
+      ctx.fillStyle = darkMode
+        ? "rgba(20, 20, 22, 0.06)"
+        : "rgba(245, 240, 230, 0.10)";
       ctx.fillRect(0, 0, width, height);
 
-      // Phase 2: Draw trade routes
+      /* ----- Trade routes ----- */
       for (const route of tradeRoutes) {
         if (route.strength > 0.1) {
           const fromSociety = societies[route.from];
           const toSociety = societies[route.to];
 
-          // Draw route path
-          ctx.strokeStyle = `hsla(25, 100%, 50%, ${route.strength * 0.1})`;
-          ctx.lineWidth = route.strength * 2;
+          // Subtle ink line
+          ctx.strokeStyle = ink(route.from, route.strength * 0.10);
+          ctx.lineWidth = Math.max(0.4, route.strength * 1.2);
           ctx.beginPath();
           ctx.moveTo(fromSociety.centerX, fromSociety.centerY);
 
@@ -559,11 +583,11 @@ export default function BackgroundSwarm() {
           ctx.quadraticCurveTo(midX, midY, toSociety.centerX, toSociety.centerY);
           ctx.stroke();
 
-          // Draw trade particles
+          // Trade messengers — accent magenta (rare, decisive)
           for (const tp of route.particles) {
             const gradient = ctx.createRadialGradient(tp.x, tp.y, 0, tp.x, tp.y, 6);
-            gradient.addColorStop(0, `hsla(35, 100%, 70%, ${route.strength * 0.8})`);
-            gradient.addColorStop(1, `hsla(35, 100%, 50%, 0)`);
+            gradient.addColorStop(0, accent(route.strength * 0.55));
+            gradient.addColorStop(1, accent(0));
             ctx.fillStyle = gradient;
             ctx.beginPath();
             ctx.arc(tp.x, tp.y, 6, 0, Math.PI * 2);
@@ -572,24 +596,23 @@ export default function BackgroundSwarm() {
         }
       }
 
-      // Phase 2: Draw signal waves
+      /* ----- Signal waves and collective-goal markers (accent only) ----- */
       for (const society of societies) {
         if (society.signalOrigin) {
           const signalAge = (Date.now() - society.signalOrigin.time) / 1000;
           const signalRadius = signalAge * 50;
-          const signalAlpha = Math.max(0, 0.3 - signalAge * 0.03);
+          const signalAlpha = Math.max(0, 0.22 - signalAge * 0.03);
 
-          ctx.strokeStyle = `hsla(${society.hue}, 100%, 60%, ${signalAlpha})`;
-          ctx.lineWidth = 2;
+          ctx.strokeStyle = accent(signalAlpha);
+          ctx.lineWidth = 1.2;
           ctx.beginPath();
           ctx.arc(society.signalOrigin.x, society.signalOrigin.y, signalRadius, 0, Math.PI * 2);
           ctx.stroke();
         }
 
-        // Phase 3: Draw collective goal indicator
         if (society.collectiveGoal && society.formation > 0.6) {
           const pulseSize = 10 + Math.sin(Date.now() * 0.003) * 5;
-          ctx.strokeStyle = `hsla(${society.hue}, 100%, 60%, ${society.formation * 0.3})`;
+          ctx.strokeStyle = accent(society.formation * 0.28);
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.arc(society.collectiveGoal.x, society.collectiveGoal.y, pulseSize, 0, Math.PI * 2);
@@ -597,7 +620,8 @@ export default function BackgroundSwarm() {
         }
       }
 
-      // Draw connections
+      /* ----- Connections (ink) ----- */
+      const connAlphaMultiplier = darkMode ? 0.18 : 0.22;
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const p1 = particles[i];
@@ -612,12 +636,13 @@ export default function BackgroundSwarm() {
             const formationAlpha = sameSociety
               ? society.formation
               : Math.min(societies[p1.society].formation, societies[p2.society].formation) * 0.3;
-            const alpha = (1 - d / connectionRange) * 0.15 * formationAlpha * (p1.loyalty + p2.loyalty) / 2;
+            const alpha =
+              ((1 - d / connectionRange) * connAlphaMultiplier * formationAlpha *
+                (p1.loyalty + p2.loyalty)) / 2;
 
             if (alpha > 0.01) {
-              const hue = sameSociety ? society.hue : 25;
-              ctx.strokeStyle = `hsla(${hue}, 100%, 55%, ${alpha})`;
-              ctx.lineWidth = sameSociety ? 0.6 : 0.2;
+              ctx.strokeStyle = ink(p1.society, alpha);
+              ctx.lineWidth = sameSociety ? 0.55 : 0.2;
               ctx.beginPath();
               ctx.moveTo(p1.x, p1.y);
               ctx.lineTo(p2.x, p2.y);
@@ -627,15 +652,18 @@ export default function BackgroundSwarm() {
         }
       }
 
-      // Draw particles
+      /* ----- Particles ----- */
+      const brightnessMultiplier = darkMode ? 1 : 1.4;
+
       for (let pIdx = 0; pIdx < particles.length; pIdx++) {
         const particle = particles[pIdx];
         const society = societies[particle.society];
         const isLeader = society.leader === pIdx;
+        const adjustedBrightness = Math.min(1, particle.brightness * brightnessMultiplier);
 
-        // Phase 3: Memory trail for leaders
+        // Memory trail for leaders — accent magenta, low alpha
         if (isLeader && particle.memory.length > 2) {
-          ctx.strokeStyle = `hsla(${society.hue}, 100%, 60%, 0.1)`;
+          ctx.strokeStyle = accent(darkMode ? 0.18 : 0.22);
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(particle.memory[0].x, particle.memory[0].y);
@@ -645,40 +673,44 @@ export default function BackgroundSwarm() {
           ctx.stroke();
         }
 
-        // Glow size (larger for leaders and signaling particles)
-        const baseGlow = particle.size * (4 + society.formation * 4);
+        const baseGlow = particle.size * (3 + society.formation * 3);
         const leaderGlow = isLeader ? particle.size * 4 : 0;
         const signalGlow = particle.signalStrength * particle.size * 3;
         const glowSize = baseGlow + leaderGlow + signalGlow;
 
         const gradient = ctx.createRadialGradient(
           particle.x, particle.y, 0,
-          particle.x, particle.y, glowSize
+          particle.x, particle.y, glowSize,
         );
 
-        // Leaders have brighter, more saturated glow
-        const saturation = isLeader ? 100 : 100;
-        const lightness = isLeader ? 65 : 55;
-
-        gradient.addColorStop(0, `hsla(${society.hue}, ${saturation}%, ${lightness}%, ${particle.brightness * 0.5})`);
-        gradient.addColorStop(0.5, `hsla(${society.hue}, ${saturation}%, ${lightness}%, ${particle.brightness * 0.15})`);
-        gradient.addColorStop(1, `hsla(${society.hue}, ${saturation}%, ${lightness}%, 0)`);
+        if (isLeader) {
+          // Single decisive accent for the leader
+          gradient.addColorStop(0, accent(adjustedBrightness * 0.55));
+          gradient.addColorStop(0.5, accent(adjustedBrightness * 0.18));
+          gradient.addColorStop(1, accent(0));
+        } else {
+          gradient.addColorStop(0, ink(particle.society, adjustedBrightness * 0.45));
+          gradient.addColorStop(0.5, ink(particle.society, adjustedBrightness * 0.12));
+          gradient.addColorStop(1, ink(particle.society, 0));
+        }
 
         ctx.fillStyle = gradient;
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, glowSize, 0, Math.PI * 2);
         ctx.fill();
 
-        // Core (larger for leaders)
-        const coreSize = isLeader ? particle.size * 1.8 : particle.size;
-        ctx.fillStyle = `hsla(${society.hue}, 100%, ${isLeader ? 75 : 65}%, ${particle.brightness})`;
+        // Core
+        const coreSize = isLeader ? particle.size * 1.6 : particle.size;
+        ctx.fillStyle = isLeader
+          ? accent(adjustedBrightness)
+          : ink(particle.society, adjustedBrightness);
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, coreSize, 0, Math.PI * 2);
         ctx.fill();
 
-        // Phase 3: Leader crown indicator
+        // Leader crown ring — accent
         if (isLeader && society.formation > 0.5) {
-          ctx.strokeStyle = `hsla(${society.hue}, 100%, 80%, ${society.formation * 0.5})`;
+          ctx.strokeStyle = accent(society.formation * 0.45);
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.arc(particle.x, particle.y, particle.size * 3, 0, Math.PI * 2);
@@ -686,7 +718,7 @@ export default function BackgroundSwarm() {
         }
       }
     },
-    []
+    [],
   );
 
   useEffect(() => {
@@ -702,6 +734,15 @@ export default function BackgroundSwarm() {
       startTimeRef.current = Date.now();
     };
 
+    // Theme observer
+    const checkTheme = () => {
+      const theme = document.documentElement.getAttribute("data-theme");
+      setIsDarkMode(theme !== "light");
+    };
+    checkTheme();
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current = { x: e.clientX, y: e.clientY };
     };
@@ -713,7 +754,11 @@ export default function BackgroundSwarm() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    ctx.fillStyle = "#000";
+    // Initial fill based on theme — match the page background tokens
+    // Dark: deep charcoal | Light: warm natural beige
+    const initialTheme = document.documentElement.getAttribute("data-theme");
+    ctx.fillStyle =
+      initialTheme === "dark" ? "rgb(20, 20, 22)" : "rgb(245, 240, 230)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     const animate = () => {
@@ -744,13 +789,15 @@ export default function BackgroundSwarm() {
         );
       }
 
+      const currentTheme = document.documentElement.getAttribute("data-theme");
       draw(
         ctx,
         particlesRef.current,
         societiesRef.current,
         tradeRoutesRef.current,
         canvas.width,
-        canvas.height
+        canvas.height,
+        currentTheme !== "light"
       );
       animationRef.current = requestAnimationFrame(animate);
     };
@@ -761,6 +808,7 @@ export default function BackgroundSwarm() {
       cancelAnimationFrame(animationRef.current);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
+      observer.disconnect();
     };
   }, [draw, initParticles, initSocieties, initTradeRoutes, updateCycle, updateParticle, updateSocieties, updateTradeRoutes]);
 
@@ -768,7 +816,7 @@ export default function BackgroundSwarm() {
     <canvas
       ref={canvasRef}
       className="swarm-bg"
-      style={{ background: "#000" }}
+      style={{ background: isDarkMode ? "#0f0f0f" : "#f5f0e6" }}
     />
   );
 }

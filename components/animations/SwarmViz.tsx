@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useCallback } from "react";
+import { useThemeColorsRef } from "./useThemeColors";
 
 interface Particle {
   x: number;
@@ -27,6 +28,7 @@ export default function SwarmViz({
   const particlesRef = useRef<Particle[]>([]);
   const globalBestRef = useRef({ x: 0, y: 0, value: Infinity });
   const animationRef = useRef<number>(0);
+  const themeRef = useThemeColorsRef();
 
   const fitness = useCallback(
     (x: number, y: number) => {
@@ -110,19 +112,19 @@ export default function SwarmViz({
 
   const draw = useCallback(
     (ctx: CanvasRenderingContext2D, particles: Particle[]) => {
-      // Fade effect
-      ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+      const t = themeRef.current;
+
+      ctx.fillStyle = t.fadeOverlay;
       ctx.fillRect(0, 0, width, height);
 
-      // Draw connections
-      ctx.strokeStyle = "rgba(255, 107, 0, 0.08)";
+      // Connections — hairline ink
+      ctx.strokeStyle = t.hairline(0.10);
       ctx.lineWidth = 0.5;
-
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const d = Math.sqrt(
             (particles[i].x - particles[j].x) ** 2 +
-            (particles[i].y - particles[j].y) ** 2
+              (particles[i].y - particles[j].y) ** 2,
           );
           if (d < 60) {
             ctx.beginPath();
@@ -133,45 +135,43 @@ export default function SwarmViz({
         }
       }
 
-      // Draw particles with glow
+      // Particles — graphite
       for (const particle of particles) {
-        // Outer glow
         const gradient = ctx.createRadialGradient(
           particle.x, particle.y, 0,
-          particle.x, particle.y, 12
+          particle.x, particle.y, 12,
         );
-        gradient.addColorStop(0, "rgba(255, 107, 0, 0.5)");
-        gradient.addColorStop(0.5, "rgba(255, 107, 0, 0.15)");
-        gradient.addColorStop(1, "rgba(255, 107, 0, 0)");
+        gradient.addColorStop(0, t.ink(0.40));
+        gradient.addColorStop(0.5, t.ink(0.10));
+        gradient.addColorStop(1, t.ink(0));
         ctx.fillStyle = gradient;
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, 12, 0, Math.PI * 2);
         ctx.fill();
 
-        // Core
-        ctx.fillStyle = "rgba(255, 140, 50, 0.8)";
+        ctx.fillStyle = t.ink(0.85);
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, 3, 0, Math.PI * 2);
         ctx.fill();
       }
 
-      // Draw global best with stronger glow
+      // Global best — Editorial Magenta accent (the one decisive moment)
       const gb = globalBestRef.current;
       const gbGradient = ctx.createRadialGradient(gb.x, gb.y, 0, gb.x, gb.y, 25);
-      gbGradient.addColorStop(0, "rgba(255, 107, 0, 0.8)");
-      gbGradient.addColorStop(0.3, "rgba(255, 107, 0, 0.3)");
-      gbGradient.addColorStop(1, "rgba(255, 107, 0, 0)");
+      gbGradient.addColorStop(0, t.accent(0.65));
+      gbGradient.addColorStop(0.3, t.accent(0.22));
+      gbGradient.addColorStop(1, t.accent(0));
       ctx.fillStyle = gbGradient;
       ctx.beginPath();
       ctx.arc(gb.x, gb.y, 25, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.fillStyle = "#ff6b00";
+      ctx.fillStyle = t.accent(1);
       ctx.beginPath();
       ctx.arc(gb.x, gb.y, 6, 0, Math.PI * 2);
       ctx.fill();
     },
-    [height, width]
+    [height, themeRef, width],
   );
 
   useEffect(() => {
@@ -184,7 +184,7 @@ export default function SwarmViz({
     globalBestRef.current = { x: 0, y: 0, value: Infinity };
     particlesRef.current = initParticles();
 
-    ctx.fillStyle = "#000";
+    ctx.fillStyle = themeRef.current.background;
     ctx.fillRect(0, 0, width, height);
 
     const animate = () => {
@@ -200,7 +200,7 @@ export default function SwarmViz({
     return () => {
       cancelAnimationFrame(animationRef.current);
     };
-  }, [draw, height, initParticles, updateParticle, width]);
+  }, [draw, height, initParticles, themeRef, updateParticle, width]);
 
   return (
     <div className="animation-container w-full overflow-hidden">

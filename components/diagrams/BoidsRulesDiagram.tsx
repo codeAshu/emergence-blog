@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useThemeColorsRef } from "../animations/useThemeColors";
 
 interface Boid {
   x: number;
@@ -13,6 +14,7 @@ export default function BoidsRulesDiagram() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
   const boidsRef = useRef<Boid[]>([]);
+  const themeRef = useThemeColorsRef();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -48,22 +50,24 @@ export default function BoidsRulesDiagram() {
     let time = 0;
 
     const draw = () => {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.15)";
+      const t = themeRef.current;
+
+      ctx.fillStyle = t.fadeOverlay;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       const labels = ["SEPARATION", "ALIGNMENT", "COHESION"];
 
       zones.forEach((zone, zoneIdx) => {
         // Zone boundary
-        ctx.strokeStyle = `rgba(255, 107, 0, 0.15)`;
+        ctx.strokeStyle = t.hairline(0.18);
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.arc(zone.x, zone.y, 70, 0, Math.PI * 2);
         ctx.stroke();
 
         // Label
-        ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
-        ctx.font = "11px monospace";
+        ctx.fillStyle = t.ink(0.55);
+        ctx.font = "10px ui-monospace, SFMono-Regular, Menlo, monospace";
         ctx.textAlign = "center";
         ctx.fillText(labels[zoneIdx], zone.x, zone.y + 90);
 
@@ -146,15 +150,15 @@ export default function BoidsRulesDiagram() {
 
           // Glow
           const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, 12);
-          gradient.addColorStop(0, "rgba(255, 107, 0, 0.3)");
-          gradient.addColorStop(1, "rgba(255, 107, 0, 0)");
+          gradient.addColorStop(0, t.ink(0.25));
+          gradient.addColorStop(1, t.ink(0));
           ctx.fillStyle = gradient;
           ctx.beginPath();
           ctx.arc(0, 0, 12, 0, Math.PI * 2);
           ctx.fill();
 
           // Triangle
-          ctx.fillStyle = `rgba(255, 107, 0, 0.8)`;
+          ctx.fillStyle = t.ink(0.85);
           ctx.beginPath();
           ctx.moveTo(size, 0);
           ctx.lineTo(-size / 2, size / 2);
@@ -164,16 +168,15 @@ export default function BoidsRulesDiagram() {
 
           ctx.restore();
 
-          // Draw interaction lines based on rule
+          // Interaction lines — accent magenta only on the rule indicator
           if (zoneIdx === 0) {
-            // Separation - repulsion arrows
             zoneBoids.forEach((other, j) => {
               if (i === j) return;
               const odx = boid.x - other.x;
               const ody = boid.y - other.y;
               const odist = Math.sqrt(odx * odx + ody * ody);
               if (odist < 30) {
-                ctx.strokeStyle = `rgba(255, 107, 0, ${0.3 * (1 - odist / 30)})`;
+                ctx.strokeStyle = t.accent(0.30 * (1 - odist / 30));
                 ctx.lineWidth = 1;
                 ctx.beginPath();
                 ctx.moveTo(other.x, other.y);
@@ -182,21 +185,19 @@ export default function BoidsRulesDiagram() {
               }
             });
           } else if (zoneIdx === 1 && i === 0) {
-            // Alignment - show average direction
             let avgVx = 0, avgVy = 0;
             zoneBoids.forEach((other) => {
               avgVx += other.vx;
               avgVy += other.vy;
             });
             const avgAngle = Math.atan2(avgVy, avgVx);
-            ctx.strokeStyle = "rgba(255, 107, 0, 0.4)";
+            ctx.strokeStyle = t.accent(0.55);
             ctx.lineWidth = 2;
             ctx.beginPath();
             ctx.moveTo(zone.x, zone.y);
             ctx.lineTo(zone.x + Math.cos(avgAngle) * 30, zone.y + Math.sin(avgAngle) * 30);
             ctx.stroke();
           } else if (zoneIdx === 2) {
-            // Cohesion - lines to center
             let avgX = 0, avgY = 0;
             zoneBoids.forEach((other) => {
               avgX += other.x;
@@ -205,7 +206,7 @@ export default function BoidsRulesDiagram() {
             avgX /= zoneBoids.length;
             avgY /= zoneBoids.length;
 
-            ctx.strokeStyle = "rgba(255, 107, 0, 0.1)";
+            ctx.strokeStyle = t.hairline(0.16);
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(boid.x, boid.y);
@@ -213,7 +214,7 @@ export default function BoidsRulesDiagram() {
             ctx.stroke();
 
             if (i === 0) {
-              ctx.fillStyle = "rgba(255, 107, 0, 0.5)";
+              ctx.fillStyle = t.accent(0.65);
               ctx.beginPath();
               ctx.arc(avgX, avgY, 4, 0, Math.PI * 2);
               ctx.fill();
@@ -231,16 +232,16 @@ export default function BoidsRulesDiagram() {
     return () => {
       cancelAnimationFrame(animationRef.current);
     };
-  }, []);
+  }, [themeRef]);
 
   return (
-    <div className="relative w-full overflow-hidden rounded-lg glass-panel">
+    <div className="relative w-full overflow-hidden animation-container">
       <canvas
         ref={canvasRef}
         className="w-full h-auto"
         style={{ maxWidth: "100%", height: "auto" }}
       />
-      <div className="absolute bottom-2 right-2 text-xs text-white/30 header-mono">
+      <div className="absolute bottom-2 right-3 header-mono text-[10px] uppercase tracking-[0.2em] text-[color:var(--text-subtle)]">
         Reynolds&apos; Boids Rules
       </div>
     </div>
