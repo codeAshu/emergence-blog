@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Bandha from "@/components/ck/Bandha";
+import KnuthPoems from "@/components/ck/KnuthPoems";
+import Sarvatobhadra from "@/components/ck/Sarvatobhadra";
 import { bandhas, sarvatobhadra } from "@/lib/ck";
 
 export const metadata: Metadata = { title: "Visuals" };
@@ -42,41 +44,51 @@ export default function Visuals() {
       </section>
 
       <section className="block" id="sarvatobhadra">
-        <div className="rule"><span className="label">Sarvatōbhadra, full square</span></div>
-        <div className="two" style={{ alignItems: "center" }}>
+        <div className="rule"><span className="label">Sarvatōbhadra</span></div>
+        <div className="two" style={{ alignItems: "start" }}>
+          <div>
+            <h2 className="h3">The four-fold palindrome.</h2>
+            <p className="muted" style={{ marginTop: 12, maxWidth: "48ch" }}>
+              A 4×8 surface on the syllables sa, ka, ra, ta. Reading left to right, right to left, top
+              to bottom or bottom to top repeats the same sequence.
+            </p>
+            <div style={{ marginTop: 20 }} data-mount="sarvatobhadra"><Sarvatobhadra /></div>
+          </div>
           <div>
             <h2 className="h3">Kirātārjunīya 15.25, Bhāravi.</h2>
             <p className="muted" style={{ marginTop: 12, maxWidth: "48ch" }}>
-              The 8×8 surface. Each row and each column is a palindrome, and the whole square reads the
-              same from any side. The verse below is the top-to-bottom, left-to-right reading.
+              The full 8×8 square. Each row and each column is a palindrome, and the whole square reads
+              the same from any side.
             </p>
-            <p className="verse" style={{ marginTop: 20 }}>{sarvatobhadra.verse}</p>
+            <div className="sb" aria-label="Sarvatobhadra grid" style={{ marginTop: 20 }}>
+              {sarvatobhadra.rows.flatMap((r, i) => r.map((c, j) => <div key={i + "-" + j}>{c}</div>))}
+            </div>
+            <p className="verse" style={{ marginTop: 16, fontSize: 19 }}>{sarvatobhadra.verse}</p>
             <p className="verse-tr">{sarvatobhadra.iast}</p>
-          </div>
-          <div className="sb" aria-label="Sarvatobhadra grid">
-            {sarvatobhadra.rows.flatMap((r, i) => r.map((c, j) => <div key={i + "-" + j}>{c}</div>))}
           </div>
         </div>
       </section>
 
-      <section className="block">
+      <section className="block" id="knuth">
         <div className="rule"><span className="label">Modern English chitrakāvya, Donald Knuth, 2005</span></div>
         <div className="prose" style={{ padding: 0, border: 0, fontSize: 17 }}>
           <p>
-            In correspondence with the IIITB-CSL group, Donald Knuth contributed two English poems built
-            on the same principle: a pair of 32-word verses on a 4×8 board, where a knight&apos;s tour over
-            one verse produces the other. They exploit English homophones (two/too, four/for, see/sea,
-            terns/turns, passed/past), and they are the only widely known modern analogues of the
-            Pādukāsahasra and Haravijaya.
+            In 2005, in correspondence with the IIITB-CSL group, Donald Knuth contributed two
+            English-language chitrakāvyas: pairs of 32-word verses arranged on a 4×8 chessboard so that
+            a knight&apos;s tour over the first verse produces the second. They are the only widely known
+            modern analogues of Vedānta Deśika&apos;s Pādukāsahasra and the Harivijaya. Where the Sanskrit
+            originals exploit the meaning-stable word order of Sanskrit, Knuth exploits the homophonic
+            looseness of English: two and too, four and for, see and sea, terns and turns, passed and
+            past are the same syllable when spoken aloud.
           </p>
           <p>
-            In the first, read in the manner of the Pādukāsahasra, verse one is read sequentially and
-            verse two by knight&apos;s tour. In the second, in the manner of the Haravijaya, verse one
-            emerges only by following the knight and verse two reads sequentially. The original Flash
-            recitals from IIITB no longer play in modern browsers; the texts will be added here once
-            cleared for reproduction.
+            Both poems are reproduced with audio recitations from the IIITB archive. Press Listen to
+            recital and the knight jumps in time with the voice, one cell per spoken word; the
+            word-onset timestamps were recovered from the recordings by onset detection. Step and
+            Auto-play walk the tour silently.
           </p>
         </div>
+        <div data-mount="knuth"><KnuthPoems /></div>
       </section>
 
       <section className="block">

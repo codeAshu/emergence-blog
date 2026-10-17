@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPost, getPosts, fmt } from "@/lib/posts";
+import Prose from "@/components/Prose";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -38,7 +39,7 @@ export default async function PostPage({ params }: Props) {
           <h1 className="display">{p.title}</h1>
           {p.subtitle && <p className="sub">{p.subtitle}</p>}
         </header>
-        <div className="prose" dangerouslySetInnerHTML={{ __html: p.html ?? "" }} />
+        <Prose html={p.html ?? ""} />
         {others.length > 0 && (
           <section className="block" style={{ paddingTop: 48 }}>
             <div className="rule"><span className="label">More</span></div>

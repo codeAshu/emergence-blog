@@ -39,7 +39,7 @@ export default function WritingPage() {
           side research I cannot put down.
         </p>
       </div>
-      <WritingIndex rows={rows} />
+      <div data-mount="writing-index" data-rows={JSON.stringify(rows)}><WritingIndex rows={rows} /></div>
     </div>
   );
 }

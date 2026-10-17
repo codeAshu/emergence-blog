@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Flock from "@/components/Flock";
+import Swarm from "@/components/Swarm";
 import Art from "@/components/Art";
 import { getPosts, fmt } from "@/lib/posts";
 import { site } from "@/lib/site";
@@ -19,7 +19,8 @@ export default function Home() {
   return (
     <>
       <section className="hero">
-        <div className="wrap">
+        <div className="swarm"><Swarm /></div>
+        <div className="wrap" style={{ position: "relative" }}>
           <div className="row">
             <div className="portrait">
               <img src={site.photo} alt={site.name} width={96} height={96} />
@@ -43,13 +44,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <div className="wrap">
-        <div className="flockwrap" aria-hidden>
-          <Flock count={70} />
-          <span className="cap">Separation, alignment, cohesion. Three rules, one flock.</span>
-        </div>
-      </div>
 
       <section className="block">
         <div className="wrap">

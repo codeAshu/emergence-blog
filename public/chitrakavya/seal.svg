@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Chitrakavya seal">
+  <defs>
+    <radialGradient id="g" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f6e1bf"/>
+      <stop offset="100%" stop-color="#b8581c" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="50" cy="50" r="48" fill="url(#g)"/>
+  <circle cx="50" cy="50" r="46" fill="none" stroke="#7a3a14" stroke-width="0.8"/>
+  <circle cx="50" cy="50" r="36" fill="none" stroke="#7a3a14" stroke-width="0.5"/>
+  <!-- 8-petal lotus -->
+  <g fill="none" stroke="#7a3a14" stroke-width="0.9">
+    <g>
+      <path d="M50 14 C58 28 58 36 50 50 C42 36 42 28 50 14 Z"/>
+      <path d="M50 86 C58 72 58 64 50 50 C42 64 42 72 50 86 Z"/>
+      <path d="M14 50 C28 42 36 42 50 50 C36 58 28 58 14 50 Z"/>
+      <path d="M86 50 C72 42 64 42 50 50 C64 58 72 58 86 50 Z"/>
+    </g>
+    <g transform="rotate(45 50 50)">
+      <path d="M50 14 C58 28 58 36 50 50 C42 36 42 28 50 14 Z"/>
+      <path d="M50 86 C58 72 58 64 50 50 C42 64 42 72 50 86 Z"/>
+      <path d="M14 50 C28 42 36 42 50 50 C36 58 28 58 14 50 Z"/>
+      <path d="M86 50 C72 42 64 42 50 50 C64 58 72 58 86 50 Z"/>
+    </g>
+  </g>
+  <!-- inner square (yantra) -->
+  <rect x="34" y="34" width="32" height="32" fill="none" stroke="#7a3a14" stroke-width="0.7" transform="rotate(45 50 50)"/>
+  <circle cx="50" cy="50" r="8" fill="#7a3a14"/>
+  <text x="50" y="54" text-anchor="middle" font-family="Tiro Devanagari Sanskrit, serif" font-size="10" fill="#f7f1e3">चि</text>
+</svg>

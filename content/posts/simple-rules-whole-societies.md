@@ -27,6 +27,8 @@ The question underneath this essay: if something like a mind can emerge from neu
 
 In 1986 Craig Reynolds built artificial birds he called boids and gave each of them three rules.
 
+<figure data-fig="boids-rules"></figure>
+
 Separation: keep a minimum distance from your neighbors.
 
 Alignment: steer toward the average heading of your neighbors.
@@ -35,7 +37,11 @@ Cohesion: steer toward the average position of your neighbors.
 
 That is the whole algorithm. There is no global state and no coordinator. Every boid sees only the few around it. Run it and the result is indistinguishable from a real flock, so much so that the technique went into films and earned Reynolds an Academy Scientific and Technical Award.
 
+<figure data-fig="boids"><figcaption>Reynolds' boids: emergent flocking from three local rules.</figcaption></figure>
+
 Conway's Game of Life is the same lesson in an even smaller package. Cells live or die based on a count of their neighbors. From that rule you get the Gosper glider gun, a configuration that emits new patterns forever. Self-sustaining, self-replicating, a digital metabolism, from a rule you can write on an index card.
+
+<figure data-fig="life"><figcaption>Conway's Game of Life: two Gosper glider guns generating patterns from one rule.</figcaption></figure>
 
 The lesson I take from both: the rule set is tiny and the behavior space is enormous, and the rule set decides which part of the behavior space you end up in.
 
@@ -56,6 +62,8 @@ Humans struggle with complex decisions because rationality, emotion and belief c
 Here is the distinction that matters for artificial agents. A machine executing trained behavior can act intelligently without choosing anything. It does what it does. Rational intelligence is about reaching a decision. Autonomy is about the choice to take that decision, which includes the ability to refrain from deciding. The power of "not yet".
 
 Every decision can be read as a game in the mathematical sense: players, rules, payoffs. Game theory sorts them into three families.
+
+<figure data-fig="game-theory"></figure>
 
 One-shot games are decided once, with lasting consequences. Choosing a graduate school. Accepting an offer. There is no replay.
 
@@ -90,6 +98,8 @@ Trace the line: cellular automata, boids, multi-agent systems, and now autonomou
 Researchers describing the next version of the web place agents as independent entities on a distributed infrastructure, with behavioral frameworks for transparent learning above them and governance mechanisms for collective decision-making above that. Whether or not you like the "Web 4.0" label, the shape is right. This is a phase transition from decentralized data to decentralized intelligence, from services to societies.
 
 Like a particle swarm converging on an optimum, these systems will find equilibria nobody programmed. Some of those equilibria will be the murmuration. Some will be the stampede.
+
+<figure data-fig="swarm"><figcaption>Particle swarm: individual agents converging toward a collective optimum.</figcaption></figure>
 
 ## The design challenge
 

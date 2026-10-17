@@ -16,7 +16,7 @@ export default function CkNav() {
   const path = usePathname();
   return (
     <nav className="subnav" aria-label="Chitrakāvya">
-      <span className="seal">चित्रकाव्य</span>
+      <img className="seal-img" src="/chitrakavya/seal.svg" alt="" width={22} height={22} /><span className="seal">चित्रकाव्य</span>
       {items.map(([href, label]) => (
         <Link key={href} href={href} aria-current={path === href ? "page" : undefined}>
           {label}

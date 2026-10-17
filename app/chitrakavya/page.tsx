@@ -18,7 +18,7 @@ export default function CkHome() {
           </p>
         </div>
         <div>
-          <KnightsTour compact />
+          <div data-mount="knights-tour-compact"><KnightsTour compact /></div>
           <p className="small muted" style={{ marginTop: 12 }}>
             Pādukāsahasra 30.40. Step through the tour that turns verse 929 into verse 930.
           </p>

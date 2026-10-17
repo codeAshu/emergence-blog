@@ -27,7 +27,7 @@ export default function KnightsTourPage() {
       </div>
 
       <section className="block" style={{ paddingTop: 40, borderTop: 0 }}>
-        <KnightsTour />
+        <div data-mount="knights-tour"><KnightsTour /></div>
       </section>
 
       <section className="block">
