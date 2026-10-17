@@ -38,14 +38,24 @@ export default function AboutPage() {
             </p>
             <h2>What I care about</h2>
             <p>
-              Beauty, philosophy, science, technology and the human experience. I am learning every
-              moment and trying to win over my mind. Yoga is the oldest engineering manual for attention
-              that I know of, and I read it next to papers on agents, memory and alignment.
+              Beauty, philosophy, mathematics, science, technology and the human experience. I am
+              learning every moment and trying to win over my mind. Yoga is the oldest engineering
+              manual for awareness that I know of, and I read it next to papers on agents, memory and
+              alignment.
+            </p>
+            <p>
+              Mathematics is where most of my wonder lives. Fractals and self-similarity, higher-order
+              structure (functions of functions, categories, the shapes that proofs make), and
+              optimization: gradients, search, equilibria, and the question of what a system is really
+              minimising when it looks like it is learning. The Chitrakāvya archive is the oldest form
+              of this interest; a knight&apos;s tour hidden in a hymn is a constraint-satisfaction problem
+              that happens to rhyme.
             </p>
             <h2>What you will find here</h2>
             <ul>
-              <li>Essays on the mind, yoga and the practice of attention.</li>
+              <li>Essays on the mind, yoga and the practice of awareness.</li>
               <li>AI, AGI and the society of agents: emergence, alignment, what comes next.</li>
+              <li>Mathematics: fractals, higher-order structure, optimization, and the proofs I keep returning to.</li>
               <li>Side research, starting with the Chitrakāvya archive.</li>
               <li>Notes from building, reading and walking in the mountains.</li>
             </ul>

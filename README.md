@@ -14,7 +14,7 @@ Drop a markdown file in `content/posts/<slug>.md` with frontmatter:
     ---
     title: "Title"
     subtitle: "One line under the title."
-    category: Essay        # Essay, Yoga, Mind, AI, Research, Notes
+    category: Essay        # Essay, Yoga, Mind, AI, Mathematics, Research, Notes
     date: 2026-10-17
     author: Ashutosh Trivedi
     featured: true         # shows in the featured row (first three by date)

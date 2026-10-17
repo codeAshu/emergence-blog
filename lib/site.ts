@@ -4,7 +4,7 @@ export const site = {
   domain: "https://emergence.live",
   tagline: "Learning every moment. Trying to win over my mind.",
   description:
-    "Essays on beauty, philosophy, science, technology and the human experience. Yoga, the mind, AI, the society of agents, and side research.",
+    "Essays on beauty, philosophy, mathematics, science, technology and the human experience. Yoga, the mind, AI, the society of agents, fractals and optimization, and side research.",
   social: {
     x: "https://x.com/ashu_trv",
     github: "https://github.com/codeAshu",
@@ -15,5 +15,5 @@ export const site = {
   photo: "/ashu.jpg",
 };
 
-export const categories = ["Essay", "Yoga", "Mind", "AI", "Research", "Notes"] as const;
+export const categories = ["Essay", "Yoga", "Mind", "AI", "Mathematics", "Research", "Notes"] as const;
 export type Category = (typeof categories)[number];

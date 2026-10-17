@@ -5,10 +5,12 @@ import { getPosts, fmt } from "@/lib/posts";
 import { site } from "@/lib/site";
 
 const threads = [
-  { t: "Yoga and the mind", p: "The oldest engineering manual for attention, read by someone who builds minds for a living." },
+  { t: "Yoga and the mind", p: "The oldest engineering manual for awareness, read by someone who builds minds for a living." },
   { t: "AI and the society of agents", p: "Emergence, alignment as architecture, and what happens when the players are no longer human." },
   { t: "Beauty", p: "Why some structures feel right before they are proven. Murmurations, metre, proofs, mountains." },
   { t: "Science and technology", p: "Notes from building infrastructure for machines that see, and from the papers that change how I think." },
+  { t: "Mathematics", p: "Fractals, higher-order structure, and the proofs that feel inevitable once you see them. Self-similarity as a way of thinking." },
+  { t: "Optimization", p: "Gradients, search, equilibria, and what a system is really minimising when it looks like it is learning." },
   { t: "Side research", p: "Chitrakāvya, computation as poetry, and other questions that will not let me go." },
   { t: "The human experience", p: "What it is like to be a person learning in public, one moment at a time." },
 ];
@@ -31,8 +33,8 @@ export default function Home() {
               </h1>
               <p className="lead">
                 I am {site.name}. I build at the intersection of machine learning and distributed
-                systems, and I write here about beauty, philosophy, science, technology and the human
-                experience.
+                systems, and I write here about beauty, philosophy, mathematics, science, technology and the
+                human experience.
               </p>
               <div className="meta">
                 <a href={site.company.url} target="_blank" rel="noopener noreferrer">Founder, {site.company.name}</a>
