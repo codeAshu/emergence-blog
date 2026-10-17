@@ -1,197 +1,178 @@
-"use client";
-
-import dynamic from "next/dynamic";
 import Link from "next/link";
-import BlogLayout from "@/components/BlogLayout";
+import Flock from "@/components/Flock";
+import Art from "@/components/Art";
+import { getPosts, fmt } from "@/lib/posts";
+import { site } from "@/lib/site";
 
-const BackgroundSwarm = dynamic(() => import("@/components/BackgroundSwarm"), {
-  ssr: false,
-});
-
-const posts = [
+const threads = [
   {
-    slug: "agentic-web",
-    title: "The Agentic Web",
-    subtitle: "When Machines Form Societies",
-    date: "April 12, 2025",
-    description:
-      "Exploring the emergence of collective AI consciousness, from cellular automata to autonomous agent networks. A philosophical journey through Web 4.0.",
-    tags: ["emergence", "ai-agents", "web4"],
+    t: "Yoga and the mind",
+    p: "The oldest engineering manual for attention. What the sutras say about the mind, read by someone who builds minds for a living.",
   },
   {
-    slug: "inner-core",
-    title: "The Inner Core",
-    subtitle: "Agent Alignment Through Shared Architecture",
-    date: "March 28, 2025",
-    description:
-      "What if alignment isn't about constraining AI, but about giving it a shared soul? A proposal for the ethical OS that all agents must compile upon.",
-    tags: ["alignment", "governance", "architecture"],
+    t: "AI and the society of agents",
+    p: "Emergence, alignment as architecture, and what happens when the players in the game are no longer human.",
   },
   {
-    slug: "compiling-ethics",
-    title: "Compiling Ethics",
-    subtitle: "The OS of Machine Souls",
-    date: "March 15, 2025",
-    description:
-      "Every program compiles to an architecture. Every agent must compile to an ethics. On the emergence of machine morality through evolutionary pressure.",
-    tags: ["ethics", "evolution", "emergence"],
+    t: "Beauty",
+    p: "Why some structures feel right before they are proven. Murmurations, metre, proofs, mountains.",
   },
   {
-    slug: "autonomy-and-choice",
-    title: "Autonomy and Choice",
-    subtitle: "Game Theory of Decision-Making Agents",
-    date: "February 22, 2025",
-    description:
-      "Why do humans struggle with complex decisions? A framework for understanding choice through game theory, multi-agent systems, and the nature of true autonomy.",
-    tags: ["game-theory", "autonomy", "multi-agent"],
+    t: "Science and technology",
+    p: "Notes from building infrastructure for machines that see, and from the papers that change how I think.",
   },
   {
-    slug: "collective-emergence",
-    title: "Collective Emergence",
-    subtitle: "An Intelligence of the Swarm",
-    date: "February 8, 2025",
-    description:
-      "How complex behaviors arise from simple rules. From bird flocks to swarm intelligence — the mathematics of collective consciousness.",
-    tags: ["emergence", "swarm", "boids"],
+    t: "Side research",
+    p: "Chitrakāvya, computation as poetry, and other questions that will not let me go.",
   },
 ];
 
 export default function Home() {
+  const posts = getPosts();
+  const featured = [
+    ...posts.filter((p) => p.featured).slice(0, 2),
+    {
+      slug: "chitrakavya",
+      title: "Chitrakāvya: poems that are programs",
+      category: "Research",
+      date: "2026-04-01",
+      author: "Archive",
+      excerpt: "Sanskrit poets encoded knight's tours, magic squares and palindromic surfaces into verse, a thousand years before Euler.",
+      href: "/chitrakavya",
+      art: "knight",
+    },
+  ];
+
   return (
-    <BlogLayout>
-      {/* Hero */}
-      <header className="relative overflow-hidden hero-section">
-        {/* Swarm canvas — restrained graphite/cream particles */}
-        <div className="absolute inset-0">
-          <BackgroundSwarm />
+    <>
+      <section className="hero">
+        <div className="flock">
+          <Flock count={80} />
         </div>
+        <div className="wrap">
+          <div className="grid">
+            <div>
+              <div className="kicker">
+                <b>emergence</b> a personal notebook
+              </div>
+              <h1 className="display">
+                Learning every moment.
+                <br />
+                Trying to win over <span className="accent">my mind</span>.
+              </h1>
+              <div className="sub">
+                <p>
+                  I am {site.name}. I build at the intersection of machine learning and distributed
+                  systems, and I write here about beauty, philosophy, science, technology and the human
+                  experience. Yoga and the mind. AI and the society of agents. Side research that keeps
+                  pulling me back.
+                </p>
+              </div>
+              <div className="actions">
+                <Link href="/writing" className="btn">Read the writing</Link>
+                <Link href="/about" className="btn btn--ghost">About me</Link>
+              </div>
+            </div>
+            <figure className="photo">
+              <img src={site.photo} alt={site.name} />
+              <figcaption>
+                {site.name} · Founder, {site.company.name}
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
 
-        <div className="relative z-10 pt-12 pb-10 md:pt-16 md:pb-12 px-6 md:px-8">
-          <div className="max-w-5xl mx-auto">
-            <p className="header-mono text-[11px] uppercase tracking-[0.2em] text-[color:var(--text-subtle)] mb-6">
-              Notebook · 2025
-            </p>
-            <h1
-              className="display-serif text-[color:var(--foreground)]"
-              style={{ fontSize: "clamp(3rem, 8vw, 5.5rem)" }}
-            >
-              Emergence
-            </h1>
-            <p
-              className="mt-6 max-w-xl text-[color:var(--text-muted)]"
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontStyle: "italic",
-                fontSize: "clamp(1.125rem, 2vw, 1.375rem)",
-                lineHeight: 1.4,
-              }}
-            >
-              Research notes on multi-agent systems, collective intelligence,
-              and computational models of consciousness.
-            </p>
+      <section className="section">
+        <div className="wrap">
+          <div className="kicker">
+            <b>01 /</b> Writing
+          </div>
+          <div className="cards">
+            {featured.map((p) => (
+              <Link key={p.slug} href={p.href ?? `/writing/${p.slug}`} className="card">
+                <div className="art">
+                  <Art kind={p.art} />
+                </div>
+                <div className="meta">
+                  <span className="cat">{p.category}</span>
+                  <span>{fmt(p.date)}</span>
+                </div>
+                <div className="t">{p.title}</div>
+                <p>{p.excerpt}</p>
+              </Link>
+            ))}
+          </div>
+          <p style={{ marginTop: 36 }}>
+            <Link href="/writing" className="textlink arrow">All writing</Link>
+          </p>
+        </div>
+      </section>
 
-            <div className="mt-10 flex items-center gap-3">
-              <span className="block w-1.5 h-1.5 rounded-full bg-[color:var(--accent)] pulse-glow" />
-              <p className="header-mono text-[11px] uppercase tracking-[0.2em] text-[color:var(--text-subtle)]">
-                Ashutosh Trivedi · Live
+      <section className="section">
+        <div className="wrap">
+          <div className="kicker">
+            <b>02 /</b> Threads
+          </div>
+          <div className="threads">
+            <div>
+              <h2 className="h2">Five things I keep coming back to.</h2>
+              <p className="lead" style={{ marginTop: 20 }}>
+                The questions that keep me awake: what patterns persist across scales, where order
+                comes from, and whether we can design systems that are more than the sum of their
+                parts. That includes the system doing the asking.
               </p>
             </div>
+            <ul className="list">
+              {threads.map((x, i) => (
+                <li key={x.t}>
+                  <span className="num">0{i + 1}</span>
+                  <div>
+                    <div className="t">{x.t}</div>
+                    <p>{x.p}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
-      </header>
+      </section>
 
-      {/* Separator line */}
-      <div className="w-full h-px bg-[color:var(--border)]" />
-
-      {/* Posts */}
-      <main className="px-6 md:px-8 py-10 md:py-12 main-content">
-        <div className="max-w-5xl mx-auto">
-          <ol className="divide-y divide-[color:var(--border)]">
-            {posts.map((post) => (
-              <li key={post.slug} className="group">
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="grid grid-cols-12 gap-4 md:gap-8 py-8 md:py-10 items-start"
-                >
-                  {/* Date */}
-                  <div className="col-span-12 md:col-span-3">
-                    <time className="header-mono text-[11px] uppercase tracking-[0.2em] text-[color:var(--text-subtle)]">
-                      {post.date}
-                    </time>
-                  </div>
-
-                  {/* Title block */}
-                  <div className="col-span-12 md:col-span-9">
-                    <h3
-                      className="headline-serif text-[color:var(--foreground)] group-hover:text-[color:var(--accent)] transition-colors"
-                      style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)" }}
-                    >
-                      {post.title}
-                    </h3>
-                    <p
-                      className="mt-1 text-[color:var(--text-subtle)] italic"
-                      style={{
-                        fontFamily: "var(--font-serif)",
-                        fontSize: "1.0625rem",
-                      }}
-                    >
-                      {post.subtitle}
-                    </p>
-                    <p className="mt-4 max-w-prose text-[color:var(--text-muted)] leading-relaxed">
-                      {post.description}
-                    </p>
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {post.tags.map((tag) => (
-                        <span key={tag} className="tag">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </Link>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="py-10 px-6 md:px-8 border-t border-[color:var(--border)]">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <Link
-            href="/about"
-            className="header-mono text-[11px] uppercase tracking-[0.2em] text-[color:var(--text-subtle)] hover:text-[color:var(--accent)] transition-colors"
-          >
-            ASHUTOSH TRIVEDI
-          </Link>
-          <div className="flex gap-6">
-            <a
-              href="https://twitter.com/ashu_trv"
-              className="header-mono text-[11px] uppercase tracking-[0.2em] text-[color:var(--text-subtle)] hover:text-[color:var(--accent)] transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Twitter
-            </a>
-            <a
-              href="https://github.com/codeAshu"
-              className="header-mono text-[11px] uppercase tracking-[0.2em] text-[color:var(--text-subtle)] hover:text-[color:var(--accent)] transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
-            <a
-              href="https://linkedin.com/in/ashutoshtrivedi"
-              className="header-mono text-[11px] uppercase tracking-[0.2em] text-[color:var(--text-subtle)] hover:text-[color:var(--accent)] transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LinkedIn
-            </a>
+      <section className="section">
+        <div className="wrap">
+          <div className="kicker">
+            <b>03 /</b> Side research
+          </div>
+          <div className="two" style={{ alignItems: "center" }}>
+            <div>
+              <h2 className="h2">A poem, a diagram and an algorithm in one composition.</h2>
+              <p className="lead" style={{ marginTop: 20 }}>
+                Chitrakāvya is a Sanskrit tradition of visual verse. Around 1300 CE, Vedānta Deśika
+                wrote a 32-syllable hymn that, read along a knight&apos;s tour of a half chessboard,
+                becomes a second hymn. The archive lives here now, with the tour you can step through.
+              </p>
+              <p style={{ marginTop: 28 }}>
+                <Link href="/chitrakavya" className="btn">Open the archive</Link>
+              </p>
+            </div>
+            <Link href="/chitrakavya/knights-tour" className="card" aria-label="Knight's tour">
+              <div className="art" style={{ aspectRatio: "16/10" }}>
+                <Art kind="knight" />
+              </div>
+            </Link>
           </div>
         </div>
-      </footer>
-    </BlogLayout>
+      </section>
+
+      <section className="section closing">
+        <div className="wrap">
+          <h2 className="h2">The murmuration continues. The pattern grows more complex.</h2>
+          <div className="actions" style={{ display: "flex", gap: 12, marginTop: 32, flexWrap: "wrap" }}>
+            <a href={site.social.x} className="btn" target="_blank" rel="noopener noreferrer">Follow on X</a>
+            <a href={site.social.email} className="btn btn--ghost">Write to me</a>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

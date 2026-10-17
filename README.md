@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# emergence.live
 
-## Getting Started
+Personal site of Ashutosh Trivedi. Next.js (App Router), no CSS framework, deployed on Vercel.
 
-First, run the development server:
+## Run
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+    npm install
+    npm run dev
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Add a post
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Drop a markdown file in `content/posts/<slug>.md` with frontmatter:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+    ---
+    title: "Title"
+    subtitle: "One line under the title."
+    category: Essay        # Essay, Yoga, Mind, AI, Research, Notes
+    date: 2026-10-17
+    author: Ashutosh Trivedi
+    featured: true         # shows in the featured row (first three by date)
+    art: flock             # card illustration: clay, flock, knight, or leave out
+    excerpt: "Two sentences for the card."
+    ---
 
-## Learn More
+The body is plain markdown. Raw HTML is allowed (for example a closing `<p class="note">`).
 
-To learn more about Next.js, take a look at the following resources:
+## Photo
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Replace `public/ashu.jpg` (4:5 portrait works best). It is shown in greyscale on the home page and in colour on hover.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Chitrakāvya
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`/chitrakavya` is the archive moved from chitrakavya.worlddb.io. Data lives in `lib/ck.ts`; figures in `components/ck/Bandha.tsx`; the interactive tour in `components/ck/KnightsTour.tsx`. Point the old domain at `/chitrakavya` with a redirect once this is live.
