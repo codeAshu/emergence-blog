@@ -29,28 +29,25 @@ export default async function PostPage({ params }: Props) {
   return (
     <article>
       <div className="wrap">
-        <header className="article-head">
+        <header className="article-head col">
           <div className="meta">
             <span className="cat">{p.category}</span>
             <span>{fmt(p.date)}</span>
-            <span>{p.author}</span>
             <span>{Math.max(1, Math.round((p.words ?? 0) / 230))} min read</span>
           </div>
-          <h1 className="display" style={{ fontSize: "clamp(36px, 5.4vw, 64px)", maxWidth: "18ch" }}>{p.title}</h1>
+          <h1 className="display">{p.title}</h1>
           {p.subtitle && <p className="sub">{p.subtitle}</p>}
         </header>
         <div className="prose" dangerouslySetInnerHTML={{ __html: p.html ?? "" }} />
         {others.length > 0 && (
-          <section className="section" style={{ paddingTop: 56 }}>
-            <div className="kicker"><b>More</b> writing</div>
-            <ul className="rows">
+          <section className="block" style={{ paddingTop: 48 }}>
+            <div className="rule"><span className="label">More</span></div>
+            <ul className="posts">
               {others.map((o) => (
                 <li key={o.slug}>
-                  <Link href={`/writing/${o.slug}`} className="row">
-                    <span className="cat">{o.category}</span>
-                    <span>{fmt(o.date)}</span>
-                    <span className="t">{o.title}</span>
-                    <span className="auth">{o.author}</span>
+                  <Link href={`/writing/${o.slug}`} className="post">
+                    <span className="when"><b>{o.category}</b>{fmt(o.date)}</span>
+                    <span><span className="t">{o.title}</span></span>
                   </Link>
                 </li>
               ))}

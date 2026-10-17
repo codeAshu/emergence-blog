@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import Art from "@/components/Art";
 
 export type Row = {
   slug: string;
@@ -12,9 +11,7 @@ export type Row = {
   dateLabel: string;
   author: string;
   excerpt?: string;
-  featured?: boolean;
   href?: string;
-  art?: string;
 };
 
 export default function WritingIndex({ rows }: { rows: Row[] }) {
@@ -25,50 +22,29 @@ export default function WritingIndex({ rows }: { rows: Row[] }) {
     return [["All", rows.length] as [string, number], ...Array.from(m.entries())];
   }, [rows]);
   const list = rows.filter((r) => tab === "All" || r.category === tab);
-  const featured = rows.filter((r) => r.featured).slice(0, 3);
 
   return (
-    <>
-      {featured.length > 0 && (
-        <section className="section section--first" style={{ paddingTop: 56 }}>
-          <div className="kicker"><b>Featured</b></div>
-          <div className="cards">
-            {featured.map((p) => (
-              <Link key={p.slug} href={p.href ?? `/writing/${p.slug}`} className="card">
-                <div className="art"><Art kind={p.art} /></div>
-                <div className="meta">
-                  <span className="cat">{p.category}</span>
-                  <span>{p.dateLabel}</span>
-                </div>
-                <div className="t">{p.title}</div>
-                <p>{p.excerpt}</p>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-
-      <section className="section" style={{ paddingTop: 56 }}>
-        <div className="tabs" role="tablist">
-          {cats.map(([c, n]) => (
-            <button key={c} role="tab" className="tab" aria-selected={tab === c} onClick={() => setTab(c)}>
-              {c}<span>{n}</span>
-            </button>
-          ))}
-        </div>
-        <ul className="rows">
-          {list.map((p) => (
-            <li key={p.slug}>
-              <Link href={p.href ?? `/writing/${p.slug}`} className="row">
-                <span className="cat">{p.category}</span>
-                <span>{p.dateLabel}</span>
+    <section className="block" style={{ paddingTop: 36, borderTop: 0 }}>
+      <div className="tabs" role="tablist">
+        {cats.map(([c, n]) => (
+          <button key={c} role="tab" className="tab" aria-selected={tab === c} onClick={() => setTab(c)}>
+            {c}<span>{n}</span>
+          </button>
+        ))}
+      </div>
+      <ul className="posts">
+        {list.map((p) => (
+          <li key={p.slug}>
+            <Link href={p.href ?? `/writing/${p.slug}`} className="post">
+              <span className="when"><b>{p.category}</b>{p.dateLabel}</span>
+              <span>
                 <span className="t">{p.title}</span>
-                <span className="auth">{p.author}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
-    </>
+                {p.excerpt && <p>{p.excerpt}</p>}
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }

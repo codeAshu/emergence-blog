@@ -16,30 +16,25 @@ export default function WritingPage() {
     dateLabel: fmt(p.date),
     author: p.author,
     excerpt: p.excerpt,
-    featured: p.featured,
     href: p.href,
-    art: p.art,
   }));
   rows.push({
     slug: "chitrakavya",
     title: "Chitrakāvya: poems that are programs",
     category: "Research",
     date: "2026-04-01",
-    dateLabel: fmt("2026-04-01"),
+    dateLabel: "Apr 2026",
     author: "Archive",
-    excerpt: "Sanskrit poets encoded knight's tours, magic squares and palindromic surfaces into verse, a thousand years before Euler.",
-    featured: true,
+    excerpt: "Sanskrit poets encoded knight's tours, magic squares and palindromic surfaces into verse, a thousand years before Euler. The archive, with the tour you can step through.",
     href: "/chitrakavya",
-    art: "knight",
   });
   rows.sort((a, b) => (a.date < b.date ? 1 : -1));
 
   return (
     <div className="wrap">
-      <div style={{ padding: "64px 0 8px" }}>
-        <div className="kicker"><b>emergence</b> writing</div>
-        <h1 className="display" style={{ fontSize: "clamp(36px, 5vw, 60px)" }}>Writing</h1>
-        <p className="lead" style={{ marginTop: 18 }}>
+      <div className="pagehead col">
+        <h1 className="display">Writing</h1>
+        <p className="lead">
           Essays and notes. Yoga and the mind, AI and the society of agents, beauty, science, and the
           side research I cannot put down.
         </p>

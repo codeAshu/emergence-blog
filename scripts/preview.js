@@ -74,7 +74,7 @@
   }
 
   /* ---------- murmuration ---------- */
-  var canvas = document.querySelector(".flock canvas");
+  var canvas = document.querySelector(".flockwrap canvas, .flock canvas");
   if (canvas && canvas.getContext) {
     var ctx = canvas.getContext("2d");
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

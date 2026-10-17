@@ -11,20 +11,19 @@ export default function AboutPage() {
     <div className="wrap">
       <div className="about">
         <div>
-          <div className="photo">
-            <img src={site.photo} alt={site.name} />
+          <div className="portrait">
+            <img src={site.photo} alt={site.name} width={160} height={160} />
           </div>
           <div className="links">
-            <a className="textlink" href={site.social.x} target="_blank" rel="noopener noreferrer">X</a>
-            <a className="textlink" href={site.social.github} target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a className="textlink" href={site.social.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <a className="textlink" href={site.social.email}>Email</a>
+            <a href={site.social.x} target="_blank" rel="noopener noreferrer">X</a>
+            <a href={site.social.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href={site.social.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href={site.social.email}>{site.social.email.replace("mailto:", "")}</a>
           </div>
         </div>
-        <div>
-          <div className="kicker"><b>About</b></div>
-          <h1 className="display" style={{ fontSize: "clamp(36px, 5vw, 60px)" }}>{site.name}</h1>
-          <div className="prose" style={{ margin: 0, padding: "28px 0 0", maxWidth: "58ch" }}>
+        <div className="col">
+          <h1 className="display">{site.name}</h1>
+          <div className="prose" style={{ padding: "28px 0 0", borderTop: 0 }}>
             <p>
               I build at the intersection of machine learning and distributed systems. By day I run{" "}
               <a href={site.company.url} target="_blank" rel="noopener noreferrer">VideoDB</a>, where we
@@ -50,10 +49,6 @@ export default function AboutPage() {
               <li>Side research, starting with the Chitrakāvya archive.</li>
               <li>Notes from building, reading and walking in the mountains.</li>
             </ul>
-            <p className="note">
-              Somewhere between the mountains and the machine. Write to me at{" "}
-              <a href={site.social.email}>{site.social.email.replace("mailto:", "")}</a>.
-            </p>
           </div>
         </div>
       </div>

@@ -5,171 +5,113 @@ import { getPosts, fmt } from "@/lib/posts";
 import { site } from "@/lib/site";
 
 const threads = [
-  {
-    t: "Yoga and the mind",
-    p: "The oldest engineering manual for attention. What the sutras say about the mind, read by someone who builds minds for a living.",
-  },
-  {
-    t: "AI and the society of agents",
-    p: "Emergence, alignment as architecture, and what happens when the players in the game are no longer human.",
-  },
-  {
-    t: "Beauty",
-    p: "Why some structures feel right before they are proven. Murmurations, metre, proofs, mountains.",
-  },
-  {
-    t: "Science and technology",
-    p: "Notes from building infrastructure for machines that see, and from the papers that change how I think.",
-  },
-  {
-    t: "Side research",
-    p: "Chitrakāvya, computation as poetry, and other questions that will not let me go.",
-  },
+  { t: "Yoga and the mind", p: "The oldest engineering manual for attention, read by someone who builds minds for a living." },
+  { t: "AI and the society of agents", p: "Emergence, alignment as architecture, and what happens when the players are no longer human." },
+  { t: "Beauty", p: "Why some structures feel right before they are proven. Murmurations, metre, proofs, mountains." },
+  { t: "Science and technology", p: "Notes from building infrastructure for machines that see, and from the papers that change how I think." },
+  { t: "Side research", p: "Chitrakāvya, computation as poetry, and other questions that will not let me go." },
+  { t: "The human experience", p: "What it is like to be a person learning in public, one moment at a time." },
 ];
 
 export default function Home() {
-  const posts = getPosts();
-  const featured = [
-    ...posts.filter((p) => p.featured).slice(0, 2),
-    {
-      slug: "chitrakavya",
-      title: "Chitrakāvya: poems that are programs",
-      category: "Research",
-      date: "2026-04-01",
-      author: "Archive",
-      excerpt: "Sanskrit poets encoded knight's tours, magic squares and palindromic surfaces into verse, a thousand years before Euler.",
-      href: "/chitrakavya",
-      art: "knight",
-    },
-  ];
+  const posts = getPosts().slice(0, 4);
 
   return (
     <>
       <section className="hero">
-        <div className="flock">
-          <Flock count={80} />
-        </div>
         <div className="wrap">
-          <div className="grid">
-            <div>
-              <div className="kicker">
-                <b>emergence</b> a personal notebook
-              </div>
+          <div className="row">
+            <div className="portrait">
+              <img src={site.photo} alt={site.name} width={96} height={96} />
+            </div>
+            <div className="col">
               <h1 className="display">
-                Learning every moment.
-                <br />
-                Trying to win over <span className="accent">my mind</span>.
+                Learning every moment. Trying to win over <span className="accent">my mind</span>.
               </h1>
-              <div className="sub">
-                <p>
-                  I am {site.name}. I build at the intersection of machine learning and distributed
-                  systems, and I write here about beauty, philosophy, science, technology and the human
-                  experience. Yoga and the mind. AI and the society of agents. Side research that keeps
-                  pulling me back.
-                </p>
-              </div>
-              <div className="actions">
-                <Link href="/writing" className="btn">Read the writing</Link>
-                <Link href="/about" className="btn btn--ghost">About me</Link>
+              <p className="lead">
+                I am {site.name}. I build at the intersection of machine learning and distributed
+                systems, and I write here about beauty, philosophy, science, technology and the human
+                experience.
+              </p>
+              <div className="meta">
+                <a href={site.company.url} target="_blank" rel="noopener noreferrer">Founder, {site.company.name}</a>
+                <a href={site.social.x} target="_blank" rel="noopener noreferrer">X</a>
+                <a href={site.social.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href={site.social.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
               </div>
             </div>
-            <figure className="photo">
-              <img src={site.photo} alt={site.name} />
-              <figcaption>
-                {site.name} · Founder, {site.company.name}
-              </figcaption>
-            </figure>
           </div>
         </div>
       </section>
 
-      <section className="section">
+      <div className="wrap">
+        <div className="flockwrap" aria-hidden>
+          <Flock count={70} />
+          <span className="cap">Separation, alignment, cohesion. Three rules, one flock.</span>
+        </div>
+      </div>
+
+      <section className="block">
         <div className="wrap">
-          <div className="kicker">
-            <b>01 /</b> Writing
-          </div>
-          <div className="cards">
-            {featured.map((p) => (
-              <Link key={p.slug} href={p.href ?? `/writing/${p.slug}`} className="card">
-                <div className="art">
-                  <Art kind={p.art} />
-                </div>
-                <div className="meta">
-                  <span className="cat">{p.category}</span>
-                  <span>{fmt(p.date)}</span>
-                </div>
-                <div className="t">{p.title}</div>
-                <p>{p.excerpt}</p>
-              </Link>
+          <div className="rule"><span className="label">Writing</span></div>
+          <ul className="posts">
+            {posts.map((p) => (
+              <li key={p.slug}>
+                <Link href={p.href ?? `/writing/${p.slug}`} className="post">
+                  <span className="when"><b>{p.category}</b>{fmt(p.date)}</span>
+                  <span>
+                    <span className="t">{p.title}</span>
+                    {p.excerpt && <p>{p.excerpt}</p>}
+                  </span>
+                </Link>
+              </li>
             ))}
-          </div>
-          <p style={{ marginTop: 36 }}>
-            <Link href="/writing" className="textlink arrow">All writing</Link>
+            <li>
+              <Link href="/chitrakavya" className="post">
+                <span className="when"><b>Research</b>Apr 2026</span>
+                <span>
+                  <span className="t">Chitrakāvya: poems that are programs</span>
+                  <p>Sanskrit poets encoded knight&apos;s tours, magic squares and palindromic surfaces into verse, a thousand years before Euler. The archive, with the tour you can step through.</p>
+                </span>
+              </Link>
+            </li>
+          </ul>
+          <p style={{ marginTop: 28 }}>
+            <Link href="/writing" className="u arrow">All writing</Link>
           </p>
         </div>
       </section>
 
-      <section className="section">
+      <section className="block">
         <div className="wrap">
-          <div className="kicker">
-            <b>02 /</b> Threads
-          </div>
-          <div className="threads">
-            <div>
-              <h2 className="h2">Five things I keep coming back to.</h2>
-              <p className="lead" style={{ marginTop: 20 }}>
-                The questions that keep me awake: what patterns persist across scales, where order
-                comes from, and whether we can design systems that are more than the sum of their
-                parts. That includes the system doing the asking.
-              </p>
-            </div>
-            <ul className="list">
-              {threads.map((x, i) => (
-                <li key={x.t}>
-                  <span className="num">0{i + 1}</span>
-                  <div>
-                    <div className="t">{x.t}</div>
-                    <p>{x.p}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <div className="rule"><span className="label">Threads</span></div>
+          <ul className="threads">
+            {threads.map((x) => (
+              <li key={x.t}>
+                <div className="t">{x.t}</div>
+                <p>{x.p}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      <section className="section">
+      <section className="block">
         <div className="wrap">
-          <div className="kicker">
-            <b>03 /</b> Side research
-          </div>
-          <div className="two" style={{ alignItems: "center" }}>
+          <div className="strip">
             <div>
               <h2 className="h2">A poem, a diagram and an algorithm in one composition.</h2>
-              <p className="lead" style={{ marginTop: 20 }}>
-                Chitrakāvya is a Sanskrit tradition of visual verse. Around 1300 CE, Vedānta Deśika
-                wrote a 32-syllable hymn that, read along a knight&apos;s tour of a half chessboard,
-                becomes a second hymn. The archive lives here now, with the tour you can step through.
+              <p className="lead" style={{ marginTop: 18 }}>
+                Around 1300 CE, Vedānta Deśika wrote a 32-syllable hymn that, read along a
+                knight&apos;s tour of a half chessboard, becomes a second hymn.
               </p>
-              <p style={{ marginTop: 28 }}>
-                <Link href="/chitrakavya" className="btn">Open the archive</Link>
+              <p style={{ marginTop: 26 }}>
+                <Link href="/chitrakavya/knights-tour" className="btn">Step through the tour</Link>
               </p>
             </div>
-            <Link href="/chitrakavya/knights-tour" className="card" aria-label="Knight's tour">
-              <div className="art" style={{ aspectRatio: "16/10" }}>
-                <Art kind="knight" />
-              </div>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="section closing">
-        <div className="wrap">
-          <h2 className="h2">The murmuration continues. The pattern grows more complex.</h2>
-          <div className="actions" style={{ display: "flex", gap: 12, marginTop: 32, flexWrap: "wrap" }}>
-            <a href={site.social.x} className="btn" target="_blank" rel="noopener noreferrer">Follow on X</a>
-            <a href={site.social.email} className="btn btn--ghost">Write to me</a>
+            <figure>
+              <Art kind="knight" />
+            </figure>
           </div>
         </div>
       </section>
