@@ -8,6 +8,7 @@ export default function Footer() {
         <div className="row">
           <div className="links">
             <Link href="/writing">Writing</Link>
+            <Link href="/darsana">Darśana</Link>
             <Link href="/chitrakavya">Chitrakāvya</Link>
             <Link href="/about">About</Link>
           </div>

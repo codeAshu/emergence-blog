@@ -14,7 +14,7 @@ export type DarsanaPost = {
 export const darsanaSeries = {
   title: "Notes on the six darśanas",
   date: "2026-10-17",
-  category: "Notes",
+  category: "Darśana",
   excerpt:
     "Six illustrated explainers on the Indian philosophical schools, written as a compiler's notes: Sāṃkhya, Yoga, Nyāya, Vaiśeṣika, Mīmāṃsā and Vedānta, with original diagrams and a few things to try.",
 };

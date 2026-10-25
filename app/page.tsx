@@ -3,7 +3,7 @@ import Swarm from "@/components/Swarm";
 import Art from "@/components/Art";
 import { getPosts, fmt } from "@/lib/posts";
 import { site } from "@/lib/site";
-import { darsanaSeries } from "@/lib/darsana";
+import { darsanaPosts, darsanaSeries } from "@/lib/darsana";
 
 const threads = [
   { t: "Yoga and the mind", p: "The oldest engineering manual for awareness, read by someone who builds minds for a living." },
@@ -64,15 +64,6 @@ export default function Home() {
               </li>
             ))}
             <li>
-              <Link href="/darsana" className="post">
-                <span className="when"><b>{darsanaSeries.category}</b>{fmt(darsanaSeries.date)}</span>
-                <span>
-                  <span className="t">{darsanaSeries.title}</span>
-                  <p>{darsanaSeries.excerpt}</p>
-                </span>
-              </Link>
-            </li>
-            <li>
               <Link href="/chitrakavya" className="post">
                 <span className="when"><b>Research</b>Apr 2026</span>
                 <span>
@@ -84,6 +75,29 @@ export default function Home() {
           </ul>
           <p style={{ marginTop: 28 }}>
             <Link href="/writing" className="u arrow">All writing</Link>
+          </p>
+        </div>
+      </section>
+
+      <section className="block">
+        <div className="wrap">
+          <div className="rule"><span className="label">Darśana</span></div>
+          <p className="lead" style={{ marginBottom: 28 }}>{darsanaSeries.excerpt}</p>
+          <ul className="posts">
+            {darsanaPosts.map((p) => (
+              <li key={p.slug}>
+                <Link href={`/darsana/${p.slug}`} className="post">
+                  <span className="when"><b>{p.school}</b>{p.n} of 6 · {p.read}</span>
+                  <span>
+                    <span className="t">{p.title}</span>
+                    <p>{p.excerpt}</p>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p style={{ marginTop: 28 }}>
+            <Link href="/darsana" className="u arrow">The six, in order</Link>
           </p>
         </div>
       </section>

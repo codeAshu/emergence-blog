@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import WritingIndex, { type Row } from "@/components/WritingIndex";
 import { getPosts, fmt } from "@/lib/posts";
-import { darsanaSeries } from "@/lib/darsana";
+import { darsanaPosts, darsanaSeries } from "@/lib/darsana";
 
 export const metadata: Metadata = {
   title: "Writing",
@@ -19,16 +19,18 @@ export default function WritingPage() {
     excerpt: p.excerpt,
     href: p.href,
   }));
-  rows.push({
-    slug: "darsana",
-    title: darsanaSeries.title,
-    category: darsanaSeries.category,
-    date: darsanaSeries.date,
-    dateLabel: fmt(darsanaSeries.date),
-    author: "Ashutosh Trivedi",
-    excerpt: darsanaSeries.excerpt,
-    href: "/darsana",
-  });
+  darsanaPosts.forEach((p) =>
+    rows.push({
+      slug: `darsana-${p.slug}`,
+      title: `${p.title}`,
+      category: darsanaSeries.category,
+      date: darsanaSeries.date,
+      dateLabel: `${fmt(darsanaSeries.date)} · ${p.school}, ${p.n} of 6`,
+      author: "Ashutosh Trivedi",
+      excerpt: p.excerpt,
+      href: `/darsana/${p.slug}`,
+    }),
+  );
   rows.push({
     slug: "chitrakavya",
     title: "Chitrakāvya: poems that are programs",
@@ -39,7 +41,8 @@ export default function WritingPage() {
     excerpt: "Sanskrit poets encoded knight's tours, magic squares and palindromic surfaces into verse, a thousand years before Euler. The archive, with the tour you can step through.",
     href: "/chitrakavya",
   });
-  rows.sort((a, b) => (a.date < b.date ? 1 : -1));
+  // newest first; a stable comparator keeps same-day entries (the six darśana posts) in series order
+  rows.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
 
   return (
     <div className="wrap">

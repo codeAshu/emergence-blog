@@ -15,5 +15,5 @@ export const site = {
   photo: "/ashu.jpg",
 };
 
-export const categories = ["Essay", "Yoga", "Mind", "AI", "Mathematics", "Research", "Notes"] as const;
+export const categories = ["Essay", "Darśana", "Yoga", "Mind", "AI", "Mathematics", "Research", "Notes"] as const;
 export type Category = (typeof categories)[number];

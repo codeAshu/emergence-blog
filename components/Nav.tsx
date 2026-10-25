@@ -6,6 +6,7 @@ import { site } from "@/lib/site";
 
 const items = [
   { href: "/writing", label: "Writing" },
+  { href: "/darsana", label: "Darśana" },
   { href: "/chitrakavya", label: "Chitrakāvya" },
   { href: "/about", label: "About" },
 ];
