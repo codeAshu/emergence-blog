@@ -3,7 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { topics, topicBySlug } from "@/lib/topics";
 import Fig from "@/components/Fig";
-import { getPostsByTopic, fmt } from "@/lib/posts";
+import { fmt } from "@/lib/posts";
+import { getEntriesByTopic } from "@/lib/entries";
 import PostRow from "@/components/PostRow";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -23,7 +24,7 @@ export default async function TopicPage({ params }: Props) {
   const { slug } = await params;
   const t = topicBySlug[slug];
   if (!t) notFound();
-  const posts = getPostsByTopic(slug);
+  const posts = getEntriesByTopic(slug);
   const others = topics.filter((o) => o.slug !== slug);
 
   return (
@@ -48,7 +49,7 @@ export default async function TopicPage({ params }: Props) {
           <ul className="posts">
             {posts.map((p) => (
               <li key={p.slug}>
-                <PostRow href={`/writing/${p.slug}`} category={p.category} dateLabel={fmt(p.date)} title={p.title} excerpt={p.excerpt} topics={p.topics} hideTopic={slug} />
+                <PostRow href={p.href} category={p.category} dateLabel={fmt(p.date)} title={p.title} excerpt={p.excerpt} topics={p.topics} hideTopic={slug} />
               </li>
             ))}
           </ul>

@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { getPosts } from "@/lib/posts";
 import { site } from "@/lib/site";
 import { topics } from "@/lib/topics";
+import { darsanaPosts } from "@/lib/darsana";
 
 export const dynamic = "force-static";
 

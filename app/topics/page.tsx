@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { topics } from "@/lib/topics";
 import Fig from "@/components/Fig";
-import { getPosts } from "@/lib/posts";
+import { getEntries } from "@/lib/entries";
 
-export const metadata: Metadata = { title: "Topics", description: "The index of the site: eight topics, each with its figure." };
+export const metadata: Metadata = { title: "Topics", description: "The index of the site: nine topics, each with its figure." };
 
 export default function TopicsPage() {
-  const posts = getPosts();
-  const count = (slug: string) => posts.filter((p) => p.topics.includes(slug)).length;
+  const entries = getEntries();
+  const count = (slug: string) => entries.filter((e) => e.topics.includes(slug)).length;
   return (
     <div className="wrap">
       <div className="pagehead col">

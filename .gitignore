@@ -7,3 +7,4 @@ out
 preview
 out
 .figures.cjs
+tsconfig.tsbuildinfo

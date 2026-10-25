@@ -288,9 +288,41 @@ export function Walk() {
   );
 }
 
+/* 9. A tree. Division into kinds, down to the particular; one line of argument followed in orange. */
+export function Tree() {
+  const depth = 5;
+  const nodes: { x: number; y: number; d: number; id: number }[] = [];
+  const edges: { a: number; b: number; hot: boolean }[] = [];
+  const hotPath = [0, 2, 5, 12, 25]; // ids along one branch, root to leaf
+  let id = 0;
+  const place = (d: number, i: number, count: number) => {
+    const y = 36 + d * ((H - 72) / (depth - 1));
+    const x = (W / (count + 1)) * (i + 1);
+    nodes.push({ x, y, d, id: id++ });
+  };
+  for (let d = 0; d < depth; d++) for (let i = 0; i < 2 ** d; i++) place(d, i, 2 ** d);
+  nodes.forEach((n) => {
+    if (n.d === depth - 1) return;
+    const c1 = 2 * n.id + 1, c2 = 2 * n.id + 2;
+    edges.push({ a: n.id, b: c1, hot: hotPath.includes(n.id) && hotPath.includes(c1) });
+    edges.push({ a: n.id, b: c2, hot: hotPath.includes(n.id) && hotPath.includes(c2) });
+  });
+  const P = (i: number) => nodes[i];
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="A branching tree of divisions with one path followed to a leaf">
+      {edges.map((e, i) => (
+        <path key={i} d={`M${P(e.a).x} ${P(e.a).y}C${P(e.a).x} ${(P(e.a).y + P(e.b).y) / 2} ${P(e.b).x} ${(P(e.a).y + P(e.b).y) / 2} ${P(e.b).x} ${P(e.b).y}`} fill="none" stroke={e.hot ? accent : ink} strokeOpacity={e.hot ? 1 : 0.45} strokeWidth={e.hot ? 1.4 : 0.8} />
+      ))}
+      {nodes.map((n) => (
+        <circle key={n.id} cx={n.x} cy={n.y} r={hotPath.includes(n.id) ? 3.6 : 2.2} fill={hotPath.includes(n.id) ? accent : ink} fillOpacity={hotPath.includes(n.id) ? 1 : 0.7} />
+      ))}
+    </svg>
+  );
+}
+
 export const figureByKey: Record<string, () => React.JSX.Element> = {
   mandelbrot: Mandelbrot, descent: Descent, phyllotaxis: Phyllotaxis, society: Society,
-  stillness: Stillness, tour: Tour, interference: Interference, walk: Walk,
+  stillness: Stillness, tour: Tour, interference: Interference, walk: Walk, tree: Tree,
 };
 
 void muted;

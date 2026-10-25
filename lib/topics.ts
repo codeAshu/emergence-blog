@@ -41,6 +41,15 @@ export const topics: Topic[] = [
     line: "Emergence, alignment as architecture, and what happens when the players are no longer human.",
   },
   {
+    slug: "philosophy",
+    name: "Philosophy",
+    figure: "tree",
+    figureName: "A tree",
+    line: "The six darśanas, the Greeks, and the questions that stay open: what there is, how we know it, and what to do about it.",
+    href: "/darsana",
+    hrefLabel: "The darśana series",
+  },
+  {
     slug: "mind",
     name: "Yoga and the mind",
     figure: "stillness",

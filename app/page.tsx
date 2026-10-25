@@ -2,14 +2,15 @@ import Link from "next/link";
 import Swarm from "@/components/Swarm";
 import Fig from "@/components/Fig";
 import { topics } from "@/lib/topics";
-import { getPosts, fmt } from "@/lib/posts";
+import { fmt } from "@/lib/posts";
+import { getEntries } from "@/lib/entries";
 import { site } from "@/lib/site";
 import PostRow from "@/components/PostRow";
 
 export default function Home() {
-  const posts = getPosts();
-  const latest = posts.slice(0, 4);
-  const count = (slug: string) => posts.filter((p) => p.topics.includes(slug)).length;
+  const entries = getEntries();
+  const latest = entries.slice(0, 5);
+  const count = (slug: string) => entries.filter((e) => e.topics.includes(slug)).length;
 
   return (
     <>
@@ -65,14 +66,11 @@ export default function Home() {
         <div className="wrap">
           <div className="rule"><span className="label">Latest</span></div>
           <ul className="posts">
-            {latest.map((p) => (
-              <li key={p.slug}>
-                <PostRow href={`/writing/${p.slug}`} category={p.category} dateLabel={fmt(p.date)} title={p.title} excerpt={p.excerpt} topics={p.topics} />
+            {latest.map((e) => (
+              <li key={e.slug}>
+                <PostRow href={e.href} category={e.category} dateLabel={fmt(e.date)} title={e.title} excerpt={e.excerpt} topics={e.topics} />
               </li>
             ))}
-            <li>
-              <PostRow href="/chitrakavya" category="Research" dateLabel="Apr 2026" title="Chitrakāvya: poems that are programs" excerpt="Sanskrit poets encoded knight's tours, magic squares and palindromic surfaces into verse, a thousand years before Euler. The archive, with the tour you can step through." topics={["chitrakavya", "mathematics"]} />
-            </li>
           </ul>
           <p style={{ marginTop: 28 }}>
             <Link href="/writing" className="u arrow">All writing</Link>

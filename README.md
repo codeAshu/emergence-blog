@@ -15,7 +15,7 @@ Drop a markdown file in `content/posts/<slug>.md` with frontmatter:
     title: "Title"
     subtitle: "One line under the title."
     category: Essay        # Essay, Research, Notes (the tab it sits under)
-    topics: [agents, mind] # one or more of: mathematics, optimization, beauty, agents, mind, science, chitrakavya, human
+    topics: [agents, mind] # one or more of: mathematics, optimization, beauty, agents, philosophy, mind, science, chitrakavya, human
     date: 2026-10-17
     author: Ashutosh Trivedi
     featured: true         # shows in the featured row (first three by date)
