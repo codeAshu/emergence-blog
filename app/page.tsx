@@ -3,6 +3,7 @@ import Swarm from "@/components/Swarm";
 import Art from "@/components/Art";
 import { getPosts, fmt } from "@/lib/posts";
 import { site } from "@/lib/site";
+import { darsanaSeries } from "@/lib/darsana";
 
 const threads = [
   { t: "Yoga and the mind", p: "The oldest engineering manual for awareness, read by someone who builds minds for a living." },
@@ -62,6 +63,15 @@ export default function Home() {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link href="/darsana" className="post">
+                <span className="when"><b>{darsanaSeries.category}</b>{fmt(darsanaSeries.date)}</span>
+                <span>
+                  <span className="t">{darsanaSeries.title}</span>
+                  <p>{darsanaSeries.excerpt}</p>
+                </span>
+              </Link>
+            </li>
             <li>
               <Link href="/chitrakavya" className="post">
                 <span className="when"><b>Research</b>Apr 2026</span>
