@@ -319,3 +319,18 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .sb--4 { max-width: 440px; }
 .sb div.hot { background: #fbe9e1; color: var(--accent-ink); }
 .subnav .seal-img { width: 22px; height: 22px; align-self: center; margin-right: 2px; }
+
+/* ---------- figure strip (home) ---------- */
+.figs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, 1fr); border-top: 1px solid var(--hair); }
+.figs li { border-bottom: 1px solid var(--hair); }
+.figs li + li { border-left: 1px solid var(--hair); }
+.figs a { display: flex; flex-direction: column; gap: 10px; padding: 16px 14px 18px; height: 100%; }
+.figs a:hover .fig { background: var(--surface); }
+.figs .fig { display: block; aspect-ratio: 1; background: transparent; transition: background .2s; }
+.figs .fig svg { width: 100%; height: 100%; display: block; }
+.figs .t { font-family: var(--serif); font-size: 18px; color: var(--ink); }
+.figs .label { font-size: 11px; }
+@media (max-width: 1000px) { .figs { grid-template-columns: repeat(3, 1fr); } .figs li:nth-child(4) { border-left: 0; } }
+@media (max-width: 520px) { .figs { grid-template-columns: repeat(2, 1fr); } .figs li:nth-child(4) { border-left: 1px solid var(--hair); } .figs li:nth-child(odd) { border-left: 0; } }
+.fig-lg { margin: 0; aspect-ratio: 1; max-width: 420px; }
+.fig-lg svg { width: 100%; height: 100%; display: block; }

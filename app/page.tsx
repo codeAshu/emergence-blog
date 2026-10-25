@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Swarm from "@/components/Swarm";
-import Art from "@/components/Art";
+import { figures, Tour } from "@/components/Figures";
 import { getPosts, fmt } from "@/lib/posts";
 import { site } from "@/lib/site";
 
@@ -44,6 +44,22 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="block" style={{ paddingTop: 0, borderTop: 0 }}>
+        <div className="wrap">
+          <ul className="figs">
+            {figures.map(({ key, label, title, Figure, href }) => (
+              <li key={key}>
+                <Link href={href}>
+                  <span className="label">{label}</span>
+                  <span className="fig"><Figure /></span>
+                  <span className="t">{title}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -105,8 +121,8 @@ export default function Home() {
                 <Link href="/chitrakavya/knights-tour" className="btn">Step through the tour</Link>
               </p>
             </div>
-            <figure>
-              <Art kind="knight" />
+            <figure className="fig-lg">
+              <Tour />
             </figure>
           </div>
         </div>
