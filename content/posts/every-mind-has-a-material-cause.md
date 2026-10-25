@@ -5,7 +5,7 @@ category: Essay
 date: 2026-10-17
 author: Ashutosh Trivedi
 featured: true
-art: clay
+topics: [agents, mind, science]
 excerpt: "Samkhya says the effect pre-exists in the cause, the substrate is inert, and discernment comes before the self. Read as a design note for AGI, it says most of our alignment vocabulary is pointed at the potter and the clay decides more."
 ---
 

@@ -17,6 +17,7 @@ export default function WritingPage() {
     author: p.author,
     excerpt: p.excerpt,
     href: p.href,
+    topics: p.topics,
   }));
   rows.push({
     slug: "chitrakavya",
@@ -27,6 +28,7 @@ export default function WritingPage() {
     author: "Archive",
     excerpt: "Sanskrit poets encoded knight's tours, magic squares and palindromic surfaces into verse, a thousand years before Euler. The archive, with the tour you can step through.",
     href: "/chitrakavya",
+    topics: ["chitrakavya", "mathematics"],
   });
   rows.sort((a, b) => (a.date < b.date ? 1 : -1));
 

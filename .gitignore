@@ -6,3 +6,4 @@ out
 *.log
 preview
 out
+.figures.cjs

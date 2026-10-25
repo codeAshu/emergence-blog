@@ -5,7 +5,7 @@ category: Essay
 date: 2026-10-10
 author: Ashutosh Trivedi
 featured: true
-art: flock
+topics: [agents, mathematics, optimization]
 excerpt: "Three local rules give you a murmuration. Slightly different rules give you a stampede. The rules between agents deserve the same care as the capabilities inside them."
 ---
 

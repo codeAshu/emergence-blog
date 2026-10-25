@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
+import PostRow from "@/components/PostRow";
 
 export type Row = {
   slug: string;
@@ -12,6 +12,7 @@ export type Row = {
   author: string;
   excerpt?: string;
   href?: string;
+  topics?: string[];
 };
 
 export default function WritingIndex({ rows }: { rows: Row[] }) {
@@ -35,13 +36,7 @@ export default function WritingIndex({ rows }: { rows: Row[] }) {
       <ul className="posts">
         {list.map((p) => (
           <li key={p.slug}>
-            <Link href={p.href ?? `/writing/${p.slug}`} className="post">
-              <span className="when"><b>{p.category}</b>{p.dateLabel}</span>
-              <span>
-                <span className="t">{p.title}</span>
-                {p.excerpt && <p>{p.excerpt}</p>}
-              </span>
-            </Link>
+            <PostRow href={p.href ?? `/writing/${p.slug}`} category={p.category} dateLabel={p.dateLabel} title={p.title} excerpt={p.excerpt} topics={p.topics} />
           </li>
         ))}
       </ul>
