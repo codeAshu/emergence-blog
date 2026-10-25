@@ -10,6 +10,60 @@ const BackgroundSwarm = dynamic(() => import("@/components/BackgroundSwarm"), {
 
 const posts = [
   {
+    slug: "samkhya",
+    title: "The clay before the pot",
+    subtitle: "Sāṃkhya · the six darśanas, 1 of 6",
+    date: "October 17, 2026",
+    description:
+      "Sāṃkhya is the oldest of India's six classical philosophies and the one most often called scientific. Its first move is the question every creation story skips: a maker can shape a pot, but where did the clay come from?",
+    tags: ["indian-philosophy", "samkhya", "darsana"],
+  },
+  {
+    slug: "yoga",
+    title: "A road out of the clay",
+    subtitle: "Yoga · the six darśanas, 2 of 6",
+    date: "October 17, 2026",
+    description:
+      "Sāṃkhya explained how consciousness gets caught in matter, and admitted it had no way out. Patañjali's Yoga is that way. It is a discipline rather than a theory, and the word does not mean what the yoga studios think it means.",
+    tags: ["indian-philosophy", "yoga", "darsana"],
+  },
+  {
+    slug: "nyaya",
+    title: "Where there is smoke",
+    subtitle: "Nyāya · the six darśanas, 3 of 6",
+    date: "October 17, 2026",
+    description:
+      "Nyāya is the school of how we know and how we argue: four roads to knowledge, one shape for every inference, and a complete catalogue of the ways a losing opponent cheats. Its best example rises from a kitchen.",
+    tags: ["indian-philosophy", "nyaya", "logic"],
+  },
+  {
+    slug: "vaisheshika",
+    title: "An inventory of everything",
+    subtitle: "Vaiśeṣika · the six darśanas, 4 of 6",
+    date: "October 17, 2026",
+    description:
+      "Vaiśeṣika is Nyāya's partner: the realist's list of what there is, down to the atom, with space and time counted as things rather than gaps. It rarely gets a treatment of its own, so this post gathers it from the places it turns up, inside Nyāya, inside the atom, inside the list of categories, and says where each piece comes from.",
+    tags: ["indian-philosophy", "vaisheshika", "atomism"],
+  },
+  {
+    slug: "mimamsa",
+    title: "The act keeps its own books",
+    subtitle: "Mīmāṃsā · the six darśanas, 5 of 6",
+    date: "October 17, 2026",
+    description:
+      "Mīmāṃsā is the school that defended the Vedic rite when the Buddhists had all but buried it. To do that it argued that the word is older than the god, that a text with no author cannot be wrong, and that nobody is needed to pay out the fruit of an act. This post follows that argument, and then looks at what the rite actually was.",
+    tags: ["indian-philosophy", "mimamsa", "ritual"],
+  },
+  {
+    slug: "vedanta",
+    title: "The seer who saw both",
+    subtitle: "Vedānta · the six darśanas, 6 of 6",
+    date: "October 17, 2026",
+    description:
+      "Vedānta is where the six darśanas were always heading: the end of the Veda and, its teachers insist, the end of thought. One set of texts, the Upaniṣads, read four ways: the world as appearance, as God's body, as God's dependent, as God himself. This post follows Śaṅkara's argument first, and then the three who said he had got it wrong.",
+    tags: ["indian-philosophy", "vedanta", "advaita"],
+  },
+  {
     slug: "agentic-web",
     title: "The Agentic Web",
     subtitle: "When Machines Form Societies",
