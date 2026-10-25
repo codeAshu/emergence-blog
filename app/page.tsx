@@ -29,7 +29,7 @@ export default function Home() {
             </div>
             <div className="col">
               <h1 className="display">
-                Learning every moment. Trying to win over <span className="accent">my mind</span>.
+                Trying to win over <span className="accent">my mind</span>.
               </h1>
               <p className="lead">
                 I am {site.name}. I build at the intersection of machine learning and distributed

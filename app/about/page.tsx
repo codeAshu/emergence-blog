@@ -39,7 +39,7 @@ export default function AboutPage() {
             <h2>What I care about</h2>
             <p>
               Beauty, philosophy, mathematics, science, technology and the human experience. I am
-              learning every moment and trying to win over my mind. Yoga is the oldest engineering
+              trying to win over my mind. Yoga is the oldest engineering
               manual for awareness that I know of, and I read it next to papers on agents, memory and
               alignment.
             </p>

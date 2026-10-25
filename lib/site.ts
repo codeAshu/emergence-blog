@@ -2,7 +2,7 @@ export const site = {
   name: "Ashutosh Trivedi",
   short: "Ashu",
   domain: "https://emergence.live",
-  tagline: "Learning every moment. Trying to win over my mind.",
+  tagline: "Trying to win over my mind.",
   description:
     "Essays on beauty, philosophy, mathematics, science, technology and the human experience. Yoga, the mind, AI, the society of agents, fractals and optimization, and side research.",
   social: {
