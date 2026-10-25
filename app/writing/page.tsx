@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import WritingIndex, { type Row } from "@/components/WritingIndex";
 import { getPosts, fmt } from "@/lib/posts";
+import { darsanaSeries } from "@/lib/darsana";
 
 export const metadata: Metadata = {
   title: "Writing",
@@ -18,6 +19,16 @@ export default function WritingPage() {
     excerpt: p.excerpt,
     href: p.href,
   }));
+  rows.push({
+    slug: "darsana",
+    title: darsanaSeries.title,
+    category: darsanaSeries.category,
+    date: darsanaSeries.date,
+    dateLabel: fmt(darsanaSeries.date),
+    author: "Ashutosh Trivedi",
+    excerpt: darsanaSeries.excerpt,
+    href: "/darsana",
+  });
   rows.push({
     slug: "chitrakavya",
     title: "Chitrakāvya: poems that are programs",
