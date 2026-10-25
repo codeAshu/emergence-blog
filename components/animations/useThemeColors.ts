@@ -61,13 +61,13 @@ function buildPalette(theme: "light" | "dark"): ThemeColors {
     };
   }
 
-  // Light — warm-paper editorial
+  // Light: the site's cream canvas, ink greys, one orange accent
   return {
-    background: "rgb(247, 244, 240)",
-    fadeOverlay: "rgba(247, 244, 240, 0.20)",
-    ink: (a) => `hsla(0, 0%, 30%, ${a})`,
-    hairline: (a) => `hsla(0, 0%, 35%, ${a})`,
-    accent: (a) => `hsla(330, 65%, 50%, ${a})`,
+    background: "rgb(248, 247, 243)",
+    fadeOverlay: "rgba(248, 247, 243, 0.20)",
+    ink: (a) => `hsla(40, 4%, 28%, ${a})`,
+    hairline: (a) => `hsla(40, 4%, 35%, ${a})`,
+    accent: (a) => `hsla(14, 80%, 45%, ${a})`,
     isDark: false,
   };
 }

@@ -540,30 +540,15 @@ export default function BackgroundSwarm() {
       height: number,
       darkMode: boolean
     ) => {
-      /* ----- Theme-aware palette ----- */
-      // Dark mode: fire orange | Light mode: blue/turquoise
-      const baseHue = darkMode ? 25 : 190; // Orange vs Turquoise
-      const hueVariation = (idx: number) => baseHue + (idx - 1) * 8;
-
-      const inkLightness = (idx: number) =>
-        darkMode ? [75, 65, 55][idx % 3] : [35, 45, 55][idx % 3];
-
+      /* ----- Palette: the site's cream canvas, three ink greys, one orange accent ----- */
+      void darkMode;
+      const inkLightness = (idx: number) => [22, 34, 46][idx % 3];
       const ink = (idx: number, alpha: number) =>
-        `hsla(${hueVariation(idx)}, ${darkMode ? 80 : 60}%, ${inkLightness(idx)}%, ${alpha})`;
+        `hsla(40, 4%, ${inkLightness(idx)}%, ${alpha})`;
+      const accent = (alpha: number) => `hsla(14, 80%, 45%, ${alpha})`;
 
-      // Accent color — brighter version of the theme
-      const accent = (alpha: number) => {
-        const h = darkMode ? 20 : 185;
-        const s = darkMode ? 95 : 75;
-        const l = darkMode ? 60 : 45;
-        return `hsla(${h}, ${s}%, ${l}%, ${alpha})`;
-      };
-
-      // Background trail fade — matches page background.
-      // Dark: deep charcoal | Light: warm natural beige
-      ctx.fillStyle = darkMode
-        ? "rgba(20, 20, 22, 0.06)"
-        : "rgba(245, 240, 230, 0.10)";
+      // Background trail fade: the page canvas (#f2f1ec)
+      ctx.fillStyle = "rgba(242, 241, 236, 0.10)";
       ctx.fillRect(0, 0, width, height);
 
       /* ----- Trade routes ----- */
@@ -621,7 +606,7 @@ export default function BackgroundSwarm() {
       }
 
       /* ----- Connections (ink) ----- */
-      const connAlphaMultiplier = darkMode ? 0.18 : 0.22;
+      const connAlphaMultiplier = 0.22;
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const p1 = particles[i];
@@ -653,7 +638,7 @@ export default function BackgroundSwarm() {
       }
 
       /* ----- Particles ----- */
-      const brightnessMultiplier = darkMode ? 1 : 1.4;
+      const brightnessMultiplier = 1.4;
 
       for (let pIdx = 0; pIdx < particles.length; pIdx++) {
         const particle = particles[pIdx];
@@ -663,7 +648,7 @@ export default function BackgroundSwarm() {
 
         // Memory trail for leaders — accent magenta, low alpha
         if (isLeader && particle.memory.length > 2) {
-          ctx.strokeStyle = accent(darkMode ? 0.18 : 0.22);
+          ctx.strokeStyle = accent(0.22);
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(particle.memory[0].x, particle.memory[0].y);
@@ -756,9 +741,7 @@ export default function BackgroundSwarm() {
 
     // Initial fill based on theme — match the page background tokens
     // Dark: deep charcoal | Light: warm natural beige
-    const initialTheme = document.documentElement.getAttribute("data-theme");
-    ctx.fillStyle =
-      initialTheme === "dark" ? "rgb(20, 20, 22)" : "rgb(245, 240, 230)";
+    ctx.fillStyle = "rgb(242, 241, 236)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     const animate = () => {
@@ -816,7 +799,8 @@ export default function BackgroundSwarm() {
     <canvas
       ref={canvasRef}
       className="swarm-bg"
-      style={{ background: isDarkMode ? "#0f0f0f" : "#f5f0e6" }}
+      style={{ background: "#f2f1ec" }}
+      aria-hidden
     />
   );
 }
