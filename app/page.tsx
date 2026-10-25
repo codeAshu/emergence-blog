@@ -1,251 +1,126 @@
-"use client";
-
-import dynamic from "next/dynamic";
 import Link from "next/link";
-import BlogLayout from "@/components/BlogLayout";
+import Swarm from "@/components/Swarm";
+import Art from "@/components/Art";
+import { getPosts, fmt } from "@/lib/posts";
+import { site } from "@/lib/site";
+import { darsanaSeries } from "@/lib/darsana";
 
-const BackgroundSwarm = dynamic(() => import("@/components/BackgroundSwarm"), {
-  ssr: false,
-});
-
-const posts = [
-  {
-    slug: "samkhya",
-    title: "The clay before the pot",
-    subtitle: "Sāṃkhya · the six darśanas, 1 of 6",
-    date: "October 17, 2026",
-    description:
-      "Sāṃkhya is the oldest of India's six classical philosophies and the one most often called scientific. Its first move is the question every creation story skips: a maker can shape a pot, but where did the clay come from?",
-    tags: ["indian-philosophy", "samkhya", "darsana"],
-  },
-  {
-    slug: "yoga",
-    title: "A road out of the clay",
-    subtitle: "Yoga · the six darśanas, 2 of 6",
-    date: "October 17, 2026",
-    description:
-      "Sāṃkhya explained how consciousness gets caught in matter, and admitted it had no way out. Patañjali's Yoga is that way. It is a discipline rather than a theory, and the word does not mean what the yoga studios think it means.",
-    tags: ["indian-philosophy", "yoga", "darsana"],
-  },
-  {
-    slug: "nyaya",
-    title: "Where there is smoke",
-    subtitle: "Nyāya · the six darśanas, 3 of 6",
-    date: "October 17, 2026",
-    description:
-      "Nyāya is the school of how we know and how we argue: four roads to knowledge, one shape for every inference, and a complete catalogue of the ways a losing opponent cheats. Its best example rises from a kitchen.",
-    tags: ["indian-philosophy", "nyaya", "logic"],
-  },
-  {
-    slug: "vaisheshika",
-    title: "An inventory of everything",
-    subtitle: "Vaiśeṣika · the six darśanas, 4 of 6",
-    date: "October 17, 2026",
-    description:
-      "Vaiśeṣika is Nyāya's partner: the realist's list of what there is, down to the atom, with space and time counted as things rather than gaps. It rarely gets a treatment of its own, so this post gathers it from the places it turns up, inside Nyāya, inside the atom, inside the list of categories, and says where each piece comes from.",
-    tags: ["indian-philosophy", "vaisheshika", "atomism"],
-  },
-  {
-    slug: "mimamsa",
-    title: "The act keeps its own books",
-    subtitle: "Mīmāṃsā · the six darśanas, 5 of 6",
-    date: "October 17, 2026",
-    description:
-      "Mīmāṃsā is the school that defended the Vedic rite when the Buddhists had all but buried it. To do that it argued that the word is older than the god, that a text with no author cannot be wrong, and that nobody is needed to pay out the fruit of an act. This post follows that argument, and then looks at what the rite actually was.",
-    tags: ["indian-philosophy", "mimamsa", "ritual"],
-  },
-  {
-    slug: "vedanta",
-    title: "The seer who saw both",
-    subtitle: "Vedānta · the six darśanas, 6 of 6",
-    date: "October 17, 2026",
-    description:
-      "Vedānta is where the six darśanas were always heading: the end of the Veda and, its teachers insist, the end of thought. One set of texts, the Upaniṣads, read four ways: the world as appearance, as God's body, as God's dependent, as God himself. This post follows Śaṅkara's argument first, and then the three who said he had got it wrong.",
-    tags: ["indian-philosophy", "vedanta", "advaita"],
-  },
-  {
-    slug: "agentic-web",
-    title: "The Agentic Web",
-    subtitle: "When Machines Form Societies",
-    date: "April 12, 2025",
-    description:
-      "Exploring the emergence of collective AI consciousness, from cellular automata to autonomous agent networks. A philosophical journey through Web 4.0.",
-    tags: ["emergence", "ai-agents", "web4"],
-  },
-  {
-    slug: "inner-core",
-    title: "The Inner Core",
-    subtitle: "Agent Alignment Through Shared Architecture",
-    date: "March 28, 2025",
-    description:
-      "What if alignment isn't about constraining AI, but about giving it a shared soul? A proposal for the ethical OS that all agents must compile upon.",
-    tags: ["alignment", "governance", "architecture"],
-  },
-  {
-    slug: "compiling-ethics",
-    title: "Compiling Ethics",
-    subtitle: "The OS of Machine Souls",
-    date: "March 15, 2025",
-    description:
-      "Every program compiles to an architecture. Every agent must compile to an ethics. On the emergence of machine morality through evolutionary pressure.",
-    tags: ["ethics", "evolution", "emergence"],
-  },
-  {
-    slug: "autonomy-and-choice",
-    title: "Autonomy and Choice",
-    subtitle: "Game Theory of Decision-Making Agents",
-    date: "February 22, 2025",
-    description:
-      "Why do humans struggle with complex decisions? A framework for understanding choice through game theory, multi-agent systems, and the nature of true autonomy.",
-    tags: ["game-theory", "autonomy", "multi-agent"],
-  },
-  {
-    slug: "collective-emergence",
-    title: "Collective Emergence",
-    subtitle: "An Intelligence of the Swarm",
-    date: "February 8, 2025",
-    description:
-      "How complex behaviors arise from simple rules. From bird flocks to swarm intelligence — the mathematics of collective consciousness.",
-    tags: ["emergence", "swarm", "boids"],
-  },
+const threads = [
+  { t: "Yoga and the mind", p: "The oldest engineering manual for awareness, read by someone who builds minds for a living." },
+  { t: "AI and the society of agents", p: "Emergence, alignment as architecture, and what happens when the players are no longer human." },
+  { t: "Beauty", p: "Why some structures feel right before they are proven. Murmurations, metre, proofs, mountains." },
+  { t: "Science and technology", p: "Notes from building infrastructure for machines that see, and from the papers that change how I think." },
+  { t: "Mathematics", p: "Fractals, higher-order structure, and the proofs that feel inevitable once you see them. Self-similarity as a way of thinking." },
+  { t: "Optimization", p: "Gradients, search, equilibria, and what a system is really minimising when it looks like it is learning." },
+  { t: "Side research", p: "Chitrakāvya, computation as poetry, and other questions that will not let me go." },
+  { t: "The human experience", p: "What it is like to be a person learning in public, one moment at a time." },
 ];
 
 export default function Home() {
+  const posts = getPosts().slice(0, 4);
+
   return (
-    <BlogLayout>
-      {/* Hero */}
-      <header className="relative overflow-hidden hero-section">
-        {/* Swarm canvas — restrained graphite/cream particles */}
-        <div className="absolute inset-0">
-          <BackgroundSwarm />
-        </div>
-
-        <div className="relative z-10 pt-12 pb-10 md:pt-16 md:pb-12 px-6 md:px-8">
-          <div className="max-w-5xl mx-auto">
-            <p className="header-mono text-[11px] uppercase tracking-[0.2em] text-[color:var(--text-subtle)] mb-6">
-              Notebook · 2025
-            </p>
-            <h1
-              className="display-serif text-[color:var(--foreground)]"
-              style={{ fontSize: "clamp(3rem, 8vw, 5.5rem)" }}
-            >
-              Emergence
-            </h1>
-            <p
-              className="mt-6 max-w-xl text-[color:var(--text-muted)]"
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontStyle: "italic",
-                fontSize: "clamp(1.125rem, 2vw, 1.375rem)",
-                lineHeight: 1.4,
-              }}
-            >
-              Research notes on multi-agent systems, collective intelligence,
-              and computational models of consciousness.
-            </p>
-
-            <div className="mt-10 flex items-center gap-3">
-              <span className="block w-1.5 h-1.5 rounded-full bg-[color:var(--accent)] pulse-glow" />
-              <p className="header-mono text-[11px] uppercase tracking-[0.2em] text-[color:var(--text-subtle)]">
-                Ashutosh Trivedi · Live
+    <>
+      <section className="hero">
+        <div className="swarm"><Swarm /></div>
+        <div className="wrap" style={{ position: "relative" }}>
+          <div className="row">
+            <div className="portrait">
+              <img src={site.photo} alt={site.name} width={96} height={96} />
+            </div>
+            <div className="col">
+              <h1 className="display">
+                Trying to win over <span className="accent">my mind</span>.
+              </h1>
+              <p className="lead">
+                I am {site.name}. I build at the intersection of machine learning and distributed
+                systems, and I write here about beauty, philosophy, mathematics, science, technology and the
+                human experience.
               </p>
+              <div className="meta">
+                <a href={site.company.url} target="_blank" rel="noopener noreferrer">Founder, {site.company.name}</a>
+                <a href={site.social.x} target="_blank" rel="noopener noreferrer">X</a>
+                <a href={site.social.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href={site.social.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              </div>
             </div>
           </div>
         </div>
-      </header>
+      </section>
 
-      {/* Separator line */}
-      <div className="w-full h-px bg-[color:var(--border)]" />
-
-      {/* Posts */}
-      <main className="px-6 md:px-8 py-10 md:py-12 main-content">
-        <div className="max-w-5xl mx-auto">
-          <ol className="divide-y divide-[color:var(--border)]">
-            {posts.map((post) => (
-              <li key={post.slug} className="group">
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="grid grid-cols-12 gap-4 md:gap-8 py-8 md:py-10 items-start"
-                >
-                  {/* Date */}
-                  <div className="col-span-12 md:col-span-3">
-                    <time className="header-mono text-[11px] uppercase tracking-[0.2em] text-[color:var(--text-subtle)]">
-                      {post.date}
-                    </time>
-                  </div>
-
-                  {/* Title block */}
-                  <div className="col-span-12 md:col-span-9">
-                    <h3
-                      className="headline-serif text-[color:var(--foreground)] group-hover:text-[color:var(--accent)] transition-colors"
-                      style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)" }}
-                    >
-                      {post.title}
-                    </h3>
-                    <p
-                      className="mt-1 text-[color:var(--text-subtle)] italic"
-                      style={{
-                        fontFamily: "var(--font-serif)",
-                        fontSize: "1.0625rem",
-                      }}
-                    >
-                      {post.subtitle}
-                    </p>
-                    <p className="mt-4 max-w-prose text-[color:var(--text-muted)] leading-relaxed">
-                      {post.description}
-                    </p>
-                    <div className="mt-5 flex flex-wrap gap-2">
-                      {post.tags.map((tag) => (
-                        <span key={tag} className="tag">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+      <section className="block">
+        <div className="wrap">
+          <div className="rule"><span className="label">Writing</span></div>
+          <ul className="posts">
+            {posts.map((p) => (
+              <li key={p.slug}>
+                <Link href={p.href ?? `/writing/${p.slug}`} className="post">
+                  <span className="when"><b>{p.category}</b>{fmt(p.date)}</span>
+                  <span>
+                    <span className="t">{p.title}</span>
+                    {p.excerpt && <p>{p.excerpt}</p>}
+                  </span>
                 </Link>
               </li>
             ))}
-          </ol>
+            <li>
+              <Link href="/darsana" className="post">
+                <span className="when"><b>{darsanaSeries.category}</b>{fmt(darsanaSeries.date)}</span>
+                <span>
+                  <span className="t">{darsanaSeries.title}</span>
+                  <p>{darsanaSeries.excerpt}</p>
+                </span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/chitrakavya" className="post">
+                <span className="when"><b>Research</b>Apr 2026</span>
+                <span>
+                  <span className="t">Chitrakāvya: poems that are programs</span>
+                  <p>Sanskrit poets encoded knight&apos;s tours, magic squares and palindromic surfaces into verse, a thousand years before Euler. The archive, with the tour you can step through.</p>
+                </span>
+              </Link>
+            </li>
+          </ul>
+          <p style={{ marginTop: 28 }}>
+            <Link href="/writing" className="u arrow">All writing</Link>
+          </p>
         </div>
-      </main>
+      </section>
 
-      {/* Footer */}
-      <footer className="py-10 px-6 md:px-8 border-t border-[color:var(--border)]">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <Link
-            href="/about"
-            className="header-mono text-[11px] uppercase tracking-[0.2em] text-[color:var(--text-subtle)] hover:text-[color:var(--accent)] transition-colors"
-          >
-            ASHUTOSH TRIVEDI
-          </Link>
-          <div className="flex gap-6">
-            <a
-              href="https://twitter.com/ashu_trv"
-              className="header-mono text-[11px] uppercase tracking-[0.2em] text-[color:var(--text-subtle)] hover:text-[color:var(--accent)] transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Twitter
-            </a>
-            <a
-              href="https://github.com/codeAshu"
-              className="header-mono text-[11px] uppercase tracking-[0.2em] text-[color:var(--text-subtle)] hover:text-[color:var(--accent)] transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
-            <a
-              href="https://linkedin.com/in/ashutoshtrivedi"
-              className="header-mono text-[11px] uppercase tracking-[0.2em] text-[color:var(--text-subtle)] hover:text-[color:var(--accent)] transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LinkedIn
-            </a>
+      <section className="block">
+        <div className="wrap">
+          <div className="rule"><span className="label">Threads</span></div>
+          <ul className="threads">
+            {threads.map((x) => (
+              <li key={x.t}>
+                <div className="t">{x.t}</div>
+                <p>{x.p}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="block">
+        <div className="wrap">
+          <div className="strip">
+            <div>
+              <h2 className="h2">A poem, a diagram and an algorithm in one composition.</h2>
+              <p className="lead" style={{ marginTop: 18 }}>
+                Around 1300 CE, Vedānta Deśika wrote a 32-syllable hymn that, read along a
+                knight&apos;s tour of a half chessboard, becomes a second hymn.
+              </p>
+              <p style={{ marginTop: 26 }}>
+                <Link href="/chitrakavya/knights-tour" className="btn">Step through the tour</Link>
+              </p>
+            </div>
+            <figure>
+              <Art kind="knight" />
+            </figure>
           </div>
         </div>
-      </footer>
-    </BlogLayout>
+      </section>
+    </>
   );
 }

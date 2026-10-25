@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 460" role="img" aria-label="Knight on a half chessboard with a knight's tour overlay">
+  <defs>
+    <pattern id="paper" patternUnits="userSpaceOnUse" width="6" height="6">
+      <rect width="6" height="6" fill="#f7f1e3"/>
+      <circle cx="1" cy="1" r="0.4" fill="#1f1b16" fill-opacity="0.05"/>
+    </pattern>
+    <radialGradient id="halo" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#f6e1bf"/>
+      <stop offset="100%" stop-color="#f7f1e3" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7a3a14"/>
+      <stop offset="100%" stop-color="#283561"/>
+    </linearGradient>
+  </defs>
+
+  <!-- background halo -->
+  <rect width="520" height="460" fill="url(#paper)"/>
+  <ellipse cx="260" cy="190" rx="240" ry="170" fill="url(#halo)"/>
+
+  <!-- decorative ornament: lotus mandala -->
+  <g transform="translate(260 200)" opacity="0.18">
+    <g fill="none" stroke="#7a3a14" stroke-width="1">
+      <circle r="170"/>
+      <circle r="140"/>
+      <circle r="110"/>
+    </g>
+    <g fill="none" stroke="#7a3a14" stroke-width="1.2">
+      <g>
+        <path d="M0 -160 C 28 -120 28 -80 0 -50 C -28 -80 -28 -120 0 -160 Z"/>
+      </g>
+      <g transform="rotate(45)"><path d="M0 -160 C 28 -120 28 -80 0 -50 C -28 -80 -28 -120 0 -160 Z"/></g>
+      <g transform="rotate(90)"><path d="M0 -160 C 28 -120 28 -80 0 -50 C -28 -80 -28 -120 0 -160 Z"/></g>
+      <g transform="rotate(135)"><path d="M0 -160 C 28 -120 28 -80 0 -50 C -28 -80 -28 -120 0 -160 Z"/></g>
+      <g transform="rotate(180)"><path d="M0 -160 C 28 -120 28 -80 0 -50 C -28 -80 -28 -120 0 -160 Z"/></g>
+      <g transform="rotate(225)"><path d="M0 -160 C 28 -120 28 -80 0 -50 C -28 -80 -28 -120 0 -160 Z"/></g>
+      <g transform="rotate(270)"><path d="M0 -160 C 28 -120 28 -80 0 -50 C -28 -80 -28 -120 0 -160 Z"/></g>
+      <g transform="rotate(315)"><path d="M0 -160 C 28 -120 28 -80 0 -50 C -28 -80 -28 -120 0 -160 Z"/></g>
+    </g>
+  </g>
+
+  <!-- 4x8 chess board (the half-board on which the knight's tour is solved) -->
+  <g transform="translate(60 120)">
+    <rect x="-2" y="-2" width="404" height="204" fill="none" stroke="#1f1b16" stroke-width="2"/>
+    <g>
+      <!-- 32 squares -->
+      <g id="cells" font-family="Tiro Devanagari Sanskrit, serif" font-size="20" text-anchor="middle">
+        <!-- generated rows -->
+        <g>
+          <rect x="0"   y="0"   width="50" height="50" fill="#efe6d2"/>
+          <rect x="50"  y="0"   width="50" height="50" fill="#e3d2a8"/>
+          <rect x="100" y="0"   width="50" height="50" fill="#efe6d2"/>
+          <rect x="150" y="0"   width="50" height="50" fill="#e3d2a8"/>
+          <rect x="200" y="0"   width="50" height="50" fill="#efe6d2"/>
+          <rect x="250" y="0"   width="50" height="50" fill="#e3d2a8"/>
+          <rect x="300" y="0"   width="50" height="50" fill="#efe6d2"/>
+          <rect x="350" y="0"   width="50" height="50" fill="#e3d2a8"/>
+        </g>
+        <g>
+          <rect x="0"   y="50"  width="50" height="50" fill="#e3d2a8"/>
+          <rect x="50"  y="50"  width="50" height="50" fill="#efe6d2"/>
+          <rect x="100" y="50"  width="50" height="50" fill="#e3d2a8"/>
+          <rect x="150" y="50"  width="50" height="50" fill="#efe6d2"/>
+          <rect x="200" y="50"  width="50" height="50" fill="#e3d2a8"/>
+          <rect x="250" y="50"  width="50" height="50" fill="#efe6d2"/>
+          <rect x="300" y="50"  width="50" height="50" fill="#e3d2a8"/>
+          <rect x="350" y="50"  width="50" height="50" fill="#efe6d2"/>
+        </g>
+        <g>
+          <rect x="0"   y="100" width="50" height="50" fill="#efe6d2"/>
+          <rect x="50"  y="100" width="50" height="50" fill="#e3d2a8"/>
+          <rect x="100" y="100" width="50" height="50" fill="#efe6d2"/>
+          <rect x="150" y="100" width="50" height="50" fill="#e3d2a8"/>
+          <rect x="200" y="100" width="50" height="50" fill="#efe6d2"/>
+          <rect x="250" y="100" width="50" height="50" fill="#e3d2a8"/>
+          <rect x="300" y="100" width="50" height="50" fill="#efe6d2"/>
+          <rect x="350" y="100" width="50" height="50" fill="#e3d2a8"/>
+        </g>
+        <g>
+          <rect x="0"   y="150" width="50" height="50" fill="#e3d2a8"/>
+          <rect x="50"  y="150" width="50" height="50" fill="#efe6d2"/>
+          <rect x="100" y="150" width="50" height="50" fill="#e3d2a8"/>
+          <rect x="150" y="150" width="50" height="50" fill="#efe6d2"/>
+          <rect x="200" y="150" width="50" height="50" fill="#e3d2a8"/>
+          <rect x="250" y="150" width="50" height="50" fill="#efe6d2"/>
+          <rect x="300" y="150" width="50" height="50" fill="#e3d2a8"/>
+          <rect x="350" y="150" width="50" height="50" fill="#efe6d2"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- knight tour path (a real Rudrata-style closed half-board tour) -->
+    <!-- tour numbers below correspond to syllables 1..32 placed on cells; we draw the path -->
+    <!-- cells indexed (col, row) with row 0 = top -->
+    <g fill="none" stroke="url(#ink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
+      <polyline points="
+        25,25
+        125,75
+        225,25
+        325,75
+        375,25
+        275,75
+        175,25
+        75,75
+        25,125
+        125,175
+        225,125
+        325,175
+        375,125
+        275,175
+        175,125
+        75,175
+        25,75
+        125,25
+        225,75
+        325,25
+        375,75
+        275,25
+        175,75
+        75,25
+        25,175
+        125,125
+        225,175
+        325,125
+        375,175
+        275,125
+        175,175
+        75,125"/>
+    </g>
+    <!-- start dot -->
+    <circle cx="25" cy="25" r="6" fill="#b8581c"/>
+    <!-- knight glyph -->
+    <g transform="translate(355 145) scale(0.8)" fill="#1f1b16" opacity="0.9">
+      <path d="M10 50 C 8 30 18 14 36 8 C 34 2 38 -4 44 -2 C 50 0 50 6 48 10 C 60 14 70 22 70 38 L 70 50 L 12 50 Z"/>
+    </g>
+  </g>
+
+  <!-- caption -->
+  <g font-family="EB Garamond, serif" fill="#3b342b">
+    <text x="60" y="370" font-size="14" font-style="italic">A knight's tour on the 4×8 half-board —</text>
+    <text x="60" y="390" font-size="14" font-style="italic">the device used by Rudraṭa (9th c.) and Vedānta Deśika (14th c.)</text>
+    <text x="60" y="410" font-size="14" font-style="italic">to bind two śloka into a single living object.</text>
+  </g>
+</svg>

@@ -1,95 +1,38 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Instrument_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import ThemeTransition from "@/components/ThemeTransition";
-
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  style: ["normal", "italic"],
-  display: "swap",
-});
-
-const instrument = Instrument_Sans({
-  variable: "--font-instrument",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
-  display: "swap",
-});
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  display: "swap",
-});
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://emergence.ashutoshtrivedi.com"),
-  title: "Emergence | Ashutosh Trivedi",
-  description:
-    "Research notes on multi-agent systems, collective intelligence, and computational models of consciousness.",
+  metadataBase: new URL(site.domain),
+  title: { default: `${site.name} · emergence`, template: `%s · ${site.name}` },
+  description: site.description,
   openGraph: {
-    title: "Emergence",
-    description:
-      "Research notes on multi-agent systems, collective intelligence, and computational models of consciousness.",
     type: "website",
-    siteName: "Emergence",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Emergence — Research on AI and Collective Intelligence",
-      },
-    ],
+    siteName: "emergence.live",
+    title: site.name,
+    description: site.description,
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Emergence | Ashutosh Trivedi",
-    description:
-      "Research notes on multi-agent systems, collective intelligence, and computational models of consciousness.",
-    images: ["/og-image.png"],
-  },
+  twitter: { card: "summary_large_image", creator: "@ashu_trv" },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="en">
       <head>
-        {/*
-          Default to light. Editorial reading is a light-mode activity per
-          the Impeccable design system. Only honor an explicit saved choice.
-        */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var saved = localStorage.getItem('theme');
-                  var theme = (saved === 'dark' || saved === 'light') ? saved : 'light';
-                  document.documentElement.setAttribute('data-theme', theme);
-                } catch (e) {
-                  document.documentElement.setAttribute('data-theme', 'light');
-                }
-              })();
-            `,
-          }}
+        <meta name="theme-color" content="#F2F1EC" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&family=Tiro+Devanagari+Sanskrit&display=swap"
+          rel="stylesheet"
         />
       </head>
-      <body
-        className={`${cormorant.variable} ${instrument.variable} ${spaceGrotesk.variable} antialiased`}
-      >
-        <ThemeTransition />
-        <Header />
-        <div className="pt-14">{children}</div>
+      <body>
+        <Nav />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
