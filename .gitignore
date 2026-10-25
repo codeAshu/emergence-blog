@@ -6,3 +6,5 @@ out
 *.log
 preview
 out
+.figures.cjs
+tsconfig.tsbuildinfo
