@@ -1,5 +1,5 @@
-// The six darśana explainers: a series of notes on the orthodox schools of
-// Indian philosophy. Each post lives at /darsana/<slug>; the content itself is
+// The six darśana explainers: a series of notes on the six Indian philosophical
+// schools. Each post lives at /darsana/<slug>; the content itself is
 // generated into app/darsana/<slug>/content.ts from the standalone pages.
 
 export type DarsanaPost = {
@@ -16,7 +16,7 @@ export const darsanaSeries = {
   date: "2026-10-17",
   category: "Notes",
   excerpt:
-    "Six illustrated explainers on the orthodox schools of Indian philosophy, written as a compiler's notes: Sāṃkhya, Yoga, Nyāya, Vaiśeṣika, Mīmāṃsā and Vedānta, with original diagrams and a few things to try.",
+    "Six illustrated explainers on the Indian philosophical schools, written as a compiler's notes: Sāṃkhya, Yoga, Nyāya, Vaiśeṣika, Mīmāṃsā and Vedānta, with original diagrams and a few things to try.",
 };
 
 export const darsanaPosts: DarsanaPost[] = [
