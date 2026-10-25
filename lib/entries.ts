@@ -1,7 +1,7 @@
 // Everything the index can point at, in one list: markdown posts plus the content that lives as
 // its own pages (the darśana series, the Chitrakāvya archive). Home, Writing and topic pages read this.
 import { getPosts } from "./posts";
-import { darsanaSeries } from "./darsana";
+import { darsanaPosts, darsanaSeries } from "./darsana";
 
 export type Entry = {
   slug: string;
@@ -14,15 +14,16 @@ export type Entry = {
 };
 
 const standalone: Entry[] = [
-  {
-    slug: "darsana",
-    href: "/darsana",
-    title: darsanaSeries.title,
+  // the six darśana posts, in series order (they share one date, so the stable sort below keeps it)
+  ...darsanaPosts.map((p) => ({
+    slug: `darsana-${p.slug}`,
+    href: `/darsana/${p.slug}`,
+    title: p.title,
     category: darsanaSeries.category,
     date: darsanaSeries.date,
-    excerpt: darsanaSeries.excerpt,
-    topics: ["philosophy", "mind"],
-  },
+    excerpt: p.excerpt,
+    topics: p.topics,
+  })),
   {
     slug: "chitrakavya",
     href: "/chitrakavya",
@@ -45,7 +46,7 @@ export function getEntries(): Entry[] {
     excerpt: p.excerpt,
     topics: p.topics,
   }));
-  return [...posts, ...standalone].sort((a, b) => (a.date < b.date ? 1 : -1));
+  return [...posts, ...standalone].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
 }
 
 export function getEntriesByTopic(slug: string): Entry[] {
