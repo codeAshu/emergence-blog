@@ -14,13 +14,16 @@ Drop a markdown file in `content/posts/<slug>.md` with frontmatter:
     ---
     title: "Title"
     subtitle: "One line under the title."
-    category: Essay        # Essay, Yoga, Mind, AI, Mathematics, Research, Notes
+    category: Essay        # Essay, Research, Notes (the tab it sits under)
+    topics: [agents, mind] # one or more of: mathematics, optimization, beauty, agents, mind, science, chitrakavya, human
     date: 2026-10-17
     author: Ashutosh Trivedi
     featured: true         # shows in the featured row (first three by date)
     art: flock             # card illustration: clay, flock, knight, or leave out
     excerpt: "Two sentences for the card."
     ---
+
+Topics are the site's index (lib/topics.ts): each has a figure and a page at /topics/<slug>, and collects every post that names it. Add a topic there and it appears on the home page, the Topics page and the nav automatically.
 
 The body is plain markdown. Raw HTML is allowed (for example a closing `<p class="note">`).
 

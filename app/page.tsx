@@ -1,23 +1,15 @@
 import Link from "next/link";
 import Swarm from "@/components/Swarm";
-import { figures, Tour } from "@/components/Figures";
+import Fig from "@/components/Fig";
+import { topics } from "@/lib/topics";
 import { getPosts, fmt } from "@/lib/posts";
 import { site } from "@/lib/site";
-import { darsanaSeries } from "@/lib/darsana";
-
-const threads = [
-  { t: "Yoga and the mind", p: "The oldest engineering manual for awareness, read by someone who builds minds for a living." },
-  { t: "AI and the society of agents", p: "Emergence, alignment as architecture, and what happens when the players are no longer human." },
-  { t: "Beauty", p: "Why some structures feel right before they are proven. Murmurations, metre, proofs, mountains." },
-  { t: "Science and technology", p: "Notes from building infrastructure for machines that see, and from the papers that change how I think." },
-  { t: "Mathematics", p: "Fractals, higher-order structure, and the proofs that feel inevitable once you see them. Self-similarity as a way of thinking." },
-  { t: "Optimization", p: "Gradients, search, equilibria, and what a system is really minimising when it looks like it is learning." },
-  { t: "Side research", p: "Chitrakāvya, computation as poetry, and other questions that will not let me go." },
-  { t: "The human experience", p: "What it is like to be a person learning in public, one moment at a time." },
-];
+import PostRow from "@/components/PostRow";
 
 export default function Home() {
-  const posts = getPosts().slice(0, 4);
+  const posts = getPosts();
+  const latest = posts.slice(0, 4);
+  const count = (slug: string) => posts.filter((p) => p.topics.includes(slug)).length;
 
   return (
     <>
@@ -50,71 +42,41 @@ export default function Home() {
 
       <section className="block" style={{ paddingTop: 0, borderTop: 0 }}>
         <div className="wrap">
-          <ul className="figs">
-            {figures.map(({ key, label, title, Figure, href }) => (
-              <li key={key}>
-                <Link href={href}>
-                  <span className="label">{label}</span>
-                  <span className="fig"><Figure /></span>
-                  <span className="t">{title}</span>
-                </Link>
-              </li>
-            ))}
+          <ul className="figs figs--4">
+            {topics.map((t) => {
+              const n = count(t.slug);
+              return (
+                <li key={t.slug}>
+                  <Link href={`/topics/${t.slug}`}>
+                    <span className="label">{t.figureName}</span>
+                    <span className="fig"><Fig k={t.figure} alt={t.figureName} /></span>
+                    <span className="t">{t.name}</span>
+                    <span className="line">{t.line}</span>
+                    <span className="count">{n ? `${n} ${n === 1 ? "piece" : "pieces"}` : t.href ? "Archive" : "Soon"}</span>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </section>
 
       <section className="block">
         <div className="wrap">
-          <div className="rule"><span className="label">Writing</span></div>
+          <div className="rule"><span className="label">Latest</span></div>
           <ul className="posts">
-            {posts.map((p) => (
+            {latest.map((p) => (
               <li key={p.slug}>
-                <Link href={p.href ?? `/writing/${p.slug}`} className="post">
-                  <span className="when"><b>{p.category}</b>{fmt(p.date)}</span>
-                  <span>
-                    <span className="t">{p.title}</span>
-                    {p.excerpt && <p>{p.excerpt}</p>}
-                  </span>
-                </Link>
+                <PostRow href={`/writing/${p.slug}`} category={p.category} dateLabel={fmt(p.date)} title={p.title} excerpt={p.excerpt} topics={p.topics} />
               </li>
             ))}
             <li>
-              <Link href="/darsana" className="post">
-                <span className="when"><b>{darsanaSeries.category}</b>{fmt(darsanaSeries.date)}</span>
-                <span>
-                  <span className="t">{darsanaSeries.title}</span>
-                  <p>{darsanaSeries.excerpt}</p>
-                </span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/chitrakavya" className="post">
-                <span className="when"><b>Research</b>Apr 2026</span>
-                <span>
-                  <span className="t">Chitrakāvya: poems that are programs</span>
-                  <p>Sanskrit poets encoded knight&apos;s tours, magic squares and palindromic surfaces into verse, a thousand years before Euler. The archive, with the tour you can step through.</p>
-                </span>
-              </Link>
+              <PostRow href="/chitrakavya" category="Research" dateLabel="Apr 2026" title="Chitrakāvya: poems that are programs" excerpt="Sanskrit poets encoded knight's tours, magic squares and palindromic surfaces into verse, a thousand years before Euler. The archive, with the tour you can step through." topics={["chitrakavya", "mathematics"]} />
             </li>
           </ul>
           <p style={{ marginTop: 28 }}>
             <Link href="/writing" className="u arrow">All writing</Link>
           </p>
-        </div>
-      </section>
-
-      <section className="block">
-        <div className="wrap">
-          <div className="rule"><span className="label">Threads</span></div>
-          <ul className="threads">
-            {threads.map((x) => (
-              <li key={x.t}>
-                <div className="t">{x.t}</div>
-                <p>{x.p}</p>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 
@@ -132,7 +94,7 @@ export default function Home() {
               </p>
             </div>
             <figure className="fig-lg">
-              <Tour />
+              <Fig k="tour" alt="Knight's tour" />
             </figure>
           </div>
         </div>

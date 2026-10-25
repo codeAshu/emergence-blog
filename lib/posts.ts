@@ -16,6 +16,7 @@ export type Post = {
   art?: string; // key for the card illustration
   html?: string;
   words?: number;
+  topics: string[];
 };
 
 const dir = path.join(process.cwd(), "content", "posts");
@@ -36,6 +37,7 @@ function read(slug: string): Post {
     art: data.art,
     html: marked.parse(content, { gfm: true }) as string,
     words: content.split(/\s+/).length,
+    topics: Array.isArray(data.topics) ? data.topics.map(String) : [],
   };
 }
 
@@ -60,4 +62,8 @@ export function fmt(date: string) {
     day: "numeric",
     year: "numeric",
   });
+}
+
+export function getPostsByTopic(slug: string): Post[] {
+  return getPosts().filter((p) => p.topics.includes(slug));
 }

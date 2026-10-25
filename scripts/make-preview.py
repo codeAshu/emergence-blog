@@ -14,6 +14,7 @@ pages = sorted(p for p in OUT.rglob("*.html") if p.name not in ("404.html", "_no
 css = next(OUT.glob("_next/static/chunks/*.css"))
 shutil.copy(css, PRE / "styles.css")
 shutil.copy(OUT / "ashu.jpg", PRE / "ashu.jpg")
+shutil.copytree(OUT / "figures", PRE / "figures", dirs_exist_ok=True)
 shutil.copytree(OUT / "chitrakavya", PRE / "chitrakavya", ignore=shutil.ignore_patterns("*.html", "*.txt", "__next*"), dirs_exist_ok=True)
 
 # route -> file
@@ -36,6 +37,8 @@ def relativize(url, from_rel):
         target = routes[path.rstrip("/")]
     elif path == "/ashu.jpg":
         target = "ashu.jpg"
+    elif path.startswith("/figures/"):
+        target = path.lstrip("/")
     elif path.startswith("/chitrakavya/") and re.search(r"\.(mp3|svg|png|jpg)$", path):
         target = path.lstrip("/")
     else:

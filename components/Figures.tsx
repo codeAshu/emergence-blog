@@ -9,6 +9,23 @@ const faint = "var(--faint)";
 const hair = "var(--hair)";
 const accent = "var(--accent)";
 
+type Bucket = { fill: string; op: number; d: string[] };
+function bucketed(): { add: (fill: string, op: number, d: string) => void; paths: () => React.JSX.Element[] } {
+  const m = new Map<string, Bucket>();
+  return {
+    add(fill, op, d) {
+      const q = Math.round(op * 8) / 8; // 8 opacity steps
+      const k = fill + "|" + q;
+      const b = m.get(k) ?? { fill, op: q, d: [] };
+      b.d.push(d);
+      m.set(k, b);
+    },
+    paths: () => Array.from(m.values()).map((b, i) => <path key={i} d={b.d.join("")} fill={b.fill} fillOpacity={b.op} />),
+  };
+}
+const rectD = (x: number, y: number, w: number, h: number) => `M${x.toFixed(1)} ${y.toFixed(1)}h${w.toFixed(1)}v${h.toFixed(1)}h${(-w).toFixed(1)}z`;
+const circD = (cx: number, cy: number, r: number) => `M${(cx - r).toFixed(1)} ${cy.toFixed(1)}a${r.toFixed(2)} ${r.toFixed(2)} 0 1 0 ${(2 * r).toFixed(2)} 0a${r.toFixed(2)} ${r.toFixed(2)} 0 1 0 ${(-2 * r).toFixed(2)} 0z`;
+
 function rng(seed: number) {
   let a = seed >>> 0;
   return () => {
@@ -38,15 +55,17 @@ export function Mandelbrot() {
       cells.push({ x: i * cell, y: j * cell, it });
     }
   }
+  const g = bucketed();
+  cells.forEach((c) => {
+    const inside = c.it >= maxIt;
+    const edge = !inside && c.it >= 7;
+    const fill = inside ? ink : edge ? accent : faint;
+    const op = inside ? 0.9 : edge ? Math.min(1, 0.25 + (c.it - 7) / 18) : 0.08 + Math.min(0.22, c.it * 0.04);
+    g.add(fill, op, rectD(c.x + 1, c.y + 1, cell - 2, cell - 2));
+  });
   return (
     <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="The Mandelbrot set drawn as a grid of cells">
-      {cells.map((c, k) => {
-        const inside = c.it >= maxIt;
-        const edge = !inside && c.it >= 7;
-        const fill = inside ? ink : edge ? accent : faint;
-        const op = inside ? 0.9 : edge ? Math.min(1, 0.25 + (c.it - 7) / 18) : 0.08 + Math.min(0.22, c.it * 0.04);
-        return <rect key={k} x={c.x + 1} y={c.y + 1} width={cell - 2} height={cell - 2} fill={fill} fillOpacity={op} />;
-      })}
+      {g.paths()}
     </svg>
   );
 }
@@ -132,12 +151,14 @@ export function Phyllotaxis() {
     const r = 7.6 * Math.sqrt(i), t = i * ga;
     return { x: W / 2 + r * Math.cos(t), y: H / 2 + r * Math.sin(t), i, s: 1.2 + 2.4 * Math.sqrt(i / n) };
   });
+  const g = bucketed();
+  pts.forEach((p) => {
+    const arm = p.i % 34 === 13;
+    g.add(arm ? accent : ink, arm ? 1 : 0.22 + 0.5 * (p.i / n), circD(p.x, p.y, p.s));
+  });
   return (
     <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="A phyllotaxis spiral of seeds with one spiral arm highlighted">
-      {pts.map((p) => {
-        const arm = p.i % 34 === 13;
-        return <circle key={p.i} cx={p.x} cy={p.y} r={p.s} fill={arm ? accent : ink} fillOpacity={arm ? 1 : 0.22 + 0.5 * (p.i / n)} />;
-      })}
+      {g.paths()}
     </svg>
   );
 }
@@ -216,13 +237,60 @@ export function Tour() {
   );
 }
 
-export const figures = [
-  { key: "mandelbrot", label: "Mathematics", title: "Mandelbrot", Figure: Mandelbrot, href: "/writing" },
-  { key: "descent", label: "Optimization", title: "Descent", Figure: Descent, href: "/writing" },
-  { key: "phyllotaxis", label: "Beauty", title: "Phyllotaxis", Figure: Phyllotaxis, href: "/writing" },
-  { key: "society", label: "Agents", title: "Society", Figure: Society, href: "/writing/simple-rules-whole-societies" },
-  { key: "stillness", label: "Yoga", title: "Stillness", Figure: Stillness, href: "/writing" },
-  { key: "tour", label: "Chitrakāvya", title: "Knight's tour", Figure: Tour, href: "/chitrakavya/knights-tour" },
-];
+/* 7. Interference. Two point sources, the intensity sampled on a grid: science as measured pattern. */
+export function Interference() {
+  const n = 36, cell = W / n;
+  const s1 = [W * 0.38, H * 0.5], s2 = [W * 0.62, H * 0.5], k = 0.62;
+  const dots: { x: number; y: number; a: number }[] = [];
+  for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) {
+    const x = (i + 0.5) * cell, y = (j + 0.5) * cell;
+    const d1 = Math.hypot(x - s1[0], y - s1[1]), d2 = Math.hypot(x - s2[0], y - s2[1]);
+    const amp = Math.cos(k * d1) + Math.cos(k * d2);
+    dots.push({ x, y, a: amp / 2 });
+  }
+  const g = bucketed();
+  dots.forEach((d) => {
+    const v = Math.abs(d.a);
+    if (v < 0.22) return;
+    const sz = Math.round((1.4 + v * 5.6) * 2) / 2;
+    g.add(ink, 0.12 + v * 0.7, rectD(d.x - sz / 2, d.y - sz / 2, sz, sz));
+  });
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Interference pattern from two point sources">
+      {g.paths()}
+      <circle cx={s1[0]} cy={s1[1]} r="3.5" fill={accent} />
+      <circle cx={s2[0]} cy={s2[1]} r="3.5" fill={accent} />
+    </svg>
+  );
+}
+
+/* 8. A walk. One path of many small steps; where it is now in orange. */
+export function Walk() {
+  const r = rng(29);
+  let x = W * 0.3, y = H * 0.62, a = -0.6;
+  const pts: number[][] = [[x, y]];
+  for (let i = 0; i < 520; i++) {
+    a += (r() - 0.5) * 0.9;
+    x += Math.cos(a) * 3.2; y += Math.sin(a) * 3.2;
+    if (x < 24 || x > W - 24) a = Math.PI - a; if (y < 24 || y > H - 24) a = -a;
+    x = Math.max(24, Math.min(W - 24, x)); y = Math.max(24, Math.min(H - 24, y));
+    pts.push([x, y]);
+  }
+  const d = pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join("");
+  const end = pts[pts.length - 1];
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="A long wandering path with its current position marked">
+      <path d={d} fill="none" stroke={ink} strokeOpacity="0.6" strokeWidth="0.9" strokeLinejoin="round" />
+      {pts.filter((_, i) => i % 40 === 0).map((p, i) => <circle key={i} cx={p[0]} cy={p[1]} r="1.8" fill={ink} fillOpacity="0.5" />)}
+      <circle cx={pts[0][0]} cy={pts[0][1]} r="3" fill="none" stroke={ink} strokeWidth="1" />
+      <circle cx={end[0]} cy={end[1]} r="4.5" fill={accent} />
+    </svg>
+  );
+}
+
+export const figureByKey: Record<string, () => React.JSX.Element> = {
+  mandelbrot: Mandelbrot, descent: Descent, phyllotaxis: Phyllotaxis, society: Society,
+  stillness: Stillness, tour: Tour, interference: Interference, walk: Walk,
+};
 
 void muted;
