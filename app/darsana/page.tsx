@@ -13,7 +13,7 @@ export default function DarsanaIndex() {
       <div className="pagehead col">
         <h1 className="display">The six darśanas</h1>
         <p className="lead">
-          Notes on the orthodox schools of Indian philosophy, one post each, written as a
+          Notes on the six Indian philosophical schools, one post each, written as a
           compiler&apos;s learning rather than a scholar&apos;s verdict. They read best in order:
           Sāṃkhya lays out the material, Yoga the way out of it, Nyāya and Vaiśeṣika the
           logic and the inventory, Mīmāṃsā the rite, and Vedānta the end the others were
