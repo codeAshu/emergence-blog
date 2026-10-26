@@ -25,8 +25,13 @@ export default function SectionNav({
   return (
     <nav className="secnav" aria-label={label}>
       <div className="secnav-head">
-        {sealImg && <img src={sealImg} alt="" width={20} height={20} />}
-        <span className={seal ? "deva" : undefined}>{seal ?? label}</span>
+        {seal && (
+          <span className="secnav-seal">
+            {sealImg && <img src={sealImg} alt="" width={20} height={20} />}
+            <span className="deva">{seal}</span>
+          </span>
+        )}
+        <span className="secnav-en">{label}</span>
       </div>
       <ul>
         {items.map((i) => (
