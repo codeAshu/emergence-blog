@@ -8,7 +8,7 @@ const description = "Vaiśeṣika is Nyāya's partner: the realist's list of wha
 export const metadata: Metadata = {
   title,
   description,
-  openGraph: { type: "article", title, description, publishedTime: "2026-10-17", authors: ["Ashutosh Trivedi"] },
+  openGraph: { type: "article", title, description, publishedTime: "2024-11-03", authors: ["Ashutosh Trivedi"] },
 };
 
 export default function VaisheshikaPage() {

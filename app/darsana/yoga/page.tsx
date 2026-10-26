@@ -8,7 +8,7 @@ const description = "Sāṃkhya explained how consciousness gets caught in matte
 export const metadata: Metadata = {
   title,
   description,
-  openGraph: { type: "article", title, description, publishedTime: "2026-10-17", authors: ["Ashutosh Trivedi"] },
+  openGraph: { type: "article", title, description, publishedTime: "2023-10-08", authors: ["Ashutosh Trivedi"] },
 };
 
 export default function YogaPage() {

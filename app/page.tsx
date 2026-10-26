@@ -10,7 +10,7 @@ import PostRow from "@/components/PostRow";
 
 export default function Home() {
   const entries = getEntries();
-  const latest = entries.filter((e) => e.category !== darsanaSeries.category).slice(0, 5);
+  const latest = entries.filter((e) => e.group !== darsanaSeries.category).slice(0, 5);
   const count = (slug: string) => entries.filter((e) => e.topics.includes(slug)).length;
 
   return (

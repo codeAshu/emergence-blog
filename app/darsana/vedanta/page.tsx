@@ -8,7 +8,7 @@ const description = "Vedānta is where the six darśanas were always heading: th
 export const metadata: Metadata = {
   title,
   description,
-  openGraph: { type: "article", title, description, publishedTime: "2026-10-17", authors: ["Ashutosh Trivedi"] },
+  openGraph: { type: "article", title, description, publishedTime: "2026-02-22", authors: ["Ashutosh Trivedi"] },
 };
 
 export default function VedantaPage() {

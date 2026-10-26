@@ -8,7 +8,7 @@ const description = "Sāṃkhya is the oldest of India's six classical philosoph
 export const metadata: Metadata = {
   title,
   description,
-  openGraph: { type: "article", title, description, publishedTime: "2026-10-17", authors: ["Ashutosh Trivedi"] },
+  openGraph: { type: "article", title, description, publishedTime: "2023-03-12", authors: ["Ashutosh Trivedi"] },
 };
 
 export default function SamkhyaPage() {
