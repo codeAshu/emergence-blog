@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import DarsanaPost from "@/components/DarsanaPost";
+import { ogFor } from "@/lib/og";
 import { css, html, js } from "./content";
 
 const title = "The seer who saw both";
@@ -8,7 +9,8 @@ const description = "Vedānta is where the six darśanas were always heading: th
 export const metadata: Metadata = {
   title,
   description,
-  openGraph: { type: "article", title, description, publishedTime: "2026-02-22", authors: ["Ashutosh Trivedi"] },
+  ...ogFor("/darsana/vedanta"),
+  openGraph: { ...ogFor("/darsana/vedanta").openGraph, type: "article", publishedTime: "2026-02-22", authors: ["Ashutosh Trivedi"] },
 };
 
 export default function VedantaPage() {

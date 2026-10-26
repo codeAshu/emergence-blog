@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import DarsanaPost from "@/components/DarsanaPost";
+import { ogFor } from "@/lib/og";
 import { css, html, js } from "./content";
 
 const title = "The act keeps its own books";
@@ -8,7 +9,8 @@ const description = "Mīmāṃsā is the school that defended the Vedic rite whe
 export const metadata: Metadata = {
   title,
   description,
-  openGraph: { type: "article", title, description, publishedTime: "2025-06-15", authors: ["Ashutosh Trivedi"] },
+  ...ogFor("/darsana/mimamsa"),
+  openGraph: { ...ogFor("/darsana/mimamsa").openGraph, type: "article", publishedTime: "2025-06-15", authors: ["Ashutosh Trivedi"] },
 };
 
 export default function MimamsaPage() {

@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { ogFor } from "@/lib/og";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About",
   description: "Ashutosh Trivedi. Builder at the edge of complexity.",
+  ...ogFor("/about"),
 };
 
 export default function AboutPage() {

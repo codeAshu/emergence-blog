@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPost, getPosts, fmt } from "@/lib/posts";
 import Prose from "@/components/Prose";
+import { ogFor } from "@/lib/og";
 import TopicChips from "@/components/TopicChips";
 import PostRow from "@/components/PostRow";
 import { topicBySlug } from "@/lib/topics";
@@ -17,10 +18,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const p = getPost(slug);
   if (!p) return {};
+  const o = ogFor(`/writing/${slug}`);
   return {
     title: p.title,
     description: p.subtitle ?? p.excerpt,
-    openGraph: { type: "article", title: p.title, description: p.subtitle ?? p.excerpt, publishedTime: p.date, authors: [p.author] },
+    ...o,
+    openGraph: { ...o.openGraph, type: "article", publishedTime: p.date, authors: [p.author] },
   };
 }
 

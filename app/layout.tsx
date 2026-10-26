@@ -2,19 +2,15 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import ViewToggle from "@/components/ViewToggle";
 import { site } from "@/lib/site";
+import { ogFor } from "@/lib/og";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.domain),
   title: { default: `${site.name} · emergence`, template: `%s · ${site.name}` },
   description: site.description,
-  openGraph: {
-    type: "website",
-    siteName: "emergence.live",
-    title: site.ogTitle,
-    description: site.ogDescription,
-  },
-  twitter: { card: "summary_large_image", creator: "@ashu_trv", title: site.ogTitle, description: site.ogDescription },
+  ...ogFor("/"),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -33,6 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Nav />
         <main>{children}</main>
         <Footer />
+        <ViewToggle />
       </body>
     </html>
   );

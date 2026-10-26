@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import DarsanaPost from "@/components/DarsanaPost";
+import { ogFor } from "@/lib/og";
 import { css, html, js } from "./content";
 
 const title = "An inventory of everything";
@@ -8,7 +9,8 @@ const description = "Vaiśeṣika is Nyāya's partner: the realist's list of wha
 export const metadata: Metadata = {
   title,
   description,
-  openGraph: { type: "article", title, description, publishedTime: "2024-11-03", authors: ["Ashutosh Trivedi"] },
+  ...ogFor("/darsana/vaisheshika"),
+  openGraph: { ...ogFor("/darsana/vaisheshika").openGraph, type: "article", publishedTime: "2024-11-03", authors: ["Ashutosh Trivedi"] },
 };
 
 export default function VaisheshikaPage() {

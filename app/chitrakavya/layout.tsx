@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { ogFor } from "@/lib/og";
 import CkNav from "@/components/ck/CkNav";
 
 export const metadata: Metadata = {
   title: { default: "Chitrakāvya", template: "%s · Chitrakāvya" },
   description: "A research archive on Sanskrit visual verse and ancient combinatorics. Poems that are diagrams and algorithms.",
+  ...ogFor("/chitrakavya"),
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

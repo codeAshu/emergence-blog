@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { ogFor } from "@/lib/og";
 import Link from "next/link";
 import { verse929, verse930, moveNumber } from "@/lib/ck";
 
-export const metadata: Metadata = { title: "Pādukā" };
+export const metadata: Metadata = { title: "Pādukā", ...ogFor("/chitrakavya/paduka") };
 
 const lineage = [
   ["Rudraṭa, Kāvyālaṅkāra 5.15", "c. 850 CE", "4 × 8", "32 + 32", "Poetic ornament"],

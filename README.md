@@ -34,3 +34,12 @@ Replace `public/ashu.jpg` (4:5 portrait works best). It is shown in greyscale on
 ## Chitrakāvya
 
 `/chitrakavya` is the archive moved from chitrakavya.worlddb.io. Data lives in `lib/ck.ts`; figures in `components/ck/Bandha.tsx`; the interactive tour in `components/ck/KnightsTour.tsx`. Point the old domain at `/chitrakavya` with a redirect once this is live.
+
+## Build steps
+
+`npm run build` runs three generators around `next build`:
+
+- `prebuild`: `npm run figures` renders the topic figures to `public/figures/*.svg`, then `npm run og` renders one 1200×630 social card per page to `public/og/<key>.png` (satori → resvg, fonts in `assets/fonts/`) and writes `public/llms.txt`. The list of pages, titles, descriptions and figures is `lib/pages.ts`; `lib/og.ts` points each page's metadata at its card.
+- `postbuild`: `npm run md` converts each prerendered page to Markdown in `public/md/<path>.md` (essays come straight from `content/posts`). The Human / Machine toggle at the bottom right of every page shows that file, as on videodb.io.
+
+So a change to any page's content, title or excerpt refreshes its card and its Markdown on the next build. The darśana posts' lead figures for their cards (`public/og/lead/*.png`) are rendered from the standalone pages by the darśana build script and committed.

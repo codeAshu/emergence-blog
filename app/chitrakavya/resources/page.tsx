@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import { ogFor } from "@/lib/og";
 import { resources } from "@/lib/ck";
 
-export const metadata: Metadata = { title: "Resources" };
+export const metadata: Metadata = { title: "Resources", ...ogFor("/chitrakavya/resources") };
 
 function Rows({ rows, cols }: { rows: string[][]; cols: string[] }) {
   return (
