@@ -1,5 +1,6 @@
 import Link from "next/link";
 import DarsanaScript from "@/components/DarsanaScript";
+import SectionNav from "@/components/SectionNav";
 import { darsanaPosts } from "@/lib/darsana";
 
 interface DarsanaPostProps {
@@ -12,21 +13,26 @@ interface DarsanaPostProps {
   js: string;
 }
 
+const menu = [
+  { href: "/darsana", label: "Overview" },
+  ...darsanaPosts.map((p) => ({ href: `/darsana/${p.slug}`, label: `${p.n} · ${p.school}` })),
+];
+
 /**
- * Renders one of the darśana explainers. These posts were written as
- * self-contained pages (their own type, diagrams and small interactive
- * widgets), so they are served as-is inside the site shell rather than
- * re-typeset through markdown. Their CSS is scoped under `.darsana` so
- * it cannot leak into the rest of the site.
+ * Renders one of the darśana explainers inside the same left-menu section grid
+ * that Chitrakāvya uses. The posts were written as self-contained pages (their
+ * own type, diagrams and small interactive widgets), so they are served as-is;
+ * their CSS is scoped under `.darsana` so it cannot leak into the rest of the site.
  */
 export default function DarsanaPost({ slug, css, html, js }: DarsanaPostProps) {
   const others = darsanaPosts.filter((p) => p.slug !== slug);
   return (
-    <>
-      <style dangerouslySetInnerHTML={{ __html: css }} />
-      <div className="darsana" dangerouslySetInnerHTML={{ __html: html }} />
-      <DarsanaScript js={js} />
-      <div className="wrap">
+    <div className="wrap section">
+      <SectionNav label="Darśana" seal="दर्शन" items={menu} />
+      <div className="section-body">
+        <style dangerouslySetInnerHTML={{ __html: css }} />
+        <div className="darsana" dangerouslySetInnerHTML={{ __html: html }} />
+        <DarsanaScript js={js} />
         <section className="block" style={{ paddingTop: 48 }}>
           <div className="rule"><span className="label">In this series</span></div>
           <ul className="posts">
@@ -44,6 +50,6 @@ export default function DarsanaPost({ slug, css, html, js }: DarsanaPostProps) {
           </p>
         </section>
       </div>
-    </>
+    </div>
   );
 }
