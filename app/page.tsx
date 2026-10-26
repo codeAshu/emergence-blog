@@ -24,12 +24,11 @@ export default function Home() {
             </div>
             <div className="col">
               <h1 className="display">
-                Trying to win over <span className="accent">my mind</span>.
+                Observe the <span className="accent">unknown</span>.
               </h1>
               <p className="lead">
-                I am {site.name}. I build at the intersection of machine learning and distributed
-                systems, and I write here about beauty, philosophy, mathematics, science, technology and the
-                human experience.
+                I am {site.name}. I write here about beauty, philosophy, mathematics, science,
+                technology and the human experience.
               </p>
               <div className="meta">
                 <a href={site.company.url} target="_blank" rel="noopener noreferrer">Founder, {site.company.name}</a>
