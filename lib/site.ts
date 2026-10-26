@@ -3,6 +3,8 @@ export const site = {
   short: "Ashu",
   domain: "https://emergence.live",
   tagline: "Observe the unknown.",
+  ogTitle: "Notes from Ashutosh Trivedi",
+  ogDescription: "I write here about beauty, philosophy, mathematics, science, technology and the human experience.",
   description:
     "Essays on beauty, philosophy, mathematics, science, technology and the human experience. Yoga, the mind, AI, the society of agents, fractals and optimization, and side research.",
   social: {
