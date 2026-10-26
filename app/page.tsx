@@ -5,11 +5,12 @@ import { topics } from "@/lib/topics";
 import { fmt } from "@/lib/posts";
 import { getEntries } from "@/lib/entries";
 import { site } from "@/lib/site";
+import { darsanaPosts, darsanaSeries } from "@/lib/darsana";
 import PostRow from "@/components/PostRow";
 
 export default function Home() {
   const entries = getEntries();
-  const latest = entries.slice(0, 5);
+  const latest = entries.filter((e) => e.category !== darsanaSeries.category).slice(0, 5);
   const count = (slug: string) => entries.filter((e) => e.topics.includes(slug)).length;
 
   return (
@@ -23,12 +24,11 @@ export default function Home() {
             </div>
             <div className="col">
               <h1 className="display">
-                Trying to win over <span className="accent">my mind</span>.
+                Observe the <span className="accent">unknown</span>.
               </h1>
               <p className="lead">
-                I am {site.name}. I build at the intersection of machine learning and distributed
-                systems, and I write here about beauty, philosophy, mathematics, science, technology and the
-                human experience.
+                I am {site.name}. I write here about beauty, philosophy, mathematics, science,
+                technology and the human experience.
               </p>
               <div className="meta">
                 <a href={site.company.url} target="_blank" rel="noopener noreferrer">Founder, {site.company.name}</a>
@@ -59,6 +59,23 @@ export default function Home() {
               );
             })}
           </ul>
+        </div>
+      </section>
+
+      <section className="block">
+        <div className="wrap">
+          <div className="rule"><span className="label">Darśana</span></div>
+          <p className="lead" style={{ marginBottom: 28 }}>{darsanaSeries.excerpt}</p>
+          <ul className="posts">
+            {darsanaPosts.map((p) => (
+              <li key={p.slug}>
+                <PostRow href={`/darsana/${p.slug}`} category={p.school} dateLabel={`${p.n} of 6 · ${p.read}`} title={p.title} excerpt={p.excerpt} />
+              </li>
+            ))}
+          </ul>
+          <p style={{ marginTop: 28 }}>
+            <Link href="/darsana" className="u arrow">The six, in order</Link>
+          </p>
         </div>
       </section>
 

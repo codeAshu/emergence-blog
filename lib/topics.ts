@@ -45,7 +45,7 @@ export const topics: Topic[] = [
     name: "Philosophy",
     figure: "tree",
     figureName: "A tree",
-    line: "The six darśanas, the Greeks, and the questions that stay open: what there is, how we know it, and what to do about it.",
+    line: "Dominant thoughts and curiosities of life and mind in India.",
     href: "/darsana",
     hrefLabel: "The darśana series",
   },

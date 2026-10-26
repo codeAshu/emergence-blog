@@ -25,7 +25,7 @@ export default function AboutPage() {
           <h1 className="display">{site.name}</h1>
           <div className="prose" style={{ padding: "28px 0 0", borderTop: 0 }}>
             <p>
-              I build at the intersection of machine learning and distributed systems. By day I run{" "}
+              By day I run{" "}
               <a href={site.company.url} target="_blank" rel="noopener noreferrer">VideoDB</a>, where we
               build data infrastructure for machines that see. Before that, a decade in natural language
               processing and multi-agent systems: embeddings, summarization, reasoning, and the question
@@ -38,8 +38,8 @@ export default function AboutPage() {
             </p>
             <h2>What I care about</h2>
             <p>
-              Beauty, philosophy, mathematics, science, technology and the human experience. I am
-              trying to win over my mind. Yoga is the oldest engineering
+              Beauty, philosophy, mathematics, science, technology and the human experience. I try
+              to observe the unknown. Yoga is the oldest engineering
               manual for awareness that I know of, and I read it next to papers on agents, memory and
               alignment.
             </p>

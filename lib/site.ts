@@ -2,7 +2,7 @@ export const site = {
   name: "Ashutosh Trivedi",
   short: "Ashu",
   domain: "https://emergence.live",
-  tagline: "Trying to win over my mind.",
+  tagline: "Observe the unknown.",
   description:
     "Essays on beauty, philosophy, mathematics, science, technology and the human experience. Yoga, the mind, AI, the society of agents, fractals and optimization, and side research.",
   social: {
@@ -15,5 +15,5 @@ export const site = {
   photo: "/ashu.jpg",
 };
 
-export const categories = ["Essay", "Yoga", "Mind", "AI", "Mathematics", "Research", "Notes"] as const;
+export const categories = ["Essay", "Darśana", "Yoga", "Mind", "AI", "Mathematics", "Research", "Notes"] as const;
 export type Category = (typeof categories)[number];
