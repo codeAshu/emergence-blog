@@ -8,7 +8,7 @@ const description = "Mīmāṃsā is the school that defended the Vedic rite whe
 export const metadata: Metadata = {
   title,
   description,
-  openGraph: { type: "article", title, description, publishedTime: "2026-10-17", authors: ["Ashutosh Trivedi"] },
+  openGraph: { type: "article", title, description, publishedTime: "2025-06-15", authors: ["Ashutosh Trivedi"] },
 };
 
 export default function MimamsaPage() {

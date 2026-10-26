@@ -8,7 +8,7 @@ const description = "Nyāya is the school of how we know and how we argue: four 
 export const metadata: Metadata = {
   title,
   description,
-  openGraph: { type: "article", title, description, publishedTime: "2026-10-17", authors: ["Ashutosh Trivedi"] },
+  openGraph: { type: "article", title, description, publishedTime: "2024-04-21", authors: ["Ashutosh Trivedi"] },
 };
 
 export default function NyayaPage() {

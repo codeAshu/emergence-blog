@@ -13,6 +13,7 @@ export default function WritingPage() {
     slug: e.slug,
     title: e.title,
     category: e.category,
+    group: e.group,
     date: e.date,
     dateLabel: fmt(e.date),
     author: "Ashutosh Trivedi",

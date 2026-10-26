@@ -13,16 +13,17 @@ export type Row = {
   excerpt?: string;
   href?: string;
   topics?: string[];
+  group?: string;
 };
 
 export default function WritingIndex({ rows }: { rows: Row[] }) {
   const [tab, setTab] = useState("All");
   const cats = useMemo(() => {
     const m = new Map<string, number>();
-    rows.forEach((r) => m.set(r.category, (m.get(r.category) ?? 0) + 1));
+    rows.forEach((r) => { const g = r.group ?? r.category; m.set(g, (m.get(g) ?? 0) + 1); });
     return [["All", rows.length] as [string, number], ...Array.from(m.entries())];
   }, [rows]);
-  const list = rows.filter((r) => tab === "All" || r.category === tab);
+  const list = rows.filter((r) => tab === "All" || (r.group ?? r.category) === tab);
 
   return (
     <section className="block" style={{ paddingTop: 36, borderTop: 0 }}>

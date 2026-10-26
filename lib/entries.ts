@@ -8,19 +8,21 @@ export type Entry = {
   href: string;
   title: string;
   category: string;
+  group?: string; // tab in the writing index when it differs from the category
   date: string; // ISO
   excerpt?: string;
   topics: string[];
 };
 
 const standalone: Entry[] = [
-  // the six darśana posts, in series order (they share one date, so the stable sort below keeps it)
+  // the six darśana posts: each row is labelled by its school and filed under Darśana in the index
   ...darsanaPosts.map((p) => ({
     slug: `darsana-${p.slug}`,
     href: `/darsana/${p.slug}`,
     title: p.title,
-    category: darsanaSeries.category,
-    date: darsanaSeries.date,
+    category: p.school,
+    group: darsanaSeries.category,
+    date: p.date,
     excerpt: p.excerpt,
     topics: p.topics,
   })),

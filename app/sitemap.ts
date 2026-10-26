@@ -13,7 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...fixed.map((p) => ({ url: base + p, lastModified: new Date() })),
     ...topics.map((t) => ({ url: `${base}/topics/${t.slug}`, lastModified: new Date() })),
     ...getPosts().map((p) => ({ url: `${base}/writing/${p.slug}`, lastModified: new Date(p.date) })),
-    { url: `${base}/darsana`, lastModified: new Date("2026-10-17") },
-    ...darsanaPosts.map((p) => ({ url: `${base}/darsana/${p.slug}`, lastModified: new Date("2026-10-17") })),
+    { url: `${base}/darsana`, lastModified: new Date(darsanaPosts[darsanaPosts.length - 1].date) },
+    ...darsanaPosts.map((p) => ({ url: `${base}/darsana/${p.slug}`, lastModified: new Date(p.date) })),
   ];
 }
