@@ -7,4 +7,11 @@ out
 preview
 out
 .figures.cjs
+.og.cjs
+.md.cjs
+
+# generated on every build (scripts/og.tsx, scripts/md.tsx); public/og/lead is hand-rendered and kept
+/public/og/*.png
+/public/llms.txt
+/public/md/
 tsconfig.tsbuildinfo

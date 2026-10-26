@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import WritingIndex, { type Row } from "@/components/WritingIndex";
 import { fmt } from "@/lib/posts";
 import { getEntries } from "@/lib/entries";
+import { ogFor } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Writing",
   description: "Essays and notes on yoga, the mind, AI, the society of agents, mathematics, philosophy, beauty, science and side research.",
+  ...ogFor("/writing"),
 };
 
 export default function WritingPage() {

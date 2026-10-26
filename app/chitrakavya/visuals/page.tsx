@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { ogFor } from "@/lib/og";
 import Bandha from "@/components/ck/Bandha";
 import KnuthPoems from "@/components/ck/KnuthPoems";
 import Sarvatobhadra from "@/components/ck/Sarvatobhadra";
 import { bandhas, sarvatobhadra } from "@/lib/ck";
 
-export const metadata: Metadata = { title: "Visuals" };
+export const metadata: Metadata = { title: "Visuals", ...ogFor("/chitrakavya/visuals") };
 
 const refs = [
   ["Chitra-kāvya, Wikipedia", "https://en.wikipedia.org/wiki/Chitra-kavya"],

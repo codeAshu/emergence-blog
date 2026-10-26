@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import DarsanaPost from "@/components/DarsanaPost";
+import { ogFor } from "@/lib/og";
 import { css, html, js } from "./content";
 
 const title = "The clay before the pot";
@@ -8,7 +9,8 @@ const description = "Sāṃkhya is the oldest of India's six classical philosoph
 export const metadata: Metadata = {
   title,
   description,
-  openGraph: { type: "article", title, description, publishedTime: "2023-03-12", authors: ["Ashutosh Trivedi"] },
+  ...ogFor("/darsana/samkhya"),
+  openGraph: { ...ogFor("/darsana/samkhya").openGraph, type: "article", publishedTime: "2023-03-12", authors: ["Ashutosh Trivedi"] },
 };
 
 export default function SamkhyaPage() {

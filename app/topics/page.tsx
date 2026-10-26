@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { ogFor } from "@/lib/og";
 import Link from "next/link";
 import { topics } from "@/lib/topics";
 import Fig from "@/components/Fig";
 import { getEntries } from "@/lib/entries";
 
-export const metadata: Metadata = { title: "Topics", description: "The index of the site: nine topics, each with its figure." };
+export const metadata: Metadata = { title: "Topics", description: "The index of the site: nine topics, each with its figure.", ...ogFor("/topics") };
 
 export default function TopicsPage() {
   const entries = getEntries();

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ogFor } from "@/lib/og";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { topics, topicBySlug } from "@/lib/topics";
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const t = topicBySlug[slug];
   if (!t) return {};
-  return { title: t.name, description: t.line };
+  return { title: t.name, description: t.line, ...ogFor(`/topics/${slug}`) };
 }
 
 export default async function TopicPage({ params }: Props) {

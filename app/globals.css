@@ -380,3 +380,20 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 @media (max-width: 860px) { .topic-head { grid-template-columns: 1fr; gap: 28px; } .topic-head .fig-lg { max-width: 240px; } }
 .fig-lg { margin: 0; aspect-ratio: 1; max-width: 340px; }
 .fig-lg svg, .fig-lg img { width: 100%; height: 100%; display: block; }
+
+/* ---------- human / machine toggle (as on videodb.io) ---------- */
+.vtoggle { position: fixed; right: 18px; bottom: 18px; z-index: 40; display: inline-flex; align-items: center; gap: 2px; padding: 3px; border: 1px solid var(--hair); border-radius: 999px; background: color-mix(in srgb, var(--canvas) 92%, transparent); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.vtoggle__tab { font: inherit; font-size: 12px; line-height: 1; padding: 7px 11px; border: 0; border-radius: 999px; background: transparent; color: var(--muted); cursor: pointer; }
+.vtoggle__tab.is-active { background: var(--ink); color: var(--canvas); }
+.vtoggle__tab:not(.is-active):hover { color: var(--ink); background: var(--tint); }
+@media (max-width: 720px) { .vtoggle { right: 12px; bottom: 12px; } }
+@media print { .vtoggle, .nav, .footer { display: none; } }
+
+/* machine view: the page's Markdown alternate, shown in place of the page */
+.machine { display: none; padding: 28px 0 110px; }
+html[data-view="machine"] main, html[data-view="machine"] .footer { display: none; }
+html[data-view="machine"] .machine { display: block; }
+.machine__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; margin: 0; padding-bottom: 14px; border-bottom: 1px solid var(--hair); }
+.machine__head code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px; color: var(--muted); overflow-wrap: anywhere; }
+.machine__head a { font-size: 14px; }
+.machine__src { margin: 0; padding: 24px 0 0; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px; line-height: 1.6; color: var(--ink); white-space: pre-wrap; overflow-wrap: anywhere; tab-size: 2; }

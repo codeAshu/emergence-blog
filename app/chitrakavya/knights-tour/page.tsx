@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import { ogFor } from "@/lib/og";
 import KnightsTour from "@/components/ck/KnightsTour";
 import { tour } from "@/lib/ck";
 
-export const metadata: Metadata = { title: "Knight's Tour" };
+export const metadata: Metadata = { title: "Knight's Tour", ...ogFor("/chitrakavya/knights-tour") };
 
 const refs = [
   ["Joshi and Sridharan, The Knight's Tour Problem and Rudraṭa's Verse, Resonance 2020", "https://link.springer.com/article/10.1007/s12045-020-1026-7"],

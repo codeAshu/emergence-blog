@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { ogFor } from "@/lib/og";
 import Link from "next/link";
 import { darsanaPosts, darsanaSeries } from "@/lib/darsana";
 
 export const metadata: Metadata = {
   title: darsanaSeries.title,
   description: darsanaSeries.excerpt,
+  ...ogFor("/darsana"),
 };
 
 export default function DarsanaIndex() {

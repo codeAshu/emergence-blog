@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import { ogFor } from "@/lib/og";
 import Link from "next/link";
 
-export const metadata: Metadata = { title: "About" };
+export const metadata: Metadata = { title: "About", ...ogFor("/chitrakavya/about") };
 
 const lineage = [
   ["Lab", "IIITB-CSL", "The Computational Sciences Laboratory at IIIT-Bangalore, where the project began as a research initiative and whose team curated the original archive."],
