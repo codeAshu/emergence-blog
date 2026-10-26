@@ -11,10 +11,10 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "emergence.live",
-    title: site.name,
-    description: site.description,
+    title: site.ogTitle,
+    description: site.ogDescription,
   },
-  twitter: { card: "summary_large_image", creator: "@ashu_trv" },
+  twitter: { card: "summary_large_image", creator: "@ashu_trv", title: site.ogTitle, description: site.ogDescription },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
