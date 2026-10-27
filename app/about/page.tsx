@@ -31,7 +31,7 @@ export default function AboutPage() {
               <a href={site.company.url} target="_blank" rel="noopener noreferrer">VideoDB</a>, where we
               build data infrastructure for machines that see. Before that, a decade in natural language
               processing and multi-agent systems: embeddings, summarization, reasoning, and the question
-              of how many agents following simple rules add up to something none of them intended.
+              of how emergence arises as an intelligent pattern.
             </p>
             <p>
               My first training in formal structure was a Sanskrit grammatical tradition, long before
@@ -40,25 +40,22 @@ export default function AboutPage() {
             </p>
             <h2>What I care about</h2>
             <p>
-              Beauty, philosophy, mathematics, science, technology and the human experience. I try
-              to observe the unknown. Yoga is the oldest engineering
-              manual for awareness that I know of, and I read it next to papers on agents, memory and
-              alignment.
+              Nature first. I love nature, and alignment with it is what I seek: long treks through
+              Himalayan terrain, meditation, music. Then beauty, philosophy, mathematics and science.
+              Yoga is the oldest engineering manual for awareness I know of, and I read it next to
+              papers on agents, memory and alignment.
             </p>
             <p>
-              Mathematics is where most of my wonder lives. Fractals and self-similarity, higher-order
-              structure (functions of functions, categories, the shapes that proofs make), and
-              optimization: gradients, search, equilibria, and the question of what a system is really
-              minimising when it looks like it is learning. The Chitrakāvya archive is the oldest form
-              of this interest; a knight&apos;s tour hidden in a hymn is a constraint-satisfaction problem
-              that happens to rhyme.
+              Mathematics and nature are where most of my wonder lives: fractals and self-similarity,
+              higher-order structure, and optimization, the question of what a system is really
+              minimising when it looks like it is learning.
             </p>
             <h2>What you will find here</h2>
             <ul>
               <li>Essays on the mind, yoga and the practice of awareness.</li>
               <li>AI, AGI and the society of agents: emergence, alignment, what comes next.</li>
               <li>Mathematics: fractals, higher-order structure, optimization, and the proofs I keep returning to.</li>
-              <li>Side research, starting with the Chitrakāvya archive.</li>
+              <li>Side research I cannot put down.</li>
               <li>Notes from building, reading and walking in the mountains.</li>
             </ul>
           </div>

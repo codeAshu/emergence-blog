@@ -4,9 +4,9 @@ export const site = {
   domain: "https://emergence.live",
   tagline: "Observe the unknown.",
   ogTitle: "Notes from Ashutosh Trivedi",
-  ogDescription: "I write here about beauty, philosophy, mathematics, science, technology and the human experience.",
+  ogDescription: "I write here about nature, beauty, philosophy, mathematics, science and music.",
   description:
-    "Essays on beauty, philosophy, mathematics, science, technology and the human experience. Yoga, the mind, AI, the society of agents, fractals and optimization, and side research.",
+    "Essays on nature, beauty, philosophy, mathematics, science and music. Yoga, meditation and the mind, long treks in the Himalaya, AI and the society of agents, fractals and optimization, and side research.",
   social: {
     x: "https://x.com/ashu_trv",
     github: "https://github.com/codeAshu",

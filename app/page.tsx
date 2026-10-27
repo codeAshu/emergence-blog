@@ -27,8 +27,8 @@ export default function Home() {
                 Observe the <span className="accent">unknown</span>.
               </h1>
               <p className="lead">
-                I am {site.name}. I write here about beauty, philosophy, mathematics, science,
-                technology and the human experience.
+                I am {site.name}. I love nature, and alignment with it is what I seek. I write
+                here about nature, beauty, philosophy, mathematics, science and music.
               </p>
               <div className="meta">
                 <a href={site.company.url} target="_blank" rel="noopener noreferrer">Founder, {site.company.name}</a>
