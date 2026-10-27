@@ -41,24 +41,21 @@ export default function AboutPage() {
             <h2>What I care about</h2>
             <p>
               Nature first. I love nature, and alignment with it is what I seek: long treks through
-              Himalayan terrain, meditation, and music. Then beauty, philosophy, mathematics and
-              science. I try to observe the unknown. Yoga is the oldest engineering manual for
-              awareness that I know of, and I read it next to papers on agents, memory and alignment.
+              Himalayan terrain, meditation, music. Then beauty, philosophy, mathematics and science.
+              Yoga is the oldest engineering manual for awareness I know of, and I read it next to
+              papers on agents, memory and alignment.
             </p>
             <p>
-              Mathematics and nature are where most of my wonder lives. Fractals and self-similarity, higher-order
-              structure (functions of functions, categories, the shapes that proofs make), and
-              optimization: gradients, search, equilibria, and the question of what a system is really
-              minimising when it looks like it is learning. The Chitrakāvya archive is the oldest form
-              of this interest; a knight&apos;s tour hidden in a hymn is a constraint-satisfaction problem
-              that happens to rhyme.
+              Mathematics and nature are where most of my wonder lives: fractals and self-similarity,
+              higher-order structure, and optimization, the question of what a system is really
+              minimising when it looks like it is learning.
             </p>
             <h2>What you will find here</h2>
             <ul>
               <li>Essays on the mind, yoga and the practice of awareness.</li>
               <li>AI, AGI and the society of agents: emergence, alignment, what comes next.</li>
               <li>Mathematics: fractals, higher-order structure, optimization, and the proofs I keep returning to.</li>
-              <li>Side research, starting with the Chitrakāvya archive.</li>
+              <li>Side research I cannot put down.</li>
               <li>Notes from building, reading and walking in the mountains.</li>
             </ul>
           </div>
