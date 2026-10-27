@@ -6,7 +6,7 @@ import { ogFor } from "@/lib/og";
 
 export const metadata: Metadata = {
   title: "Writing",
-  description: "Essays and notes on yoga, the mind, AI, the society of agents, mathematics, philosophy, beauty, science and side research.",
+  description: "Essays and notes on nature, the mind, yoga, AI and the society of agents, mathematics, philosophy, beauty, science, music and side research.",
   ...ogFor("/writing"),
 };
 
@@ -29,8 +29,8 @@ export default function WritingPage() {
       <div className="pagehead col">
         <h1 className="display">Writing</h1>
         <p className="lead">
-          Essays and notes. Yoga and the mind, AI and the society of agents, mathematics, philosophy,
-          beauty, science, and the side research I cannot put down.
+          Essays and notes. Nature, yoga and the mind, AI and the society of agents, mathematics,
+          philosophy, beauty, science, music, and the side research I cannot put down.
         </p>
       </div>
       <div data-mount="writing-index" data-rows={JSON.stringify(rows)}><WritingIndex rows={rows} /></div>

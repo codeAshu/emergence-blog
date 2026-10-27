@@ -31,7 +31,7 @@ export default function AboutPage() {
               <a href={site.company.url} target="_blank" rel="noopener noreferrer">VideoDB</a>, where we
               build data infrastructure for machines that see. Before that, a decade in natural language
               processing and multi-agent systems: embeddings, summarization, reasoning, and the question
-              of how many agents following simple rules add up to something none of them intended.
+              of how emergence arises as an intelligent pattern.
             </p>
             <p>
               My first training in formal structure was a Sanskrit grammatical tradition, long before
@@ -40,13 +40,13 @@ export default function AboutPage() {
             </p>
             <h2>What I care about</h2>
             <p>
-              Beauty, philosophy, mathematics, science, technology and the human experience. I try
-              to observe the unknown. Yoga is the oldest engineering
-              manual for awareness that I know of, and I read it next to papers on agents, memory and
-              alignment.
+              Nature first. I love nature, and alignment with it is what I seek: long treks through
+              Himalayan terrain, meditation, and music. Then beauty, philosophy, mathematics and
+              science. I try to observe the unknown. Yoga is the oldest engineering manual for
+              awareness that I know of, and I read it next to papers on agents, memory and alignment.
             </p>
             <p>
-              Mathematics is where most of my wonder lives. Fractals and self-similarity, higher-order
+              Mathematics and nature are where most of my wonder lives. Fractals and self-similarity, higher-order
               structure (functions of functions, categories, the shapes that proofs make), and
               optimization: gradients, search, equilibria, and the question of what a system is really
               minimising when it looks like it is learning. The Chitrakāvya archive is the oldest form

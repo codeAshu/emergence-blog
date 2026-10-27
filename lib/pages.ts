@@ -38,7 +38,7 @@ export function getPageCards(): PageCard[] {
   const add = (c: Omit<PageCard, "key">) => cards.push({ ...c, key: ogKey(c.path) });
 
   add({ path: "/", title: site.ogTitle, description: site.ogDescription, kicker: "emergence.live", figure: "phyllotaxis" });
-  add({ path: "/writing", title: "Writing", description: "Essays and notes. Yoga and the mind, AI and the society of agents, mathematics, philosophy, beauty, science, and the side research I cannot put down.", kicker: "emergence.live", figure: "walk" });
+  add({ path: "/writing", title: "Writing", description: "Essays and notes. Nature, yoga and the mind, AI and the society of agents, mathematics, philosophy, beauty, science, music, and the side research I cannot put down.", kicker: "emergence.live", figure: "walk" });
   add({ path: "/topics", title: "Topics", description: "The figures are the index. Each one gathers the pieces that touch it: mathematics, optimization, beauty, agents, philosophy, the mind, science, Chitrakāvya and the human experience.", kicker: "emergence.live", figure: "mandelbrot" });
   add({ path: "/about", title: site.name, description: site.description, kicker: "About", image: site.photo.replace(/^\//, "") });
 
