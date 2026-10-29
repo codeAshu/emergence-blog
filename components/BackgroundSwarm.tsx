@@ -1,6 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useCallback, useState } from "react";
+import { useEffect, useRef, useCallback } from "react";
+import { currentTheme, subscribeTheme } from "@/lib/theme";
+
+// The page canvas in each theme (--canvas in app/globals.css), as RGB for the trail fade
+const CANVAS_RGB = { light: "242, 241, 236", dark: "22, 21, 18" };
 
 interface Particle {
   x: number;
@@ -51,7 +55,7 @@ export default function BackgroundSwarm() {
   const startTimeRef = useRef<number>(Date.now());
   const cyclePhaseRef = useRef<"forming" | "dispersing">("forming");
   const cycleStartRef = useRef<number>(Date.now());
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const darkRef = useRef(false);
 
   const numSocieties = 3;
   const particlesPerSociety = 50;
@@ -540,15 +544,14 @@ export default function BackgroundSwarm() {
       height: number,
       darkMode: boolean
     ) => {
-      /* ----- Palette: the site's cream canvas, three ink greys, one orange accent ----- */
-      void darkMode;
-      const inkLightness = (idx: number) => [22, 34, 46][idx % 3];
+      /* ----- Palette: the page canvas, three ink greys, one orange accent (per theme) ----- */
+      const inkLightness = (idx: number) => (darkMode ? [84, 72, 60] : [22, 34, 46])[idx % 3];
       const ink = (idx: number, alpha: number) =>
-        `hsla(40, 4%, ${inkLightness(idx)}%, ${alpha})`;
-      const accent = (alpha: number) => `hsla(14, 80%, 45%, ${alpha})`;
+        darkMode ? `hsla(45, 7%, ${inkLightness(idx)}%, ${alpha})` : `hsla(40, 4%, ${inkLightness(idx)}%, ${alpha})`;
+      const accent = (alpha: number) => (darkMode ? `hsla(15, 76%, 57%, ${alpha})` : `hsla(14, 80%, 45%, ${alpha})`);
 
-      // Background trail fade: the page canvas (#f2f1ec)
-      ctx.fillStyle = "rgba(242, 241, 236, 0.10)";
+      // Background trail fade: the page canvas
+      ctx.fillStyle = `rgba(${darkMode ? CANVAS_RGB.dark : CANVAS_RGB.light}, 0.10)`;
       ctx.fillRect(0, 0, width, height);
 
       /* ----- Trade routes ----- */
@@ -719,14 +722,22 @@ export default function BackgroundSwarm() {
       startTimeRef.current = Date.now();
     };
 
-    // Theme observer
-    const checkTheme = () => {
-      const theme = document.documentElement.getAttribute("data-theme");
-      setIsDarkMode(theme !== "light");
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // Theme: start on the right canvas, and repaint it whole when the theme changes
+    const paintBackground = () => {
+      ctx.fillStyle = `rgb(${darkRef.current ? CANVAS_RGB.dark : CANVAS_RGB.light})`;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
     };
-    checkTheme();
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    darkRef.current = currentTheme() === "dark";
+    const unsubscribeTheme = subscribeTheme(() => {
+      const dark = currentTheme() === "dark";
+      if (dark !== darkRef.current) {
+        darkRef.current = dark;
+        paintBackground();
+      }
+    });
 
     const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current = { x: e.clientX, y: e.clientY };
@@ -736,13 +747,7 @@ export default function BackgroundSwarm() {
     window.addEventListener("resize", handleResize);
     window.addEventListener("mousemove", handleMouseMove);
 
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    // Initial fill based on theme — match the page background tokens
-    // Dark: deep charcoal | Light: warm natural beige
-    ctx.fillStyle = "rgb(242, 241, 236)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    paintBackground();
 
     const animate = () => {
       updateCycle(
@@ -772,7 +777,6 @@ export default function BackgroundSwarm() {
         );
       }
 
-      const currentTheme = document.documentElement.getAttribute("data-theme");
       draw(
         ctx,
         particlesRef.current,
@@ -780,7 +784,7 @@ export default function BackgroundSwarm() {
         tradeRoutesRef.current,
         canvas.width,
         canvas.height,
-        currentTheme !== "light"
+        darkRef.current
       );
       animationRef.current = requestAnimationFrame(animate);
     };
@@ -791,7 +795,7 @@ export default function BackgroundSwarm() {
       cancelAnimationFrame(animationRef.current);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
-      observer.disconnect();
+      unsubscribeTheme();
     };
   }, [draw, initParticles, initSocieties, initTradeRoutes, updateCycle, updateParticle, updateSocieties, updateTradeRoutes]);
 
@@ -799,7 +803,7 @@ export default function BackgroundSwarm() {
     <canvas
       ref={canvasRef}
       className="swarm-bg"
-      style={{ background: "#f2f1ec" }}
+      style={{ background: "var(--canvas)" }}
       aria-hidden
     />
   );
