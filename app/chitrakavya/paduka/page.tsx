@@ -5,6 +5,7 @@ import { verse929, verse930, moveNumber } from "@/lib/ck";
 
 export const metadata: Metadata = { title: "Pādukā", ...ogFor("/chitrakavya/paduka") };
 
+const lineageCols = ["Author, work", "Date", "Board", "Syllables", "Subject"];
 const lineage = [
   ["Rudraṭa, Kāvyālaṅkāra 5.15", "c. 850 CE", "4 × 8", "32 + 32", "Poetic ornament"],
   ["Ratnākara, Haravijaya ch. 6", "c. 850 CE", "4 × 8", "32 + 32", "Hymn to Śiva"],
@@ -111,11 +112,11 @@ export default function Paduka() {
 
       <section className="block">
         <div className="rule"><span className="label">Lineage</span></div>
-        <table className="table">
-          <thead><tr><th>Author, work</th><th>Date</th><th>Board</th><th>Syllables</th><th>Subject</th></tr></thead>
+        <table className="table table--stack">
+          <thead><tr>{lineageCols.map((c) => <th key={c}>{c}</th>)}</tr></thead>
           <tbody>
             {lineage.map((r) => (
-              <tr key={r[0]}>{r.map((c, i) => <td key={i}>{c}</td>)}</tr>
+              <tr key={r[0]}>{r.map((c, i) => <td key={i} data-label={lineageCols[i]}>{c}</td>)}</tr>
             ))}
           </tbody>
         </table>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { site } from "@/lib/site";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const items = [
   { href: "/writing", label: "Writing" },
@@ -30,9 +31,12 @@ export default function Nav() {
           ))}
         </ul>
         <div className="right">
-          <a href={site.social.x} target="_blank" rel="noopener noreferrer">X</a>
-          <a href={site.social.github} target="_blank" rel="noopener noreferrer">GitHub</a>
-          <a href={site.social.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <div className="social">
+            <a href={site.social.x} target="_blank" rel="noopener noreferrer">X</a>
+            <a href={site.social.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href={site.social.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          </div>
+          <ThemeToggle />
         </div>
       </div>
     </header>

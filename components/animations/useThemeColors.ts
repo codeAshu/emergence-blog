@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { currentTheme, subscribeTheme, type Theme } from "@/lib/theme";
 
 export interface ThemeColors {
   /** Page background — used for the trail-fade overlay */
@@ -11,15 +12,15 @@ export interface ThemeColors {
   ink: (alpha: number) => string;
   /** Connection / hairline ink */
   hairline: (alpha: number) => string;
-  /** Editorial Magenta accent — use sparingly */
+  /** The orange accent, used sparingly */
   accent: (alpha: number) => string;
   /** True when the page is currently in dark mode */
   isDark: boolean;
 }
 
 /**
- * Read the active editorial palette from the document `data-theme`
- * attribute and keep a ref up to date as the user toggles the theme.
+ * The palette for the theme the page is showing (the reader's pick, or the system's),
+ * kept up to date in a ref as the theme changes.
  *
  * Canvas animations must read from the returned ref each frame because
  * react state updates would tear the running RAF loop.
@@ -29,34 +30,24 @@ export function useThemeColorsRef() {
 
   useEffect(() => {
     const apply = () => {
-      const theme =
-        document.documentElement.getAttribute("data-theme") === "dark"
-          ? "dark"
-          : "light";
-      ref.current = buildPalette(theme);
+      ref.current = buildPalette(currentTheme());
     };
-
     apply();
-    const observer = new MutationObserver(apply);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["data-theme"],
-    });
-
-    return () => observer.disconnect();
+    return subscribeTheme(apply);
   }, []);
 
   return ref;
 }
 
-function buildPalette(theme: "light" | "dark"): ThemeColors {
+function buildPalette(theme: Theme): ThemeColors {
   if (theme === "dark") {
+    // Night: the dark surface, warm light greys, the brighter orange
     return {
-      background: "rgb(20, 20, 22)",
-      fadeOverlay: "rgba(20, 20, 22, 0.18)",
-      ink: (a) => `hsla(0, 0%, 80%, ${a})`,
-      hairline: (a) => `hsla(0, 0%, 75%, ${a})`,
-      accent: (a) => `hsla(330, 65%, 70%, ${a})`,
+      background: "rgb(28, 27, 24)",
+      fadeOverlay: "rgba(28, 27, 24, 0.20)",
+      ink: (a) => `hsla(45, 8%, 80%, ${a})`,
+      hairline: (a) => `hsla(45, 6%, 72%, ${a})`,
+      accent: (a) => `hsla(15, 76%, 57%, ${a})`,
       isDark: true,
     };
   }

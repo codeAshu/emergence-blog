@@ -6,15 +6,15 @@ export const metadata: Metadata = { title: "Resources", ...ogFor("/chitrakavya/r
 
 function Rows({ rows, cols }: { rows: string[][]; cols: string[] }) {
   return (
-    <table className="table">
+    <table className="table table--stack">
       <thead><tr>{cols.map((c) => <th key={c}>{c}</th>)}</tr></thead>
       <tbody>
         {rows.map((r, i) => (
           <tr key={i}>
             {r.map((c, j) => {
               const isUrl = /^https?:\/\//.test(c);
-              if (isUrl) return <td key={j}><a href={c} target="_blank" rel="noopener noreferrer">{new URL(c).hostname.replace("www.", "")}</a></td>;
-              return <td key={j}>{c}</td>;
+              if (isUrl) return <td key={j} data-label={cols[j]}><a href={c} target="_blank" rel="noopener noreferrer">{new URL(c).hostname.replace("www.", "")}</a></td>;
+              return <td key={j} data-label={cols[j]}>{c}</td>;
             })}
           </tr>
         ))}
